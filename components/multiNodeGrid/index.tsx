@@ -5,7 +5,7 @@ import {
 } from '../../lib/constants';
 import * as gtag from '../../lib/gtag';
 import useContract from '../../lib/hooks/useContract';
-import { useWalletStore } from '../../lib/stores/wallet';
+import { MultiNodeType, useWalletStore } from '../../lib/stores/wallet';
 import { BlockchainType, ChainEnum } from '../../lib/types';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
@@ -18,32 +18,66 @@ export function MulitNodeGrid() {
 
   const contract = useContract(MULTINODE_CLAIM_CONTRACT, MultiNodeContractAbi);
 
-  async function claimAllRewards(nodeIds?: string[]) {
+  async function claimAllRewards(multiNodes?: MultiNodeType[]) {
     try {
-      if (!claimableNodes?.length) {
+      if (!multiNodes?.length) {
         return toast.error('No Multi Nodes are available to claim rewards');
       }
 
-      toast.success(`Confirming Transaction In Wallet`);
+      const nodeIds = multiNodes
+        ?.filter((n) => n.chainId === chainId)
+        .map((i) => i.nodeId);
 
-      // TODO: check the state of nodeIds which have claimable funds and only submit those
-      const gasLimit = RECOMMENDED_MULTI_GAS * claimableNodes?.length;
+      const confirmingToast = toast.success(
+        `Confirming Transaction In Wallet`,
+        {
+          style: {
+            background: '#3F88C5',
+            color: 'white',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#3F88C5',
+          },
+        }
+      );
+
+      const gasLimit = RECOMMENDED_MULTI_GAS * nodeIds?.length;
+
       const mccClaimTxt = await contract?.claimDividendsMulti(nodeIds, {
         gasLimit,
       });
 
-      const tx = await mccClaimTxt.wait();
-
-      toast.success(
+      toast.remove(confirmingToast);
+      const loadingToast = toast.loading(
         <div>
-          <div>Your MCC Multi Node Dividends are processing</div>
+          <div>Your transaction is processing on chain</div>
           <a
             target="_blank"
             rel="noopener noreferrer"
             href={`${generateChainBase(chainId)}/tx/${mccClaimTxt.hash}`}
             className="font-bold underline cursor-pointer"
           >
-            Transaction Hash Link
+            Transaction Link
+          </a>
+        </div>
+      );
+
+      const tx = await mccClaimTxt.wait();
+
+      toast.remove(loadingToast);
+      toast.success(
+        <div>
+          <div>
+            Your MCC Multi Node Dividends have been processed to your wallet
+          </div>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`${generateChainBase(chainId)}/tx/${mccClaimTxt.hash}`}
+            className="font-bold underline cursor-pointer"
+          >
+            Transaction Link
           </a>
         </div>
       );
@@ -54,16 +88,13 @@ export function MulitNodeGrid() {
         label: 'Dividend',
         value: `${tx}`,
       });
-
-      // TODO: Listen for transaction success
-      // const event = tx.events[0];
-      // const value = event.args[2];
-    } catch (error) {
+    } catch (error: any) {
       toast.dismiss();
-      // @ts-expect-error
+
       if (error?.code === 4001) {
-        toast.error('User denied transaction signature');
+        return toast.error('User denied transaction signature');
       }
+      toast.error(error?.message);
 
       console.error(error);
     }

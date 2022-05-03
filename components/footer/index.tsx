@@ -13,8 +13,6 @@ const officialNavigation = {
   main: [
     { name: 'Website', href: 'https://mchain.capital/' },
     { name: 'Twitter', href: 'https://twitter.com/MulChainCapital' },
-    { name: 'Telegram', href: 'https://t.me/MultiChainCapital' },
-    { name: 'Discord', href: 'https://discord.com/invite/4GwbcQNa7P' },
     { name: 'Medium', href: 'https://multichaincapital.medium.com/' },
     { name: 'Github', href: 'https://github.com/mchaindev' },
   ],
@@ -93,15 +91,45 @@ export function Footer() {
             </div>
           ))}
         </nav>
+        <div
+          id="disclaimer"
+          className="flex flex-col items-center justify-center mt-6 text-xs text-gray-300"
+        >
+          <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+            Disclaimer
+          </div>
+          <div className="max-w-xl text-center text-amber-400">
+            Crypto products are unregulated and can be highly risky. As such,
+            MCC.Cafe makes no representations, warranties, or assurances as to
+            the security, currency or accuracy of the features contained on this
+            website or any sites linked to or from this website.
+          </div>
+        </div>
+        <div
+          id="of-note"
+          className="flex flex-col items-center justify-center mt-6 text-xs text-gray-300"
+        >
+          <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+            Of Note
+          </div>
+          <div className="max-w-xl text-center text-amber-400">
+            The MCC Cafe & MCC Incubation Zone does not condone any violence,
+            threats or defamatory comments made towards any members of our
+            community which includes Mr. Capital. Any such member participating
+            in this behavior in the MCC Incubation Zone channels or in any other
+            public channels will not be permitted to participate in our
+            community.
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center mt-6 text-xs text-gray-300">
+          <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+            Git Commit Hash
+          </div>
+          <div className="text-amber-400">
+            {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
+          </div>
+        </div>
       </motion.div>
-      <div className="flex flex-col items-center justify-center mb-2 text-xs text-gray-300">
-        <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-          Git Commit Hash
-        </div>
-        <div className="text-amber-400">
-          {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
-        </div>
-      </div>
     </motion.footer>
   );
 }

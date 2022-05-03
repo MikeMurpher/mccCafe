@@ -6,6 +6,7 @@ import {
 import * as gtag from '../../lib/gtag';
 import useContract from '../../lib/hooks/useContract';
 import useMultiNodeActiveBalance from '../../lib/hooks/useMultiNodeActiveBalance';
+import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { useWalletStore } from '../../lib/stores/wallet';
 import { BlockchainType, ChainEnum } from '../../lib/types';
 import {
@@ -34,28 +35,31 @@ export function MultiNode(props: MultiNodeType) {
     request(url, { method: 'GET' })
   );
 
+  const { address } = useWeb3();
   const { chainId, addClaimableNode } = useWalletStore((state) => state);
   const contract = useContract(MULTINODE_CLAIM_CONTRACT, MultiNodeContractAbi);
 
-  const mccClaimable = useMultiNodeActiveBalance(
-    MULTINODE_CLAIM_CONTRACT,
-    MultiNodeContractAbi,
-    'unclaimed',
-    chainId,
-    token_id
-  );
+  const mccClaimable = useMultiNodeActiveBalance({
+    contractAddress: MULTINODE_CLAIM_CONTRACT,
+    abi: MultiNodeContractAbi,
+    balanceType: 'unclaimed',
+    chainId: chainId,
+    nodeId: token_id,
+    address,
+  });
 
-  const totalEarnings = useMultiNodeActiveBalance(
-    MULTINODE_CLAIM_CONTRACT,
-    MultiNodeContractAbi,
-    'totalEarnings',
-    chainId,
-    token_id
-  );
+  const totalEarnings = useMultiNodeActiveBalance({
+    contractAddress: MULTINODE_CLAIM_CONTRACT,
+    abi: MultiNodeContractAbi,
+    balanceType: 'totalEarnings',
+    chainId: chainId,
+    nodeId: token_id,
+    address,
+  });
 
   useEffect(() => {
-    if (parseInt(mccClaimable) > 0) {
-      addClaimableNode({ nodeId: token_id });
+    if (parseInt(mccClaimable) > 0 && chainId) {
+      addClaimableNode({ chainId, nodeId: token_id });
     }
   }, [mccClaimable]);
 
@@ -74,23 +78,45 @@ export function MultiNode(props: MultiNodeType) {
       const { ethereum } = window;
 
       if (ethereum) {
-        toast.success(`Confirming Transaction In Wallet`);
+        toast.success(`Confirming Transaction In Wallet`, {
+          style: {
+            background: '#3F88C5',
+            color: 'white',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#3F88C5',
+          },
+        });
         const mccClaimTxt = await contract?.claimDividend(nodeId, {
           gasLimit: RECOMMENDED_SINGLE_GAS,
         });
 
-        const tx = await mccClaimTxt.wait();
-
-        toast.success(
+        toast.loading(
           <div>
-            <div>Your MCC Multi Node Dividends are processing</div>
+            <div>Your transaction is processing on chain</div>
             <a
               target="_blank"
               rel="noopener noreferrer"
               href={`${generateChainBase(chainId)}/tx/${mccClaimTxt.hash}`}
               className="font-bold underline cursor-pointer"
             >
-              Transaction Hash Link
+              Transaction Link
+            </a>
+          </div>
+        );
+        const tx = await mccClaimTxt.wait();
+
+        toast.success(
+          <div>
+            <div>Your MCC Multi Node Dividends have been processed</div>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`${generateChainBase(chainId)}/tx/${mccClaimTxt.hash}`}
+              className="font-bold underline cursor-pointer"
+            >
+              Transaction Link
             </a>
           </div>
         );
@@ -101,10 +127,6 @@ export function MultiNode(props: MultiNodeType) {
           label: 'Dividend',
           value: `${tx}`,
         });
-
-        // TODO: Listen for transaction success
-        // const event = tx.events[0];
-        // const value = event.args[2];
       } else {
         toast.error('Ethereum is not enabled in your browser!');
       }

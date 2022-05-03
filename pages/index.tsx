@@ -12,7 +12,6 @@ export default function HomePage() {
         description="☕ An internet cafe for the Multi Chain Capital community where they can come for a quick pick me up ☕"
         canonical="https://www.mcc.cafe/"
       />
-
       <div className="mb-8 border-2 rounded-lg border-amber-700 bg-amber-50">
         <div className="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:flex lg:items-center lg:justify-between lg:py-24 lg:px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">
@@ -46,6 +45,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
       <MulitNodeGrid />
     </LayoutContainer>
   );

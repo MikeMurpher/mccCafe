@@ -1,3 +1,7 @@
+import MCC from '../../contracts/MCC.json';
+import { MCC_CONTRACT } from '../../lib/constants';
+import { useMccBalance } from '../../lib/hooks/useMccBalance';
+import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './Navigation';
 import { useDimensions } from './use-dimensions';
@@ -28,6 +32,12 @@ const sidebar = {
 
 const navItems = [
   {
+    nextJsLink: true,
+    openInNewPage: false,
+    text: 'Disclaimer',
+    href: '#disclaimer',
+  },
+  {
     nextJsLink: false,
     openInNewPage: true,
     text: 'Twitter',
@@ -52,6 +62,16 @@ export function NavContainer() {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
 
+  const { chainId, address } = useWeb3();
+
+  const mccBalance = useMccBalance({
+    contractAddress: MCC_CONTRACT,
+    abi: MCC,
+    type: 'balance',
+    chainId,
+    address,
+  });
+
   return (
     <motion.nav
       initial={false}
@@ -65,6 +85,7 @@ export function NavContainer() {
           <div className="px-4 py-4 border-b border-slate-900/10 dark:border-slate-300/10 lg:border-0">
             <div className="relative flex items-center">
               <a href="#" className="w-12 h-12">
+                <div className="hidden">{mccBalance}</div>
                 <span className="sr-only">MCC Cafe Logo</span>
                 <Image
                   alt="logo"
@@ -98,10 +119,10 @@ export function NavContainer() {
                     {navItems.map((n, i) => (
                       <li key={`${i}-${n.href}`}>
                         <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-amber-500 dark:hover:text-amber-400"
                           href={n.href}
+                          rel={n?.openInNewPage ? 'noopener noreferrer' : ''}
+                          target={n?.openInNewPage ? '_blank' : ''}
+                          className="hover:text-amber-500 dark:hover:text-amber-400"
                         >
                           {n.text}
                         </a>

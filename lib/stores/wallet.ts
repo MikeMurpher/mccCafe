@@ -1,4 +1,4 @@
-import { BlockchainType } from '../types';
+import { BlockchainType, ChainEnum } from '../types';
 import create, { StateCreator } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 
@@ -9,11 +9,16 @@ export type MyWalletState = {
   chainId?: BlockchainType;
   isDisconnect?: boolean;
   connecting?: boolean;
-  claimableNodes?: string[];
+  claimableNodes?: MultiNodeType[];
   resetProvider: () => void;
   updateWeb3Provider: (params: any) => void;
-  addClaimableNode: (params: { nodeId: string }) => void;
+  addClaimableNode: (params: MultiNodeType) => void;
 };
+
+export interface MultiNodeType {
+  nodeId: string;
+  chainId: ChainEnum;
+}
 
 type MyPersist = (
   config: StateCreator<MyWalletState>,
@@ -48,12 +53,20 @@ export const useWalletStore = create<MyWalletState>(
           };
         });
       },
-      addClaimableNode: ({ nodeId }) => {
+      addClaimableNode: (n) => {
         set((state) => {
+          const currentNodes = state?.claimableNodes ?? [];
+          const allNodes = [...currentNodes, n];
+          const claimableNodes = new Map(
+            allNodes?.map((i) => {
+              return [i.nodeId, i];
+            })
+          );
+
           return {
             ...state,
             // @ts-expect-error
-            claimableNodes: [...new Set([...state?.claimableNodes, nodeId])],
+            claimableNodes: [...claimableNodes.values()],
           };
         });
       },

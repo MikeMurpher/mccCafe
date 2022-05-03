@@ -15,44 +15,42 @@ function getNodeBalance(contract: any) {
     }
 
     if (callType === 'unclaimed') {
-      const claimable = await contract.getUnpaidEarnings(parseInt(nodeId));
-      return claimable;
+      return await contract.getUnpaidEarnings(parseInt(nodeId));
     }
 
     if (callType === 'totalEarnings') {
-      const paid = await contract.getTotalEarnings(parseInt(nodeId));
-      return paid;
+      return await contract.getTotalEarnings(parseInt(nodeId));
     }
 
     return null;
   };
 }
 
-export default function useMultiNodeActiveBalance(
-  contractAddress: string,
-  abi: any,
-  balanceType: 'unclaimed' | 'totalEarnings',
-  chainId?: BlockchainType,
-  nodeId?: string,
-  suspense = false
-) {
+interface Props {
+  contractAddress: string;
+  abi: any;
+  balanceType: 'unclaimed' | 'totalEarnings';
+  chainId?: BlockchainType;
+  nodeId?: string;
+  address?: string;
+}
+
+export default function useMultiNodeActiveBalance(props: Props) {
+  const { contractAddress, abi, balanceType, chainId, nodeId, address } = props;
+
   const contract = useContract(contractAddress, abi);
 
-  const shouldFetch =
-    typeof contractAddress === 'string' && !!contract && !!nodeId && !!chainId;
+  const shouldFetch = !!contractAddress && !!contract && !!nodeId && !!chainId;
 
   const result = useSWR(
     shouldFetch
       ? [
-          `DividendBalance-${chainId}-${nodeId}-${balanceType}`,
+          `DividendBalance-${chainId}-${nodeId}-${balanceType}-${address}`,
           nodeId,
           balanceType,
         ]
       : null,
-    getNodeBalance(contract),
-    {
-      suspense,
-    }
+    getNodeBalance(contract)
   );
 
   useKeepSWRDataLiveAsBlocksArrive(result.mutate);

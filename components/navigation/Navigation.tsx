@@ -28,6 +28,13 @@ const itemIds = [
     img: ``,
   },
   {
+    nextJsLink: true,
+    openInNewPage: false,
+    text: `Disclaimer`,
+    href: '#disclaimer',
+    img: ``,
+  },
+  {
     nextJsLink: false,
     openInNewPage: true,
     text: `GitHub`,

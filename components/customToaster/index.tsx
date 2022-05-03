@@ -7,10 +7,21 @@ export function CustomToaster() {
         duration: Infinity,
         success: {
           style: {
-            background: 'green',
+            background: '#32533D',
+            color: 'white',
+          },
+          iconTheme: {
+            primary: '#fff',
+            secondary: '#32533D',
+          },
+        },
+        loading: {
+          style: {
+            background: '#4C2C72',
             color: 'white',
           },
         },
+
         error: {
           style: {
             background: 'red',
@@ -38,3 +49,14 @@ export function CustomToaster() {
     </Toaster>
   );
 }
+
+// toast(`Confirm Transaction In Wallet`, {
+//   style: {
+//     background: '#3F88C5',
+//     color: 'white',
+//   },
+//   iconTheme: {
+//     primary: '#fff',
+//     secondary: '#3F88C5',
+//   },
+// });
