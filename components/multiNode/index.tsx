@@ -1,10 +1,14 @@
 import MultiNodeContractAbi from '../../contracts/MultiNode.json';
 import {
+  BSCSCAN_URL,
+  ETHERSCAN_URL,
+  FTMSCAN_URL,
   MULTINODE_CLAIM_CONTRACT,
+  MULTINODE_CONTRACT,
   RECOMMENDED_SINGLE_GAS,
 } from '../../lib/constants';
 import * as gtag from '../../lib/gtag';
-import useContract from '../../lib/hooks/useContract';
+import { useContract } from '../../lib/hooks/useContract';
 import useMultiNodeActiveBalance from '../../lib/hooks/useMultiNodeActiveBalance';
 import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { useWalletStore } from '../../lib/stores/wallet';
@@ -35,8 +39,9 @@ export function MultiNode(props: MultiNodeType) {
     request(url, { method: 'GET' })
   );
 
-  const { address } = useWeb3();
-  const { chainId, addClaimableNode } = useWalletStore((state) => state);
+  const { chainId, address } = useWeb3();
+
+  const { addClaimableNode } = useWalletStore((state) => state);
   const contract = useContract(MULTINODE_CLAIM_CONTRACT, MultiNodeContractAbi);
 
   const mccClaimable = useMultiNodeActiveBalance({
@@ -245,11 +250,11 @@ export function MultiNode(props: MultiNodeType) {
 function generateSellLink(nodeId: string, chain?: BlockchainType) {
   switch (chain) {
     case ChainEnum.erc:
-      return `https://opensea.io/assets/0xf9b899e6e84f6383f99b262eda36c9bddd5fc080/${nodeId}`;
+      return `https://opensea.io/assets/${MULTINODE_CONTRACT}/${nodeId}`;
     case ChainEnum.bsc:
-      return `https://tofunft.com/nft/bsc/0xF9b899E6E84f6383f99b262edA36C9bDdD5fc080/${nodeId}`;
+      return `https://tofunft.com/nft/bsc/${MULTINODE_CONTRACT}/${nodeId}`;
     case ChainEnum.ftm:
-      return `https://paintswap.finance/marketplace/assets/0xf9b899e6e84f6383f99b262eda36c9bddd5fc080/${nodeId}`;
+      return `https://paintswap.finance/marketplace/assets/${MULTINODE_CONTRACT}/${nodeId}`;
     default:
       ``;
   }
@@ -258,11 +263,11 @@ function generateSellLink(nodeId: string, chain?: BlockchainType) {
 export function generateChainBase(chain?: BlockchainType) {
   switch (chain) {
     case ChainEnum.erc:
-      return `https://etherscan.io`;
+      return ETHERSCAN_URL;
     case ChainEnum.bsc:
-      return `https://bscscan.com`;
+      return BSCSCAN_URL;
     case ChainEnum.ftm:
-      return `https://ftmscan.com`;
+      return FTMSCAN_URL;
     default:
       ``;
   }

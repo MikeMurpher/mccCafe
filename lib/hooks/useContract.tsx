@@ -1,24 +1,41 @@
 import { useWeb3 } from './useWeb3';
-import { Contract } from '@ethersproject/contracts';
+import { AddressZero } from '@ethersproject/constants';
+import { Provider } from '@ethersproject/providers';
+import { Contract, ContractInterface, Signer } from 'ethers';
+import { isAddress } from 'ethers/lib/utils';
 import { useMemo } from 'react';
 
-export default function useContract<T extends Contract = Contract>(
+export function getContract<T = Contract>(
   address: string,
-  ABI: any
-): T | null {
-  const { chainId, address: signer, provider } = useWeb3();
+  abi: ContractInterface,
+  provider: Signer | Provider
+) {
+  return new Contract(address, abi, provider);
+}
 
-  return useMemo(() => {
-    if (!address || !ABI || !provider || !chainId) {
-      return null;
+export function useContract<Contract = any>(
+  address: string,
+  abi: ContractInterface
+) {
+  const { provider, chainId } = useWeb3();
+
+  const signerOrProvider = useMemo(() => {
+    if (provider?.['getSigner']) {
+      return provider.getSigner();
+    } else {
+      return provider;
     }
+  }, [provider]);
 
-    try {
-      return new Contract(address, ABI, provider.getSigner(signer));
-    } catch (error) {
-      console.error('Failed To Get Contract', error);
+  if (!isAddress(address) || address === AddressZero) {
+    throw Error(`Invalid 'address' parameter '${address}'.`);
+  }
 
-      return null;
-    }
-  }, [address, ABI, provider, signer]) as T;
+  const contract = useMemo(
+    // @ts-expect-error
+    () => getContract<Contract>(address, abi, signerOrProvider),
+    [address, abi, signerOrProvider, chainId]
+  );
+
+  return contract;
 }

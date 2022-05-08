@@ -1,4 +1,3 @@
-import { Web3Account } from '../components/account';
 import { LayoutContainer } from '../components/layout';
 import { MulitNodeGrid } from '../components/multiNodeGrid';
 import { NextSeo } from 'next-seo';
@@ -18,8 +17,8 @@ export default function HomePage() {
             <span className="block bg-gradient-to-br from-gray-800 via-gray-600 to-[#a47730] bg-clip-text pb-0.5 text-center font-black text-transparent">
               Need help claiming MCC Node Rewards?
             </span>
-            <span className="mt-6 flex flex-col items-center font-kaushan text-[#a47730] sm:mt-0 sm:flex-row">
-              <span className="whitespace-nowrap">MCC Cafe</span>
+            <span className="mt-6 flex flex-col items-center justify-center lg:justify-start font-kaushan text-[#a47730] sm:mt-0 sm:flex-row">
+              <span className="">MCC Cafe</span>
               <span className="inline-flex pl-4 pr-1">
                 <span className="w-24 h-24">
                   <Image
@@ -33,14 +32,14 @@ export default function HomePage() {
                   />
                 </span>
               </span>
-              <div className="">has got you covered</div>
+              <div className="text-center sm:text-justify">
+                has got you covered
+              </div>
             </span>
           </h2>
           <div className="flex mt-8 lg:mt-0 lg:flex-shrink-0">
             <div className="inline-flex w-full">
-              <div className="flex flex-col items-center w-full">
-                <Web3Account />
-              </div>
+              <div className="flex flex-col items-center w-full"></div>
             </div>
           </div>
         </div>

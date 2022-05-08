@@ -1,8 +1,9 @@
 import { BlockchainType } from '../types';
 import { numberWithCommas } from '../utils/formatNumbers';
 import { parseMCCAmount } from '../utils/parseBalance';
-import useContract from './useContract';
+import { useContract } from './useContract';
 import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
+import { useWeb3 } from './useWeb3';
 import useSWR from 'swr';
 
 function getNodeBalance(contract: any) {
@@ -36,8 +37,9 @@ interface Props {
 }
 
 export default function useMultiNodeActiveBalance(props: Props) {
-  const { contractAddress, abi, balanceType, chainId, nodeId, address } = props;
+  const { contractAddress, abi, balanceType, nodeId } = props;
 
+  const { address, chainId } = useWeb3();
   const contract = useContract(contractAddress, abi);
 
   const shouldFetch = !!contractAddress && !!contract && !!nodeId && !!chainId;

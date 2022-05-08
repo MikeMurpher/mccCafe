@@ -1,4 +1,3 @@
-import { useWeb3 } from './useWeb3';
 import type { Web3Provider } from '@ethersproject/providers';
 import { formatUnits } from '@ethersproject/units';
 import useSWR from 'swr';
@@ -11,9 +10,7 @@ function getGas(provider: Web3Provider) {
   };
 }
 
-export function useGasGwei() {
-  const { provider } = useWeb3();
-
+export function useGasGwei(provider: any) {
   const { data } = useSWR(provider ? ['gas'] : null, getGas(provider), {
     refreshInterval: 10 * 1000,
   });

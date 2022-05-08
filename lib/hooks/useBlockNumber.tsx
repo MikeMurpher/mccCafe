@@ -9,10 +9,10 @@ function getBlockNumber(library: Web3Provider) {
 }
 
 export default function useBlockNumber() {
+  // @ts-expect-error
   const { library } = useWeb3React<Web3Provider>();
   const shouldFetch = !!library;
 
-  // @ts-expect-error
   return useSWR(shouldFetch ? ['BlockNumber'] : null, getBlockNumber(library), {
     refreshInterval: 10 * 1000,
   });

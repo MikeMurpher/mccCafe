@@ -1,4 +1,4 @@
-import { BlockchainType, ChainEnum } from '../types';
+import { BlockchainType, ChainEnum, WalletType } from '../types';
 import create, { StateCreator } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 
@@ -7,12 +7,16 @@ export type MyWalletState = {
   web3Provider?: any;
   address?: string;
   chainId?: BlockchainType;
-  isDisconnect?: boolean;
+  isDisconnected: WalletType[];
+  previousConnections: WalletType[];
   connecting?: boolean;
   claimableNodes?: MultiNodeType[];
   resetProvider: () => void;
   updateWeb3Provider: (params: any) => void;
   addClaimableNode: (params: MultiNodeType) => void;
+  addDisconnectAction: (params: WalletType) => void;
+  addPreviousConnectionAction: (params: WalletType) => void;
+  removeDisconnectAction: (params: WalletType) => void;
 };
 
 export interface MultiNodeType {
@@ -30,9 +34,10 @@ const initialState = {
   web3Provider: null,
   address: undefined,
   chainId: undefined,
-  isDisconnect: false,
+  isDisconnected: [],
   connecting: false,
   claimableNodes: [],
+  previousConnections: [],
 };
 
 export const useWalletStore = create<MyWalletState>(
@@ -42,9 +47,10 @@ export const useWalletStore = create<MyWalletState>(
       web3Provider: null,
       address: undefined,
       chainId: undefined,
-      isDisconnect: false,
+      isDisconnected: [],
       connecting: false,
       claimableNodes: [],
+      previousConnections: [],
       updateWeb3Provider: (params) => {
         set((state) => {
           return {
@@ -70,10 +76,28 @@ export const useWalletStore = create<MyWalletState>(
           };
         });
       },
-      disconnectAction: () => {
+      removeDisconnectAction: (params) => {
         set((state) => ({
           ...state,
-          isDisconnect: true,
+          isDisconnected: [],
+        }));
+      },
+      addDisconnectAction: (params) => {
+        set((state) => ({
+          ...state,
+          isDisconnected: [...state.isDisconnected, params],
+        }));
+      },
+      removePreviousConnectionAction: () => {
+        set((state) => ({
+          ...state,
+          previousConnections: [],
+        }));
+      },
+      addPreviousConnectionAction: (params) => {
+        set((state) => ({
+          ...state,
+          previousConnections: [...state.previousConnections, params],
         }));
       },
       resetProvider: () => {

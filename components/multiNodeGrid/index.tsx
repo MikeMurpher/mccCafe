@@ -4,7 +4,8 @@ import {
   RECOMMENDED_MULTI_GAS,
 } from '../../lib/constants';
 import * as gtag from '../../lib/gtag';
-import useContract from '../../lib/hooks/useContract';
+import { useContract } from '../../lib/hooks/useContract';
+import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { MultiNodeType, useWalletStore } from '../../lib/stores/wallet';
 import { BlockchainType, ChainEnum } from '../../lib/types';
 import request from '../../lib/utils/request';
@@ -14,7 +15,8 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 export function MulitNodeGrid() {
-  const { address, chainId, claimableNodes } = useWalletStore((state) => state);
+  const { address, chainId } = useWeb3();
+  const { claimableNodes } = useWalletStore((state) => state);
 
   const contract = useContract(MULTINODE_CLAIM_CONTRACT, MultiNodeContractAbi);
 

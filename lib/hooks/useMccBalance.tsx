@@ -1,37 +1,42 @@
-import { BlockchainType } from '../types';
 import { numberWithCommas } from '../utils/formatNumbers';
 import { parseMCCAmount } from '../utils/parseBalance';
-import useContract from './useContract';
+import { useContract } from './useContract';
 import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
+import { useWeb3 } from './useWeb3';
 import useSWR from 'swr';
 
-function getMCCBalance(contract: any) {
+function getMCCBalance(contract: any, chainId: any) {
   return async (...args: any[]) => {
-    return await contract.balanceOf(args?.[0]?.[1]);
+    try {
+      return await contract.balanceOf(args?.[0]?.[1]);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 }
 
 interface BalanceProps {
   contractAddress: string;
   abi: any;
-  type: 'balance';
-  chainId?: BlockchainType;
-  address?: string;
 }
 
 export function useMccBalance(props: BalanceProps) {
-  const { contractAddress, abi, type, chainId, address } = props;
+  const { contractAddress, abi } = props;
+
+  const { address, chainId } = useWeb3();
   const contract = useContract(contractAddress, abi);
 
-  const shouldFetch =
-    typeof contractAddress === 'string' && !!contract && !!chainId && !!address;
+  const shouldFetch = !!contractAddress && !!contract && !!chainId;
 
-  const result = useSWR(
-    shouldFetch ? [`MccBalance-${chainId}-${type}-${address}`, address] : null,
-    getMCCBalance(contract)
+  const { data, mutate } = useSWR(
+    shouldFetch
+      ? [`MccBalance-${chainId}-${address}-${contractAddress}`, address]
+      : null,
+    getMCCBalance(contract, chainId)
   );
 
-  useKeepSWRDataLiveAsBlocksArrive(result.mutate);
+  useKeepSWRDataLiveAsBlocksArrive(mutate);
 
-  return numberWithCommas(parseMCCAmount(result?.data ?? 0, 18, 2));
+  return numberWithCommas(parseMCCAmount(data ?? 0, 18, 2));
 }

@@ -24,7 +24,7 @@ const itemIds = [
     nextJsLink: false,
     openInNewPage: true,
     text: `Telegram`,
-    href: 'https://t.me/MultiChainCapital',
+    href: 'https://t.me/MccIncubationZone',
     img: ``,
   },
   {
