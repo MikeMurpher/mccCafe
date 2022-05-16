@@ -11,7 +11,6 @@ import {
   hooks as walletConnectHooks,
   walletConnect,
 } from '../../connectors/walletConnect';
-import useMetaMaskOnboarding from '../../lib/hooks/useMetaMaskOnboarding';
 import { useWalletStore } from '../../lib/stores/wallet';
 import { WalletEnum } from '../../lib/types';
 import { ConnectionComponent } from '../connectorComponents/connection';
@@ -63,8 +62,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
   const { isDisconnected, previousConnections } = useWalletStore(
     (state) => state
   );
-
-  const { isWeb3Available, startOnboarding } = useMetaMaskOnboarding();
 
   let [isOnboardingModal, setOnboardingModal] = useState(false);
 
@@ -250,22 +247,14 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
     <>
       <button
         className="relative inline-flex items-center justify-center px-3 py-1 overflow-hidden text-sm font-bold tracking-tighter text-white bg-gray-800 rounded-lg group"
-        onClick={() =>
-          isWeb3Available ? openOnboardingModal() : startOnboarding()
-        }
+        onClick={() => openOnboardingModal()}
       >
         <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-green-500 rounded-full group-hover:h-56 group-hover:w-56" />
         <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg bg-gradient-to-b from-transparent via-transparent to-gray-700 opacity-30" />
         <span className="relative whitespace-nowrap">
-          {isWeb3Available
-            ? isWalletActivating
-              ? 'Connecting...'
-              : `Connect Wallet`
-            : `Install Metamask`}
+          {isWalletActivating ? 'Connecting...' : `Connect Wallet`}
         </span>
-        <span className="sr-only">
-          {isWeb3Available ? `Connect Wallet` : `Install Metamask`}
-        </span>
+        <span className="sr-only">Connect Wallet</span>
       </button>
 
       <Transition appear show={isOnboardingModal} as={Fragment}>

@@ -38,7 +38,7 @@ const navItems = [
     nextJsLink: false,
     openInNewPage: true,
     text: 'Twitter',
-    href: 'https://twitter.com/MulChainCapital',
+    href: 'https://twitter.com/mccincubations',
   },
   {
     nextJsLink: false,

@@ -2,6 +2,7 @@ import MCC from '../../contracts/MCC.json';
 import { CHAINS, getAddChainParameters, URLS } from '../../lib/chains';
 import { MCC_CONTRACT } from '../../lib/constants';
 import { useMccBalance } from '../../lib/hooks/useMccBalance';
+import useMetaMaskOnboarding from '../../lib/hooks/useMetaMaskOnboarding';
 import { useWalletStore } from '../../lib/stores/wallet';
 import { WalletEnum, WalletType } from '../../lib/types';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
@@ -26,11 +27,12 @@ import { CashIcon, ChevronDownIcon } from '@heroicons/react/solid';
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import type { Web3ReactHooks } from '@web3-react/core';
 import { GnosisSafe } from '@web3-react/gnosis-safe';
-import type { MetaMask } from '@web3-react/metamask';
+import { MetaMask } from '@web3-react/metamask';
 import { Network } from '@web3-react/network';
 import { WalletConnect } from '@web3-react/walletconnect';
 import classNames from 'classnames';
 import Image from 'next/image';
+import Router from 'next/router';
 import { Fragment, useCallback, useState } from 'react';
 
 interface ConnectionProps {
@@ -149,6 +151,8 @@ export function ConnectionComponent(props: ConnectionProps) {
     abi: MCC,
   });
 
+  // const router = useRouter();
+
   function closeAccountModal() {
     setAccountIsOpen(false);
   }
@@ -156,6 +160,8 @@ export function ConnectionComponent(props: ConnectionProps) {
   function openAccountModal() {
     setAccountIsOpen(true);
   }
+
+  const { isWeb3Available, startOnboarding } = useMetaMaskOnboarding();
 
   const switchChain = useCallback(
     async (desiredChainId: number) => {
@@ -177,45 +183,13 @@ export function ConnectionComponent(props: ConnectionProps) {
         );
       }
       addPreviousConnectionAction(type);
+      // @ts-expect-error
+      Router.reload(window.location.pathname);
     },
     [connector, chainId]
   );
 
-  if (error) {
-    return (
-      <div className="flex flex-col mb-2">
-        {!(connector instanceof GnosisSafe) && (
-          <ChainSelect
-            chainId={chainId}
-            switchChain={switchChain}
-            displayDefault={displayDefault}
-            chainIds={chainIds}
-          />
-        )}
-
-        <button
-          className="inline-flex justify-center w-full px-4 py-2 mt-2 text-base font-medium text-white border border-white rounded-md shadow-sm hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-          onClick={() => {
-            connector instanceof GnosisSafe
-              ? void connector.activate()
-              : connector instanceof WalletConnect ||
-                connector instanceof Network
-              ? void connector.activate(
-                  desiredChainId === -1 ? undefined : desiredChainId
-                )
-              : void connector.activate(
-                  desiredChainId === -1
-                    ? undefined
-                    : getAddChainParameters(desiredChainId)
-                );
-            addPreviousConnectionAction(type);
-          }}
-        >
-          Try Again?
-        </button>
-      </div>
-    );
-  } else if (isActive) {
+  if (isActive) {
     return (
       <div className="relative flex items-center mt-1">
         <button
@@ -398,7 +372,7 @@ export function ConnectionComponent(props: ConnectionProps) {
         </div>
       </div>
     );
-  } else if (isOnboarding) {
+  } else if (isOnboarding || error) {
     return (
       <div className="relative flex flex-col items-center space-x-3">
         <div
@@ -415,7 +389,9 @@ export function ConnectionComponent(props: ConnectionProps) {
             <h3 className="text-lg font-medium">
               <button
                 onClick={
-                  isActivating
+                  connector instanceof MetaMask && !isWeb3Available
+                    ? () => startOnboarding()
+                    : isActivating
                     ? undefined
                     : () => {
                         connector instanceof GnosisSafe
@@ -441,6 +417,11 @@ export function ConnectionComponent(props: ConnectionProps) {
                 {/* Extend touch target to entire panel */}
                 <span className="absolute inset-0" aria-hidden="true" />
                 {renderMessaging(type)?.title}
+                {error && (
+                  <span className="flex items-center justify-center text-xs bg-red-600">
+                    There was an error connecting - Try Again?
+                  </span>
+                )}
               </button>
             </h3>
             <p className="mt-2 text-sm text-gray-200">
@@ -451,6 +432,7 @@ export function ConnectionComponent(props: ConnectionProps) {
       </div>
     );
   }
+
   return null;
 }
 
