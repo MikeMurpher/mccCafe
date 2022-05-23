@@ -3,7 +3,7 @@ import { formatUnits } from '@ethersproject/units';
 
 const ONE_BILLION = 1000000000;
 
-export const parseMCCAmount = (
+export const parseBalance = (
   value: BigNumberish,
   decimals = 18,
   decimalsToDisplay = 8

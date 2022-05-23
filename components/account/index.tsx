@@ -87,12 +87,7 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
       !isDisconnected?.includes(WalletEnum.metamask) &&
       previousConnections.includes(WalletEnum.metamask)
     ) {
-      try {
-        void metaMask.connectEagerly();
-      } catch (error) {
-        console.error(error);
-        throw error;
-      }
+      void metaMask.connectEagerly();
     }
   }, []);
 

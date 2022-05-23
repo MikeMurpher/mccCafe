@@ -1,6 +1,6 @@
 export default function request(
   url: string,
-  options: RequestInit
+  options?: RequestInit
 ): Promise<any> {
   return fetch(
     url,

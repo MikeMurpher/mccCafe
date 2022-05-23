@@ -1,5 +1,6 @@
 import { LayoutContainer } from '../components/layout';
 import { MulitNodeGrid } from '../components/multiNodeGrid';
+import { RewardBalanceStats } from '../components/rewardBalanceStats';
 import { NextSeo } from 'next-seo';
 import Image from 'next/image';
 
@@ -46,6 +47,7 @@ export default function HomePage() {
       </div>
 
       <MulitNodeGrid />
+      <RewardBalanceStats />
     </LayoutContainer>
   );
 }

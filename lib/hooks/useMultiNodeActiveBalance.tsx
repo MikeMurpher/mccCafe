@@ -1,6 +1,6 @@
 import { BlockchainType } from '../types';
 import { numberWithCommas } from '../utils/formatNumbers';
-import { parseMCCAmount } from '../utils/parseBalance';
+import { parseBalance } from '../utils/parseBalance';
 import { useContract } from './useContract';
 import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
 import { useWeb3 } from './useWeb3';
@@ -57,5 +57,5 @@ export default function useMultiNodeActiveBalance(props: Props) {
 
   useKeepSWRDataLiveAsBlocksArrive(result.mutate);
 
-  return numberWithCommas(parseMCCAmount(result?.data ?? 0, 18, 2));
+  return numberWithCommas(parseBalance(result?.data ?? 0, 18, 2));
 }

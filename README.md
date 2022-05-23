@@ -10,7 +10,7 @@
 <span> · </span>
 <a href="https://t.me/MccIncubationZone">Telegram</a> 
 <span> · </span>
-<a href="https://twitter.com/MulChainCapital">Twitter</a>
+<a href="https://twitter.com/multichaincap">Twitter</a>
 </div>
 
 <br />

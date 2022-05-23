@@ -1,11 +1,11 @@
 import { numberWithCommas } from '../utils/formatNumbers';
-import { parseMCCAmount } from '../utils/parseBalance';
+import { parseBalance } from '../utils/parseBalance';
 import { useContract } from './useContract';
 import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
 import { useWeb3 } from './useWeb3';
 import useSWR from 'swr';
 
-function getMCCBalance(contract: any, chainId: any) {
+function getContractBalance(contract: any, chainId: any) {
   return async (...args: any[]) => {
     try {
       return await contract.balanceOf(args?.[0]?.[1]);
@@ -21,7 +21,7 @@ interface BalanceProps {
   abi: any;
 }
 
-export function useMccBalance(props: BalanceProps) {
+export function useTokenBalance(props: BalanceProps) {
   const { contractAddress, abi } = props;
 
   const { address, chainId } = useWeb3();
@@ -31,12 +31,12 @@ export function useMccBalance(props: BalanceProps) {
 
   const { data, mutate } = useSWR(
     shouldFetch
-      ? [`MccBalance-${chainId}-${address}-${contractAddress}`, address]
+      ? [`balance-${chainId}-${address}-${contractAddress}`, address]
       : null,
-    getMCCBalance(contract, chainId)
+    getContractBalance(contract, chainId)
   );
 
   useKeepSWRDataLiveAsBlocksArrive(mutate);
 
-  return numberWithCommas(parseMCCAmount(data ?? 0, 18, 2));
+  return numberWithCommas(parseBalance(data ?? 0, 18, 2));
 }

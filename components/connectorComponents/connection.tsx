@@ -1,8 +1,8 @@
 import MCC from '../../contracts/MCC.json';
 import { CHAINS, getAddChainParameters, URLS } from '../../lib/chains';
 import { MCC_CONTRACT } from '../../lib/constants';
-import { useMccBalance } from '../../lib/hooks/useMccBalance';
 import useMetaMaskOnboarding from '../../lib/hooks/useMetaMaskOnboarding';
+import { useTokenBalance } from '../../lib/hooks/useTokenBalance';
 import { useWalletStore } from '../../lib/stores/wallet';
 import { WalletEnum, WalletType } from '../../lib/types';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
@@ -146,12 +146,10 @@ export function ConnectionComponent(props: ConnectionProps) {
 
   let [isAccountOpen, setAccountIsOpen] = useState(false);
 
-  const mccBalance = useMccBalance({
+  const mccBalance = useTokenBalance({
     contractAddress: MCC_CONTRACT,
     abi: MCC,
   });
-
-  // const router = useRouter();
 
   function closeAccountModal() {
     setAccountIsOpen(false);

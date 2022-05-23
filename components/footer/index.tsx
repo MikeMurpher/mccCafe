@@ -4,7 +4,7 @@ const navigation = {
   main: [
     { name: 'Website', href: 'https://incubations.mchain.capital' },
     { name: 'Telegram', href: 'https://t.me/MccIncubationZone' },
-    { name: 'Twitter', href: 'https://twitter.com/mccincubations' },
+    { name: 'Twitter', href: 'https://twitter.com/multichaincap' },
     { name: 'CZR Finance', href: 'https://czr.finance' },
     { name: 'Github', href: 'https://github.com/cryptod00c/mccCafe' },
   ],
