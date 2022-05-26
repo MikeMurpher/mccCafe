@@ -71,7 +71,7 @@ export function NavContainer() {
         <div className="mx-auto max-w-8xl">
           <div className="px-4 py-4 border-b border-slate-900/10 dark:border-slate-300/10 lg:border-0">
             <div className="relative flex items-center justify-center">
-              <a href="#" className="w-12 h-12">
+              <a href="/" className="w-12 h-12">
                 <span className="sr-only">MCC Cafe Logo</span>
                 <Image
                   alt="logo"

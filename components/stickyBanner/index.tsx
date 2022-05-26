@@ -6,16 +6,17 @@ export function StickyBanner() {
       <div className="px-3 py-3 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center sm:px-16">
           <p className="font-medium text-white">
-            <span className="md:hidden">New Bite Sized 🍫 DeFi Learning</span>
+            <span className="md:hidden">
+              MCC DeFi learning series ✏️ Impermanent Loss
+            </span>
             <span className="hidden md:inline">
-              Check out our bite sized 🍫 blog posts - in our MCC DeFi learning
-              series
+              MCC DeFi learning series ✏️ Impermanent Loss
             </span>
             <span className="inline-block ml-2">
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href="https://medium.com/@mikemurpher/bite-size-index-8ebaa7399607"
+                href="https://medium.com/@mikemurpher/what-is-impermanent-loss-3bcbd5a8a07e"
                 className="font-bold text-white underline"
               >
                 {' '}
