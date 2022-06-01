@@ -106,7 +106,7 @@ export function MulitNodeGrid() {
     address
       ? `https://deep-index.moralis.io/api/v2/${address}/nft/0xF9b899E6E84f6383f99b262edA36C9bDdD5fc080?chain=${generateChainName(
           chainId
-        )}&format=decimal&offset=0&limit=499`
+        )}&format=decimal&limit=99`
       : ``,
     (url: string) =>
       request(url, {

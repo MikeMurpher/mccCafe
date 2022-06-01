@@ -16,7 +16,7 @@ import ogTomb from '../../public/incubators/ogtomb.png';
 import salestax from '../../public/incubators/sales.png';
 import ub from '../../public/incubators/ub.png';
 import uub from '../../public/incubators/uub.png';
-import Mcc from '../icons/glyphs/mcc';
+import MccLogo from '../icons/glyphs/mcc';
 import { CoinbaseWalletSvg } from '../svgs/coinbaseWallet';
 import { GnosisSafeSvg } from '../svgs/gnosisSafe';
 import { MetamaskSvg } from '../svgs/metamask';
@@ -207,7 +207,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                 )}
               >
                 <span className="w-4 h-4 sm:w-6 sm:h-6">
-                  <Mcc id={id} />
+                  <MccLogo id={id} />
                 </span>
                 <span className="flex flex-col justify-center pt-4 pl-1 text-lg font-bold text-gray-700">
                   <span className="leading-[0px] text-left">MCC</span>
