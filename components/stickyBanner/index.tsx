@@ -7,16 +7,16 @@ export function StickyBanner() {
         <div className="text-center sm:px-16">
           <p className="font-medium text-white">
             <span className="md:hidden">
-              MCC DeFi learning series ✏️ Impermanent Loss
+              MCC DeFi learning series ✏️ What are ERC20 tokens
             </span>
             <span className="hidden md:inline">
-              MCC DeFi learning series ✏️ Impermanent Loss
+              MCC DeFi learning series ✏️ What are ERC20 tokens
             </span>
             <span className="inline-block ml-2">
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href="https://medium.com/@mikemurpher/what-is-impermanent-loss-3bcbd5a8a07e"
+                href="https://medium.com/@mikemurpher/what-are-erc-20-tokens-868a881c4557"
                 className="font-bold text-white underline"
               >
                 {' '}

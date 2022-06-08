@@ -23,6 +23,5 @@ const eip1193Provider = new Eip1193BridgeWithoutAccounts(
 );
 
 export const [eip1193, hooks] = initializeConnector<EIP1193>(
-  (actions) => new EIP1193(actions, eip1193Provider),
-  [1]
+  (actions) => new EIP1193({ actions, provider: eip1193Provider })
 );

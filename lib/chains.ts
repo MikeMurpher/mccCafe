@@ -1,19 +1,7 @@
 import type { AddEthereumChainParameter } from '@web3-react/types';
 
-const ETH: AddEthereumChainParameter['nativeCurrency'] = {
-  name: 'Ether',
-  symbol: 'ETH',
-  decimals: 18,
-};
-
-const MATIC: AddEthereumChainParameter['nativeCurrency'] = {
-  name: 'Matic',
-  symbol: 'MATIC',
-  decimals: 18,
-};
-
 interface BasicChainInformation {
-  urls: (string | undefined)[];
+  urls: string[];
   name: string;
 }
 
@@ -37,7 +25,6 @@ export function getAddChainParameters(
       chainId,
       chainName: chainInformation.name,
       nativeCurrency: chainInformation.nativeCurrency,
-      // @ts-expect-error
       rpcUrls: chainInformation.urls,
       blockExplorerUrls: chainInformation.blockExplorerUrls,
     };
@@ -51,9 +38,7 @@ export const CHAINS: {
 } = {
   1: {
     urls: [
-      process.env.NEXT_PUBLIC_INFURA_ID
-        ? `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`
-        : undefined,
+      `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
       'https://cloudflare-eth.com',
     ].filter((url) => url !== undefined),
     name: 'Ethereum',
@@ -75,17 +60,14 @@ export const CHAINS: {
   // },
 };
 
-export const URLS: { [chainId: number]: (string | undefined)[] } = Object.keys(
+export const URLS: { [chainId: number]: string[] } = Object.keys(
   CHAINS
-).reduce<{ [chainId: number]: (string | undefined)[] }>(
-  (accumulator, chainId) => {
-    const validURLs: (string | undefined)[] = CHAINS[Number(chainId)].urls;
+).reduce<{ [chainId: number]: string[] }>((accumulator, chainId) => {
+  const validURLs: string[] = CHAINS[Number(chainId)].urls;
 
-    if (validURLs.length) {
-      accumulator[Number(chainId)] = validURLs;
-    }
+  if (validURLs.length) {
+    accumulator[Number(chainId)] = validURLs;
+  }
 
-    return accumulator;
-  },
-  {}
-);
+  return accumulator;
+}, {});

@@ -40,7 +40,6 @@ interface ConnectionProps {
   connector: MetaMask | WalletConnect | CoinbaseWallet | Network | GnosisSafe;
   chainId: ReturnType<Web3ReactHooks['useChainId']>;
   isActivating: ReturnType<Web3ReactHooks['useIsActivating']>;
-  error: ReturnType<Web3ReactHooks['useError']>;
   isActive: ReturnType<Web3ReactHooks['useIsActive']>;
   accounts: ReturnType<Web3ReactHooks['useAccounts']>;
   ens: ReturnType<Web3ReactHooks['useENSNames']>;
@@ -120,7 +119,6 @@ export function ConnectionComponent(props: ConnectionProps) {
     connector,
     chainId,
     isActivating,
-    error,
     isActive,
     type,
     isOnboarding,
@@ -370,7 +368,7 @@ export function ConnectionComponent(props: ConnectionProps) {
         </div>
       </div>
     );
-  } else if (isOnboarding || error) {
+  } else if (isOnboarding) {
     return (
       <div className="relative flex flex-col items-center space-x-3">
         <div
@@ -415,11 +413,6 @@ export function ConnectionComponent(props: ConnectionProps) {
                 {/* Extend touch target to entire panel */}
                 <span className="absolute inset-0" aria-hidden="true" />
                 {renderMessaging(type)?.title}
-                {error && (
-                  <span className="flex items-center justify-center text-xs bg-red-600">
-                    There was an error connecting - Try Again?
-                  </span>
-                )}
               </button>
             </h3>
             <p className="mt-2 text-sm text-gray-200">

@@ -21,7 +21,6 @@ const {
   useChainId: useMetaMaskChainId,
   useAccounts: useMetaMaskAccount,
   useProvider: useMetaMaskProvider,
-  useError: useMetaMaskError,
   useIsActivating: useIsMetaMaskActivating,
   useIsActive: useIsMetaMaskActive,
   useENSNames: useMetaMaskENSNames,
@@ -31,7 +30,6 @@ const {
   useChainId: useCoinbaseWalletChainId,
   useAccounts: useCoinbaseWalletAccount,
   useProvider: useCoinbaseWalletProvider,
-  useError: useCoinbaseWalletError,
   useIsActivating: useIsCoinbaseWalletActivating,
   useIsActive: useIsCoinbaseWalletActive,
   useENSNames: useCoinbaseWalletENSNames,
@@ -41,7 +39,6 @@ const {
   useChainId: useWalletConnectChainId,
   useAccounts: useWalletConnectAccount,
   useProvider: useWalletConnectProvider,
-  useError: useWalletConnectError,
   useIsActivating: useIsWalletConnectActivating,
   useIsActive: useIsWalletConnectActive,
   useENSNames: useWalletConnectENSNames,
@@ -51,7 +48,6 @@ const {
   useChainId: useGnosisSafeChainId,
   useAccounts: useGnosisSafeAccount,
   useProvider: useGnosisSafeProvider,
-  useError: useGnosisSafeError,
   useIsActivating: useIsGnosisSafeActivating,
   useIsActive: useIsGnosisSafeActive,
   useENSNames: useGnosisSafeENSNames,
@@ -75,7 +71,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
 
   // MetaMask
   const metaMaskChainId = useMetaMaskChainId();
-  const metaMaskError = useMetaMaskError();
   const isMetaMaskActivating = useIsMetaMaskActivating();
   const isMetaMaskActive = useIsMetaMaskActive();
   const metaMaskENS = useMetaMaskENSNames();
@@ -93,7 +88,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
 
   // Wallet Connect
   const walletConnectChainId = useWalletConnectChainId();
-  const walletConnectError = useWalletConnectError();
   const isWalletConnectActivating = useIsWalletConnectActivating();
   const isWalletConnectActive = useIsWalletConnectActive();
   const walletConnectENS = useWalletConnectENSNames();
@@ -116,7 +110,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
 
   // Coinbase Wallet
   const coinbaseWalletChainId = useCoinbaseWalletChainId();
-  const coinbaseWalletError = useCoinbaseWalletError();
   const isCoinbaseWalletActivating = useIsCoinbaseWalletActivating();
   const isCoinbaseWalletActive = useIsCoinbaseWalletActive();
   const coinbaseWalletENS = useCoinbaseWalletENSNames();
@@ -139,7 +132,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
 
   // Gnosis Safe
   const gnosisSafeChainId = useGnosisSafeChainId();
-  const gnosisSafeError = useGnosisSafeError();
   const isGnosisSafeActivating = useIsGnosisSafeActivating();
   const isGnosisSafeActive = useIsGnosisSafeActive();
   const gnosisSafeENS = useGnosisSafeENSNames();
@@ -169,7 +161,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
           connector={metaMask}
           chainId={metaMaskChainId}
           isActivating={isMetaMaskActivating}
-          error={metaMaskError}
           isActive={isMetaMaskActive}
           accounts={metaMaskAccounts}
           ens={metaMaskENS}
@@ -183,7 +174,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
           connector={walletConnect}
           chainId={walletConnectChainId}
           isActivating={isWalletConnectActivating}
-          error={walletConnectError}
           isActive={isWalletConnectActive}
           accounts={walletConnectAccounts}
           ens={walletConnectENS}
@@ -197,7 +187,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
           connector={coinbaseWallet}
           chainId={coinbaseWalletChainId}
           isActivating={isCoinbaseWalletActivating}
-          error={coinbaseWalletError}
           isActive={isCoinbaseWalletActive}
           accounts={coinbaseWalletAccounts}
           ens={coinbaseWalletENS}
@@ -211,7 +200,6 @@ export function Web3Account(props: { id: 'mobile' | 'desktop' }) {
           connector={gnosisSafe}
           chainId={gnosisSafeChainId}
           isActivating={isGnosisSafeActivating}
-          error={gnosisSafeError}
           isActive={isGnosisSafeActive}
           accounts={gnosisSafeAccounts}
           ens={gnosisSafeENS}
