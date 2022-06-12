@@ -3,20 +3,22 @@ import create, { StateCreator } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 
 export type MyWalletState = {
-  provider?: any;
-  web3Provider?: any;
-  address?: string;
-  chainId?: BlockchainType;
+  manualAddress?: string;
+  manualChaindId?: BlockchainType;
   isDisconnected: WalletType[];
   previousConnections: WalletType[];
-  connecting?: boolean;
   claimableNodes?: MultiNodeType[];
-  resetProvider: () => void;
-  updateWeb3Provider: (params: any) => void;
+  multiNodes?: any[];
+  walletNodeStats: {
+    available: number;
+    producing: number;
+  };
+  resetMultiNodeStats: () => void;
   addClaimableNode: (params: MultiNodeType) => void;
   addDisconnectAction: (params: WalletType) => void;
   addPreviousConnectionAction: (params: WalletType) => void;
   removeDisconnectAction: (params: WalletType) => void;
+  addNodeStats: (params: any) => void;
 };
 
 export interface MultiNodeType {
@@ -30,32 +32,67 @@ type MyPersist = (
 ) => StateCreator<MyWalletState>;
 
 const initialState = {
-  provider: null,
-  web3Provider: null,
-  address: undefined,
-  chainId: undefined,
+  manualAddress: undefined,
+  manualChaindId: undefined,
   isDisconnected: [],
-  connecting: false,
   claimableNodes: [],
   previousConnections: [],
+  multiNodes: [],
+  walletNodeStats: {
+    available: 0,
+    producing: 0,
+  },
 };
 
 export const useWalletStore = create<MyWalletState>(
   (persist as unknown as MyPersist)(
     (set, get) => ({
-      provider: null,
-      web3Provider: null,
-      address: undefined,
-      chainId: undefined,
+      manualAddress: undefined,
+      manualChaindId: undefined,
       isDisconnected: [],
-      connecting: false,
       claimableNodes: [],
       previousConnections: [],
-      updateWeb3Provider: (params) => {
+      multiNodes: [],
+      walletNodeStats: {
+        available: 0,
+        producing: 0,
+      },
+      addNodeStats: (n) => {
         set((state) => {
+          const currentNodeStats = state?.multiNodes ?? [];
+          const allNodes = [...currentNodeStats, n].filter(Boolean);
+          const builtNodeStats = new Map(
+            allNodes?.map((i) => {
+              return [i.nodeId, i];
+            })
+          );
+
+          // @ts-expect-error
+          const multiNodes = [...builtNodeStats.values()];
+
           return {
             ...state,
-            ...params,
+            multiNodes,
+            walletNodeStats: {
+              ...multiNodes.reduce(
+                (acc, cur) => {
+                  if (!cur?.mccClaimable && !cur?.mccPerDay) {
+                    return acc;
+                  }
+
+                  return {
+                    available:
+                      acc?.available +
+                      parseInt(cur?.mccClaimable?.replaceAll(',', '')),
+                    producing: acc?.producing + parseInt(cur?.mccPerDay),
+                  };
+                },
+                {
+                  available: 0,
+                  producing: 0,
+                }
+              ),
+            },
           };
         });
       },
@@ -98,6 +135,17 @@ export const useWalletStore = create<MyWalletState>(
         set((state) => ({
           ...state,
           previousConnections: [...state.previousConnections, params],
+        }));
+      },
+      resetMultiNodeStats: () => {
+        set((state) => ({
+          ...state,
+          multiNodes: [],
+          claimableNodes: [],
+          walletNodeStats: {
+            available: 0,
+            producing: 0,
+          },
         }));
       },
       resetProvider: () => {

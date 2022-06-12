@@ -1,42 +1,36 @@
+import { BlockchainType, ChainEnum } from '../types';
 import { numberWithCommas } from '../utils/formatNumbers';
-import { parseBalance } from '../utils/parseBalance';
-import { useContract } from './useContract';
-import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
+import request from '../utils/request';
 import { useWeb3 } from './useWeb3';
 import useSWR from 'swr';
 
-function getContractBalance(contract: any, chainId: any) {
-  return async (...args: any[]) => {
-    try {
-      return await contract.balanceOf(args?.[0]?.[1]);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-}
-
 interface BalanceProps {
-  contractAddress: string;
-  abi: any;
+  address?: string;
 }
 
 export function useTokenBalance(props: BalanceProps) {
-  const { contractAddress, abi } = props;
+  const { address } = props;
+  const { chainId } = useWeb3();
 
-  const { address, chainId } = useWeb3();
-  const contract = useContract(contractAddress, abi);
-
-  const shouldFetch = !!contractAddress && !!contract && !!chainId;
-
-  const { data, mutate } = useSWR(
-    shouldFetch
-      ? [`balance-${chainId}-${address}-${contractAddress}`, address]
-      : null,
-    getContractBalance(contract, chainId)
+  const { data } = useSWR(
+    address ? `/api/holdings?address=${address}` : ``,
+    (url: string) => request(url)
   );
 
-  useKeepSWRDataLiveAsBlocksArrive(mutate);
+  const chainBalance = getChainBalance(data, chainId);
 
-  return numberWithCommas(parseBalance(data ?? 0, 18, 2));
+  return numberWithCommas(chainBalance ?? 0);
+}
+
+function getChainBalance(data: any, chain?: BlockchainType) {
+  switch (chain) {
+    case ChainEnum.erc:
+      return data?.erc?.supply;
+    case ChainEnum.bsc:
+      return data?.bsc?.supply;
+    case ChainEnum.ftm:
+      return data?.ftm?.supply;
+    default:
+      return data?.erc?.supply;
+  }
 }

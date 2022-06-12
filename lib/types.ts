@@ -5,6 +5,12 @@ export enum ChainEnum {
   offline = -1,
 }
 
+export enum ChainNameEnum {
+  erc = 'erc',
+  bsc = 'bsc',
+  ftm = 'ftm',
+}
+
 export type BlockchainType =
   | ChainEnum.erc
   | ChainEnum.bsc

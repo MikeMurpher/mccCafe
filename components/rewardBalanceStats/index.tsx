@@ -1,3 +1,5 @@
+import { MULTINODE_CLAIM_CONTRACT } from '../../lib/constants';
+import { ChainNameEnum } from '../../lib/types';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
@@ -11,17 +13,18 @@ import useSWR from 'swr';
 export function RewardBalanceStats() {
   const [rewards, setRewards] = useState([
     {
-      name: 'ftm',
+      name: ChainNameEnum.ftm,
     },
     {
-      name: 'bsc',
+      name: ChainNameEnum.bsc,
     },
     {
-      name: 'erc',
+      name: ChainNameEnum.erc,
     },
   ]);
+
   const { data, isLoading } = useSWR(
-    '/api/multinodes-reward-supply',
+    `/api/holdings?address=${MULTINODE_CLAIM_CONTRACT}`,
     (url: string) => request(url)
   );
 
@@ -106,11 +109,11 @@ export function RewardBalanceStats() {
 
 function renderChainIcon(chain?: string) {
   switch (chain) {
-    case 'erc':
+    case ChainNameEnum.erc:
       return <ErcIcon />;
-    case 'bsc':
+    case ChainNameEnum.bsc:
       return <BSCIcon />;
-    case 'ftm':
+    case ChainNameEnum.ftm:
       return <FtmIcon />;
   }
 }

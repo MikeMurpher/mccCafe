@@ -1,36 +1,26 @@
-import {
-  BUSD,
-  ERC_USDC,
-  FTM_USDC,
-  MCC_CONTRACT,
-  WBNB,
-  WETH,
-  WFTM,
-} from '../../lib/constants';
+import { MCC_CONTRACT } from '../../lib/constants';
+import { ChainNameEnum } from '../../lib/types';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const [ftmPrice, bscPrice, ercPrice] = await Promise.all([
-      getUSDMccPrice({
-        network: 'fantom',
-        quoteCurrency: WFTM,
-        usdCurrency: FTM_USDC,
+      getPriceQuote({
+        chain: ChainNameEnum.ftm,
       }),
-      getUSDMccPrice({
-        network: 'bsc',
-        quoteCurrency: WBNB,
-        usdCurrency: BUSD,
+      getPriceQuote({
+        chain: ChainNameEnum.bsc,
       }),
-      getUSDMccPrice({
-        network: 'ethereum',
-        quoteCurrency: WETH,
-        usdCurrency: ERC_USDC,
+      getPriceQuote({
+        chain: 'eth',
       }),
     ]);
 
-    res.setHeader('Cache-Control', 's-maxage=600');
-    res.status(200).json({ ftmPrice, bscPrice, ercPrice });
+    res.status(200).json({
+      ftmPrice: ftmPrice?.usdPrice,
+      bscPrice: bscPrice.usdPrice,
+      ercPrice: ercPrice.usdPrice,
+    });
     res.end();
   } catch (error) {
     console.error(error);
@@ -38,74 +28,20 @@ export default async (_req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-async function getUSDMccPrice({ network, quoteCurrency, usdCurrency }: any) {
+async function getPriceQuote({ chain }: any) {
   try {
-    const mccData = await getPriceQuote({
-      network,
-      baseCurrency: MCC_CONTRACT,
-      quoteCurrency,
-    });
-
-    const mccPrice = mccData?.data?.ethereum?.dexTrades?.[0]?.quotePrice;
-
-    const usdPrice = await getPriceQuote({
-      network,
-      baseCurrency: quoteCurrency,
-      quoteCurrency: usdCurrency,
-    });
-
-    const usdMultiple =
-      1 / usdPrice?.data?.ethereum?.dexTrades?.[0]?.quotePrice;
-
-    return Number(mccPrice / usdMultiple).toFixed(10);
+    return await fetch(
+      `https://deep-index.moralis.io/api/v2/erc20/${MCC_CONTRACT}/price?chain=${chain}`,
+      {
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          'x-api-key': `${process.env.NEXT_PUBLIC_MORALIS_API_KEY}`,
+        },
+        method: 'GET',
+      }
+    ).then((res) => res.json());
   } catch (error) {
     console.error(error);
   }
-}
-
-async function getPriceQuote({ network, baseCurrency, quoteCurrency }: any) {
-  return await fetch('https://graphql.bitquery.io/', {
-    headers: {
-      accept: 'application/json',
-      'content-type': 'application/json',
-      'x-api-key': `${process.env.BIT_QUERY_API_KEY}`,
-    },
-    body: JSON.stringify({
-      query: `
-        query ($network: EthereumNetwork!, $baseCurrency: String!, $quoteCurrency: String!) {
-          ethereum(network: $network) {
-            dexTrades(
-              baseCurrency: {is: $baseCurrency}
-              quoteCurrency: {is: $quoteCurrency}
-              options: {desc: ["block.height", "transaction.index"], limit: 1}
-            ) {
-              block {
-                height
-                timestamp {
-                  time(format: "%Y-%m-%d %H:%M:%S")
-                }
-              }
-              transaction {
-                index
-              }
-              baseCurrency {
-                symbol
-              }
-              quoteCurrency {
-                symbol
-              }
-              quotePrice
-            }
-          }
-          
-        }
-      `,
-      variables: {
-        network,
-        baseCurrency,
-        quoteCurrency,
-      },
-    }),
-    method: 'POST',
-  }).then((res) => res.json());
 }

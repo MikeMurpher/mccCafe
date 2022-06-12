@@ -1,8 +1,7 @@
-import MCC from '../../contracts/MCC.json';
 import { CHAINS, getAddChainParameters, URLS } from '../../lib/chains';
-import { MCC_CONTRACT } from '../../lib/constants';
 import useMetaMaskOnboarding from '../../lib/hooks/useMetaMaskOnboarding';
 import { useTokenBalance } from '../../lib/hooks/useTokenBalance';
+import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { useWalletStore } from '../../lib/stores/wallet';
 import { WalletEnum, WalletType } from '../../lib/types';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
@@ -137,6 +136,7 @@ export function ConnectionComponent(props: ConnectionProps) {
     removeDisconnectAction,
     addDisconnectAction,
     addPreviousConnectionAction,
+    resetMultiNodeStats,
   } = useWalletStore((state) => state);
   const [desiredChainId, setDesiredChainId] = useState<number>(
     isNetwork ? 1 : -1
@@ -144,9 +144,10 @@ export function ConnectionComponent(props: ConnectionProps) {
 
   let [isAccountOpen, setAccountIsOpen] = useState(false);
 
+  const { address } = useWeb3();
+
   const mccBalance = useTokenBalance({
-    contractAddress: MCC_CONTRACT,
-    abi: MCC,
+    address,
   });
 
   function closeAccountModal() {
@@ -161,6 +162,7 @@ export function ConnectionComponent(props: ConnectionProps) {
 
   const switchChain = useCallback(
     async (desiredChainId: number) => {
+      resetMultiNodeStats();
       setDesiredChainId(desiredChainId);
       // if we're already connected to the desired chain, return
       if (desiredChainId === chainId) return;

@@ -1,4 +1,5 @@
 import MultiNodeContractAbi from '../../contracts/MultiNode.json';
+import { generateChainName } from '../../lib/chains';
 import {
   BSCSCAN_URL,
   ETHERSCAN_URL,
@@ -17,6 +18,7 @@ import {
   formatTotalRealized,
   numberWithCommas,
 } from '../../lib/utils/formatNumbers';
+import { isNumeric } from '../../lib/utils/isNumeric';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
 import { InformationCircleIcon, SparklesIcon } from '@heroicons/react/solid';
@@ -30,18 +32,24 @@ interface MultiNodeType {
   name: string;
   token_id: string;
   token_uri: string;
+  isManualCheckEnabled: boolean;
 }
 
 export function MultiNode(props: MultiNodeType) {
-  const { token_uri, token_id } = props;
-
-  const { data } = useSWR(token_uri ? token_uri : ``, (url: string) =>
-    request(url, { method: 'GET' })
-  );
+  const { token_id, isManualCheckEnabled } = props;
 
   const { chainId, address } = useWeb3();
+  const chainName = generateChainName(chainId);
+  const { data } = useSWR(
+    token_id
+      ? `https://nftapi${
+          chainName === 'ftm' ? '2' : ''
+        }.mchain.capital/metadata/${chainName}/${token_id}.json`
+      : ``,
+    (url: string) => request(url, { method: 'GET' })
+  );
 
-  const { addClaimableNode } = useWalletStore((state) => state);
+  const { addClaimableNode, addNodeStats } = useWalletStore((state) => state);
   const contract = useContract(MULTINODE_CLAIM_CONTRACT, MultiNodeContractAbi);
 
   const mccClaimable = useMultiNodeActiveBalance({
@@ -62,11 +70,26 @@ export function MultiNode(props: MultiNodeType) {
     address,
   });
 
+  const mccPerDay = parseFloat(
+    data?.attributes?.[2].value?.replace(/,/g, '')
+  ).toFixed(2);
+
   useEffect(() => {
     if (parseInt(mccClaimable) > 0 && chainId) {
       addClaimableNode({ chainId, nodeId: token_id });
     }
   }, [mccClaimable]);
+
+  useEffect(() => {
+    if (token_id && isNumeric(mccPerDay)) {
+      addNodeStats({
+        mccClaimable,
+        totalEarnings,
+        mccPerDay,
+        nodeId: token_id,
+      });
+    }
+  }, [token_id, mccClaimable, mccPerDay, totalEarnings]);
 
   const nothingClaimable = parseInt(mccClaimable) === 0;
 
@@ -163,12 +186,7 @@ export function MultiNode(props: MultiNodeType) {
           <dt className="font-bold text-gray-700 uppercase">Rewards</dt>
           <dd className="my-0.5 h-4">
             <span className="px-2 py-1 text-sm font-bold text-gray-800 bg-gray-100 rounded-full">
-              {numberWithCommas(
-                parseFloat(
-                  data?.attributes?.[2].value?.replace(/,/g, '')
-                ).toFixed(2)
-              )}{' '}
-              MCC/day
+              {numberWithCommas(mccPerDay)} MCC/day
             </span>
           </dd>
           <dt className="mt-2 font-bold text-gray-700 uppercase">Claimable</dt>
@@ -216,7 +234,9 @@ export function MultiNode(props: MultiNodeType) {
                 className="w-5 h-5 text-gray-400"
                 aria-hidden="true"
               />
-              <span className="ml-3">Sell</span>
+              <span className="ml-3">
+                {isManualCheckEnabled ? 'Buy' : 'Sell'}
+              </span>
             </a>
           </div>
           <div className="flex flex-1 w-0 -ml-px">
@@ -225,10 +245,13 @@ export function MultiNode(props: MultiNodeType) {
                 if (nothingClaimable) {
                   return toast.error('Nothing claimable in this MultiNode');
                 }
+                if (isManualCheckEnabled) {
+                  return toast.error('You do not own this node - nice try 😺');
+                }
                 claimRewards(props?.token_id);
               }}
               className={classNames(
-                nothingClaimable
+                nothingClaimable || isManualCheckEnabled
                   ? `from-gray-500 to-gray-700 hover:to-gray-90`
                   : `from-green-500 to-green-700 hover:to-green-90`,
                 `"relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-medium text-gray-100 border rounded-br-lg cursor-pointer bg-gradient-to-r 0"`
