@@ -1,11 +1,9 @@
 import { MULTINODE_CLAIM_CONTRACT } from '../../lib/constants';
-import { ChainNameEnum } from '../../lib/types';
+import { ChainEnum, ChainNameEnum } from '../../lib/types';
+import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
-import { BSCIcon } from '../svgs/bsc';
-import { ErcIcon } from '../svgs/erc';
-import { FtmIcon } from '../svgs/ftm';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -14,12 +12,15 @@ export function RewardBalanceStats() {
   const [rewards, setRewards] = useState([
     {
       name: ChainNameEnum.ftm,
+      id: ChainEnum.ftm,
     },
     {
       name: ChainNameEnum.bsc,
+      id: ChainEnum.bsc,
     },
     {
       name: ChainNameEnum.erc,
+      id: ChainEnum.erc,
     },
   ]);
 
@@ -34,6 +35,7 @@ export function RewardBalanceStats() {
         rewards.map((b) => {
           return {
             name: b?.name,
+            id: b?.id,
             ...data?.[b?.name],
           };
         })
@@ -50,7 +52,7 @@ export function RewardBalanceStats() {
         {rewards.map((item: any) => (
           <div key={item.name} className="px-4 py-5 sm:p-6">
             <dt className="flex items-center text-base font-bold text-gray-900 uppercase">
-              {renderChainIcon(item?.name)}
+              {renderConnectedChain(item?.id)}
               {item?.name}{' '}
               <span className="ml-1 text-xs font-normal text-gray-400 normal-case">
                 chain
@@ -105,15 +107,4 @@ export function RewardBalanceStats() {
       </dl>
     </div>
   );
-}
-
-function renderChainIcon(chain?: string) {
-  switch (chain) {
-    case ChainNameEnum.erc:
-      return <ErcIcon />;
-    case ChainNameEnum.bsc:
-      return <BSCIcon />;
-    case ChainNameEnum.ftm:
-      return <FtmIcon />;
-  }
 }

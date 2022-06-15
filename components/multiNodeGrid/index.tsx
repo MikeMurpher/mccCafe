@@ -1,22 +1,33 @@
 import MultiNodeContractAbi from '../../contracts/MultiNode.json';
 import {
-  generateChainName,
-  generateChainNameIdentifier,
-} from '../../lib/chains';
-import {
   MULTINODE_CLAIM_CONTRACT,
   RECOMMENDED_MULTI_GAS,
 } from '../../lib/constants';
 import * as gtag from '../../lib/gtag';
 import { useContract } from '../../lib/hooks/useContract';
+import { useMultiNodeGasPrediction } from '../../lib/hooks/useMultiNodeGasPrediction';
 import { useTokenBalance } from '../../lib/hooks/useTokenBalance';
 import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { MultiNodeType, useWalletStore } from '../../lib/stores/wallet';
-import { abbreviateNumber } from '../../lib/utils/formatNumbers';
+import {
+  generateChainAbbreviation,
+  generateChainBase,
+  generateChainName,
+  generateChainNameIdentifier,
+  renderConnectedChain,
+} from '../../lib/utils/chainFormatters';
+import { abbreviateNumber, formatDollar } from '../../lib/utils/formatNumbers';
+import { isNumeric } from '../../lib/utils/isNumeric';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
-import { generateChainBase, MultiNode } from '../multiNode';
-import { Dialog, Switch, Transition } from '@headlessui/react';
+import { MultiNode } from '../multiNode';
+import { Dialog, Popover, Switch, Transition } from '@headlessui/react';
+import {
+  ChevronDownIcon,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  ShoppingCartIcon,
+} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { ChangeEvent, Fragment, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -39,8 +50,15 @@ const overview = [
 
 export function MulitNodeGrid() {
   const { address, chainId } = useWeb3();
-  const { claimableNodes, resetMultiNodeStats, walletNodeStats } =
-    useWalletStore((state) => state);
+  const {
+    claimableNodes,
+    resetMultiNodeStats,
+    walletNodeStats,
+    cartClaimNodes,
+    removeFromCartClaim,
+    cartMccTotal,
+    emptyCartClaims,
+  } = useWalletStore((state) => state);
   const [manualAddress, setManualAddress] = useState<string>('');
   let [isManualModal, setManualCheckModal] = useState(false);
   const [manualCheckEnabled, setEnabled] = useState(false);
@@ -51,13 +69,13 @@ export function MulitNodeGrid() {
     address: manualCheckEnabled ? manualAddress : address,
   });
 
-  async function claimAllRewards(multiNodes?: MultiNodeType[]) {
+  async function claimNodeRewards(selectedNodes?: MultiNodeType[]) {
     try {
-      if (!multiNodes?.length) {
-        return toast.error('No Multi Nodes are available to claim rewards');
+      if (!selectedNodes?.length) {
+        return toast.error('No Multi Nodes selected to claim rewards');
       }
 
-      const nodeIds = multiNodes
+      const nodeIds = selectedNodes
         ?.filter((n) => n.chainId === chainId)
         .map((i) => i.nodeId);
 
@@ -121,6 +139,8 @@ export function MulitNodeGrid() {
         label: 'Dividend',
         value: `${tx}`,
       });
+
+      emptyCartClaims();
     } catch (error: any) {
       toast.dismiss();
 
@@ -180,7 +200,7 @@ export function MulitNodeGrid() {
           <button
             type="button"
             onClick={() => openManualCheckModal()}
-            className="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-white border border-white rounded-md focus:ring-offset-2"
+            className="inline-flex items-center px-4 py-2 mb-1 ml-3 text-sm font-medium text-white border border-white rounded-md focus:ring-offset-2"
           >
             Check Address Manually
           </button>
@@ -210,6 +230,9 @@ export function MulitNodeGrid() {
     address ? `/api/holdings?address=${address}` : null
   );
 
+  const { cartPrediction, perNodePrediction, nativePrice } =
+    useMultiNodeGasPrediction(cartClaimNodes?.length ?? 0);
+
   if (isLoading) {
     return (
       <div className="py-10">
@@ -232,22 +255,198 @@ export function MulitNodeGrid() {
                 </h2>
               </div>
 
-              <div className="flex flex-shrink-0 mt-4 md:mt-0 md:ml-4">
+              <div className="flex flex-col items-end flex-shrink-0 mt-4 sm:items-baseline sm:flex-row md:mt-0 md:ml-4">
                 {renderAccountCheck()}
                 {!manualCheckEnabled && (
-                  <button
-                    type="button"
-                    onClick={() => claimAllRewards(claimableNodes)}
-                    disabled={!walletNodeStats?.available}
-                    className={classNames(
-                      !walletNodeStats?.available
-                        ? 'from-gray-500 to-gray-700 cursor-not-allowed focus:ring-gray-500'
-                        : 'from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500',
-                      'inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-100 border rounded-md bg-gradient-to-r  focus:ring-offset-2'
-                    )}
-                  >
-                    Claim All Rewards
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => claimNodeRewards(claimableNodes)}
+                      disabled={!walletNodeStats?.available}
+                      className={classNames(
+                        !walletNodeStats?.available
+                          ? 'from-gray-500 to-gray-700 cursor-not-allowed focus:ring-gray-500'
+                          : 'from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500',
+                        'inline-flex items-center px-4 mb-1 py-2 ml-3 text-sm font-medium text-gray-100 border rounded-md bg-gradient-to-r focus:ring-offset-2'
+                      )}
+                    >
+                      Claim All Rewards
+                    </button>
+                    <div className="inline-flex items-center ml-3">
+                      <Popover className="relative">
+                        {({ open }) => (
+                          <>
+                            <Popover.Button
+                              className={`
+                ${open ? '' : ''}
+                group inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium text-black hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+                            >
+                              <span className="">Claim Cart</span>
+                              <ShoppingCartIcon
+                                className={`${open ? '' : ''}
+                  ml-2 h-5 w-5 text-black transition duration-150 ease-in-out group-hover:text-opacity-80`}
+                                aria-hidden="true"
+                              />
+                              <ChevronDownIcon
+                                className={`${open ? '' : ''}
+                  ml-2 h-5 w-5 text-black transition duration-150 ease-in-out group-hover:text-opacity-80`}
+                                aria-hidden="true"
+                              />
+                            </Popover.Button>
+                            <Transition
+                              as={Fragment}
+                              enter="transition ease-out duration-200"
+                              enterFrom="opacity-0 translate-y-1"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in duration-150"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 translate-y-1"
+                            >
+                              <Popover.Panel className="absolute z-10 w-screen max-w-sm px-2 mt-3 transform sm:-translate-x-3/4 -translate-x-2/3 left-1/2 sm:px-0">
+                                <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                  <div className="relative grid gap-8 p-4 overflow-y-scroll bg-gray-100 max-h-96">
+                                    {cartClaimNodes?.length ? (
+                                      <ul className="">
+                                        {cartClaimNodes.map((cn) => {
+                                          return (
+                                            <li
+                                              key={`cart-${cn.nodeId}`}
+                                              className="relative flex items-center px-6 py-5 mb-1 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                                            >
+                                              <div className="flex-shrink-0">
+                                                <img
+                                                  className="w-6 h-auto rounded-full"
+                                                  src={`/nodes/${cn?.type}.png`}
+                                                  alt=""
+                                                />
+                                              </div>
+                                              <div className="flex-1 min-w-0">
+                                                <div className="focus:outline-none">
+                                                  <span
+                                                    className="absolute inset-0"
+                                                    aria-hidden="true"
+                                                  />
+                                                  <p className="flex items-center text-sm font-semibold text-gray-900">
+                                                    MultiNode: #{cn?.nodeId}
+                                                    <span className="flex justify-center ml-auto">
+                                                      <button
+                                                        onClick={() => {
+                                                          removeFromCartClaim({
+                                                            nodeId: cn?.nodeId,
+                                                          });
+                                                        }}
+                                                        className="relative bg-gray-200 rounded-full group"
+                                                      >
+                                                        <span className="flex items-center justify-center p-0.25 overflow-hidden rounded-full">
+                                                          <MinusCircleIcon className="w-4 h-4 text-gray-600 transition-colors duration-200 bg-gray-200 group-hover:text-red-500" />
+                                                        </span>
+                                                      </button>
+                                                    </span>
+                                                  </p>
+                                                  <span className="py-0.5 px-2 text-xs font-bold text-gray-800 bg-green-100 border-green-900 border rounded-full whitespace-nowrap">
+                                                    <>{cn.mccClaimable}</>
+                                                  </span>
+                                                  <span className="ml-1">
+                                                    MCC Claimable
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </li>
+                                          );
+                                        })}
+                                      </ul>
+                                    ) : (
+                                      <div className="flex flex-col items-center">
+                                        <div className="text-lg font-bold text-gray-700">
+                                          No Nodes In Cart
+                                        </div>
+                                        <div className="w-full text-center">
+                                          Click the plus{' '}
+                                          <PlusCircleIcon className="inline-block w-5 h-5 text-gray-400" />{' '}
+                                          button in the top right corner of the
+                                          node to add it to your claim.
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  {!!cartClaimNodes?.length && (
+                                    <div className="px-6 py-2 bg-white border-t border-gray-300">
+                                      <dl className="space-y-2 text-sm font-medium text-gray-500 ">
+                                        <div className="flex justify-between">
+                                          <dt>MCC</dt>
+                                          <dd className="text-gray-900">
+                                            {abbreviateNumber(cartMccTotal, 2)}
+                                          </dd>
+                                        </div>
+
+                                        <div className="flex justify-between">
+                                          <dt>USD</dt>
+                                          <dd className="text-gray-900">
+                                            $
+                                            {abbreviateNumber(
+                                              cartMccTotal *
+                                                dataPrice?.[
+                                                  `${generateChainNameIdentifier(
+                                                    chainId
+                                                  )}`
+                                                ].price,
+                                              2
+                                            )}
+                                          </dd>
+                                        </div>
+
+                                        <div className="flex justify-between pb-2">
+                                          <dt>Estimated Gas</dt>
+                                          <dd className="text-gray-900">
+                                            <span className="text-sm">
+                                              {`(${generateChainAbbreviation(
+                                                chainId
+                                              )}${Number(
+                                                nativePrice.toFixed(6)
+                                              )})`}
+                                            </span>
+                                            <span className="ml-1 p-1 text-[#3498db] bg-[#3498db1a] rounded-lg">
+                                              ($
+                                              {formatDollar(cartPrediction)})
+                                            </span>
+                                          </dd>
+                                        </div>
+                                      </dl>
+                                    </div>
+                                  )}
+                                  <button
+                                    onClick={() => {
+                                      if (!cartClaimNodes?.length) {
+                                        return toast.error(
+                                          'No nodes added to cart for claiming'
+                                        );
+                                      }
+                                      claimNodeRewards(cartClaimNodes);
+                                    }}
+                                    className={classNames(
+                                      cartClaimNodes?.length
+                                        ? `from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500`
+                                        : `from-gray-500 to-gray-700 hover:to-gray-900 focus:ring-gray-500 cursor-not-allowed`,
+                                      `flex justify-center w-full p-4 text-white bg-gradient-to-r `
+                                    )}
+                                  >
+                                    <div className="flow-root px-2 py-2">
+                                      <span className="flex items-center">
+                                        <span className="text-lg font-bold text-white">
+                                          Initiate Claim
+                                        </span>
+                                      </span>
+                                    </div>
+                                  </button>
+                                </div>
+                              </Popover.Panel>
+                            </Transition>
+                          </>
+                        )}
+                      </Popover>
+                    </div>
+                  </>
                 )}
               </div>
             </>
@@ -268,7 +467,7 @@ export function MulitNodeGrid() {
         </div>
       </header>
 
-      <div className="mb-8">
+      <div className="mb-4">
         <dl className="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-3 md:divide-y-0 md:divide-x">
           {!!data &&
             overview.map((item) => (
@@ -337,7 +536,48 @@ export function MulitNodeGrid() {
             ))}
         </dl>
       </div>
-
+      <div>
+        <div className="flex justify-center max-w-md py-1 mb-4 ml-auto text-white bg-gray-500 rounded-md shadow">
+          <div className="flex items-center">
+            Live Est ($
+            {isNumeric(`${perNodePrediction}`) ? (
+              formatDollar(perNodePrediction)
+            ) : (
+              <Loading size={4} fill="#FFF" />
+            )}
+            ) per MultiNode claim on{' '}
+            <span className="inline-flex items-center justify-center mx-1">
+              {renderConnectedChain(chainId)}
+            </span>{' '}
+            chain
+            <div className="relative flex flex-col items-center ml-1 text-gray-200 group">
+              <svg
+                className="w-5 h-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div className="absolute bottom-0 flex-col items-center hidden w-24 mb-6 text-center group-hover:flex">
+                <span className="relative z-10 p-2 text-xs leading-none text-white whitespace-no-wrap bg-black rounded shadow-lg">
+                  Please note this gas is an estimate based on historical data
+                  of MultiNode claims. Gas prices costs for your claim may vary
+                  due to current gas and price fluctuations.
+                </span>
+                <div className="w-3 h-3 -mt-2 rotate-45 bg-gray-600" />
+              </div>
+            </div>
+          </div>
+          <span className="text-gray-400 ">
+            <span className="sr-only">Gas Per Multi Node Predictor</span>
+          </span>
+        </div>
+      </div>
       <ul
         role="list"
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"

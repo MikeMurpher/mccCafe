@@ -1,10 +1,8 @@
 import { getTokenBalance } from '../../lib/api/getTokenBalance';
-import { MCC_CONTRACT } from '../../lib/constants';
+import { MCC_CONTRACT, ONE_BILLION } from '../../lib/constants';
 import { ChainNameEnum } from '../../lib/types';
 import request from '../../lib/utils/request';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-const ONE_BILLION = 1000000000;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {

@@ -3,7 +3,7 @@
 <br />
 <div align="center"><strong>MCC Cafe</strong></div>
 <div align="center">A little pick me up for the Multi Chain Capital Community</div>
-<div align="center">A MCC Incubation Zone Production</div>
+<div align="center">A $MCC Official Community Production</div>
 <br />
 <div align="center">
 <a href="https://mcc.cafe/">Website</a> 

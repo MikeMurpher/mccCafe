@@ -6,17 +6,15 @@ export function StickyBanner() {
       <div className="px-3 py-3 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center sm:px-16">
           <p className="font-medium text-white">
-            <span className="md:hidden">
-              MCC DeFi learning series ✏️ What are ERC20 tokens
-            </span>
+            <span className="md:hidden">MCC Staking ⚡ Live on 3 chains</span>
             <span className="hidden md:inline">
-              MCC DeFi learning series ✏️ What are ERC20 tokens
+              MCC Staking ⚡ Live on 3 chains
             </span>
             <span className="inline-block ml-2">
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href="https://medium.com/@mikemurpher/what-are-erc-20-tokens-868a881c4557"
+                href="https://medium.com/@mikemurpher/mcc-staking-live-on-ftm-6a1c70da1cfc"
                 className="font-bold text-white underline"
               >
                 {' '}

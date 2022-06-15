@@ -9,6 +9,7 @@ export enum ChainNameEnum {
   erc = 'erc',
   bsc = 'bsc',
   ftm = 'ftm',
+  offline = 'offline',
 }
 
 export type BlockchainType =

@@ -1,4 +1,3 @@
-import { BlockchainType, ChainEnum, ChainNameEnum } from './types';
 import type { AddEthereumChainParameter } from '@web3-react/types';
 
 interface BasicChainInformation {
@@ -72,29 +71,3 @@ export const URLS: { [chainId: number]: string[] } = Object.keys(
 
   return accumulator;
 }, {});
-
-export function generateChainName(chain?: BlockchainType) {
-  switch (chain) {
-    case ChainEnum.erc:
-      return `eth`;
-    case ChainEnum.bsc:
-      return `bsc`;
-    case ChainEnum.ftm:
-      return `ftm`;
-    default:
-      return `eth`;
-  }
-}
-
-export function generateChainNameIdentifier(chain?: BlockchainType) {
-  switch (chain) {
-    case ChainEnum.erc:
-      return ChainNameEnum.erc;
-    case ChainEnum.bsc:
-      return ChainNameEnum.bsc;
-    case ChainEnum.ftm:
-      return ChainNameEnum.ftm;
-    default:
-      return ChainNameEnum.erc;
-  }
-}

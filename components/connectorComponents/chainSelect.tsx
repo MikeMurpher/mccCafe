@@ -1,14 +1,7 @@
 import { CHAINS } from '../../lib/chains';
-import { BlockchainType, ChainEnum } from '../../lib/types';
-import { BSCIcon } from '../svgs/bsc';
-import { ErcIcon } from '../svgs/erc';
-import { FtmIcon } from '../svgs/ftm';
+import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { Listbox, Transition } from '@headlessui/react';
-import {
-  CheckCircleIcon,
-  SelectorIcon,
-  StatusOfflineIcon,
-} from '@heroicons/react/solid';
+import { CheckCircleIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
 
 interface ChainSelectProps {
@@ -88,26 +81,4 @@ export function ChainSelect(props: ChainSelectProps) {
       </div>
     </Listbox>
   );
-}
-
-function renderConnectedChain(chain?: BlockchainType) {
-  switch (chain) {
-    case ChainEnum.erc:
-      return <ErcIcon />;
-    case ChainEnum.bsc:
-      return <BSCIcon />;
-    case ChainEnum.ftm:
-      return <FtmIcon />;
-    case ChainEnum.offline:
-      return (
-        <StatusOfflineIcon
-          className="w-5 h-5 text-gray-900"
-          aria-hidden="true"
-        />
-      );
-    default:
-      return (
-        <StatusOfflineIcon className="w-5 h-5 text-black" aria-hidden="true" />
-      );
-  }
 }

@@ -1,9 +1,5 @@
 import MultiNodeContractAbi from '../../contracts/MultiNode.json';
-import { generateChainName } from '../../lib/chains';
 import {
-  BSCSCAN_URL,
-  ETHERSCAN_URL,
-  FTMSCAN_URL,
   MULTINODE_CLAIM_CONTRACT,
   MULTINODE_CONTRACT,
   RECOMMENDED_SINGLE_GAS,
@@ -15,13 +11,22 @@ import { useWeb3 } from '../../lib/hooks/useWeb3';
 import { useWalletStore } from '../../lib/stores/wallet';
 import { BlockchainType, ChainEnum } from '../../lib/types';
 import {
+  generateChainBase,
+  generateChainName,
+} from '../../lib/utils/chainFormatters';
+import {
   formatTotalRealized,
   numberWithCommas,
 } from '../../lib/utils/formatNumbers';
 import { isNumeric } from '../../lib/utils/isNumeric';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
-import { InformationCircleIcon, SparklesIcon } from '@heroicons/react/solid';
+import {
+  CheckCircleIcon,
+  InformationCircleIcon,
+  PlusCircleIcon,
+  SparklesIcon,
+} from '@heroicons/react/solid';
 import classNames from 'classnames';
 import error from 'next/error';
 import React, { useEffect } from 'react';
@@ -49,8 +54,18 @@ export function MultiNode(props: MultiNodeType) {
     (url: string) => request(url, { method: 'GET' })
   );
 
-  const { addClaimableNode, addNodeStats } = useWalletStore((state) => state);
+  const {
+    addClaimableNode,
+    addNodeStats,
+    addToCartClaim,
+    removeFromCartClaim,
+    cartClaimNodes,
+  } = useWalletStore((state) => state);
   const contract = useContract(MULTINODE_CLAIM_CONTRACT, MultiNodeContractAbi);
+
+  const isInCart = cartClaimNodes?.filter(
+    (ccn) => ccn.nodeId === token_id
+  )?.length;
 
   const mccClaimable = useMultiNodeActiveBalance({
     contractAddress: MULTINODE_CLAIM_CONTRACT,
@@ -170,7 +185,45 @@ export function MultiNode(props: MultiNodeType) {
   }
 
   return (
-    <li className="flex flex-col col-span-1 text-center bg-white divide-y divide-gray-200 rounded-lg shadow">
+    <li
+      className={classNames(
+        isInCart ? `border-green-600` : ` border-white`,
+        `flex flex-col border-4 col-span-1 text-center bg-white rounded-lg shadow`
+      )}
+    >
+      {!isManualCheckEnabled && (
+        <button
+          onClick={() => {
+            if (isInCart) {
+              return removeFromCartClaim({
+                nodeId: token_id,
+              });
+            }
+
+            if (nothingClaimable) {
+              return toast.error('Nothing claimable in this MultiNode');
+            }
+
+            return addToCartClaim({
+              mccClaimable,
+              totalEarnings,
+              chainId,
+              mccPerDay,
+              type: data?.attributes?.[0].value?.toLowerCase(),
+              nodeId: token_id,
+            });
+          }}
+          className="relative h-0 ml-auto bg-gray-200 rounded-full right-1.5 top-1.5 group"
+        >
+          <span className="flex items-center justify-center p-0.25 overflow-hidden rounded-full ">
+            {isInCart ? (
+              <CheckCircleIcon className="w-8 h-8 text-green-600 transition-colors duration-500 bg-gray-200 group-hover:text-red-500" />
+            ) : (
+              <PlusCircleIcon className="w-8 h-8 text-gray-600 transition-colors duration-500 bg-gray-200 group-hover:text-gray-500" />
+            )}
+          </span>
+        </button>
+      )}
       <div className="flex flex-col flex-1 px-8 py-6">
         {isLoading || !nodePic ? (
           <Loading size={64} fill="gray" />
@@ -185,7 +238,7 @@ export function MultiNode(props: MultiNodeType) {
         <dl className="flex flex-col justify-between flex-grow mt-1">
           <dt className="font-bold text-gray-700 uppercase">Rewards</dt>
           <dd className="my-0.5 h-4">
-            <span className="px-2 py-1 text-sm font-bold text-gray-800 bg-gray-100 rounded-full">
+            <span className="px-2 py-1 text-sm font-bold text-gray-800 bg-gray-100 rounded-full whitespace-nowrap">
               {numberWithCommas(mccPerDay)} MCC/day
             </span>
           </dd>
@@ -198,7 +251,7 @@ export function MultiNode(props: MultiNodeType) {
                 fill="gray"
               />
             ) : (
-              <span className="px-2 py-1 text-sm font-bold text-green-100 bg-green-800 rounded-full">
+              <span className="px-2 py-1 text-sm font-bold text-green-100 bg-green-800 rounded-full whitespace-nowrap">
                 <>{mccClaimable} MCC</>
               </span>
             )}
@@ -214,7 +267,7 @@ export function MultiNode(props: MultiNodeType) {
                 fill="gray"
               />
             ) : (
-              <span className="px-2 py-1 text-sm font-bold text-green-800 bg-green-100 rounded-full">
+              <span className="px-2 py-1 text-sm font-bold text-green-800 bg-green-100 rounded-full whitespace-nowrap">
                 <>{formatTotalRealized(totalEarnings, mccClaimable)} MCC</>
               </span>
             )}
@@ -278,19 +331,6 @@ function generateSellLink(nodeId: string, chain?: BlockchainType) {
       return `https://tofunft.com/nft/bsc/${MULTINODE_CONTRACT}/${nodeId}`;
     case ChainEnum.ftm:
       return `https://paintswap.finance/marketplace/assets/${MULTINODE_CONTRACT}/${nodeId}`;
-    default:
-      ``;
-  }
-}
-
-export function generateChainBase(chain?: BlockchainType) {
-  switch (chain) {
-    case ChainEnum.erc:
-      return ETHERSCAN_URL;
-    case ChainEnum.bsc:
-      return BSCSCAN_URL;
-    case ChainEnum.ftm:
-      return FTMSCAN_URL;
     default:
       ``;
   }

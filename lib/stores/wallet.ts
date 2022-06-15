@@ -8,6 +8,8 @@ export type MyWalletState = {
   isDisconnected: WalletType[];
   previousConnections: WalletType[];
   claimableNodes?: MultiNodeType[];
+  cartClaimNodes?: MultiNodeType[];
+  cartMccTotal: number;
   multiNodes?: any[];
   walletNodeStats: {
     available: number;
@@ -15,6 +17,9 @@ export type MyWalletState = {
   };
   resetMultiNodeStats: () => void;
   addClaimableNode: (params: MultiNodeType) => void;
+  addToCartClaim: (params: MultiNodeType) => void;
+  removeFromCartClaim: (params: { nodeId: string }) => void;
+  emptyCartClaims: () => void;
   addDisconnectAction: (params: WalletType) => void;
   addPreviousConnectionAction: (params: WalletType) => void;
   removeDisconnectAction: (params: WalletType) => void;
@@ -23,7 +28,11 @@ export type MyWalletState = {
 
 export interface MultiNodeType {
   nodeId: string;
-  chainId: ChainEnum;
+  chainId?: ChainEnum;
+  mccClaimable?: string;
+  totalEarnings?: string;
+  mccPerDay?: string;
+  type?: string;
 }
 
 type MyPersist = (
@@ -37,7 +46,9 @@ const initialState = {
   isDisconnected: [],
   claimableNodes: [],
   previousConnections: [],
+  cartClaimNodes: [],
   multiNodes: [],
+  cartMccTotal: 0,
   walletNodeStats: {
     available: 0,
     producing: 0,
@@ -53,6 +64,8 @@ export const useWalletStore = create<MyWalletState>(
       claimableNodes: [],
       previousConnections: [],
       multiNodes: [],
+      cartMccTotal: 0,
+      cartClaimNodes: [],
       walletNodeStats: {
         available: 0,
         producing: 0,
@@ -93,6 +106,55 @@ export const useWalletStore = create<MyWalletState>(
                 }
               ),
             },
+          };
+        });
+      },
+      addToCartClaim: (n) => {
+        set((state) => {
+          const currentNodes = state?.cartClaimNodes ?? [];
+          const allNodes = [...currentNodes, n];
+          const cartNodes = new Map(
+            allNodes?.map((i) => {
+              return [i.nodeId, i];
+            })
+          );
+
+          return {
+            ...state,
+
+            cartMccTotal:
+              state.cartMccTotal +
+              parseInt((n?.mccClaimable ?? '0').replaceAll(',', '')),
+            // @ts-expect-error
+            cartClaimNodes: [...cartNodes.values()],
+          };
+        });
+      },
+      removeFromCartClaim: (n) => {
+        set((state) => {
+          const cartClaimNodes = state.cartClaimNodes?.filter(
+            (ccn) => ccn.nodeId !== n.nodeId
+          );
+
+          const removeNode = state.cartClaimNodes?.filter(
+            (ccn) => ccn.nodeId === n.nodeId
+          )[0];
+
+          return {
+            ...state,
+            cartMccTotal:
+              state.cartMccTotal -
+              parseInt((removeNode?.mccClaimable ?? '0').replaceAll(',', '')),
+            cartClaimNodes,
+          };
+        });
+      },
+      emptyCartClaims: () => {
+        set((state) => {
+          return {
+            ...state,
+            cartMccTotal: 0,
+            cartClaimNodes: [],
           };
         });
       },
@@ -142,6 +204,8 @@ export const useWalletStore = create<MyWalletState>(
           ...state,
           multiNodes: [],
           claimableNodes: [],
+          cartClaimNodes: [],
+          cartMccTotal: 0,
           walletNodeStats: {
             available: 0,
             producing: 0,
