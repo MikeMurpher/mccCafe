@@ -101,3 +101,16 @@ export function renderConnectedChain(chain?: BlockchainType) {
       );
   }
 }
+
+export function generateChainGasMultiple(chainId?: BlockchainType): number {
+  switch (chainId) {
+    case ChainEnum.erc:
+      return 1;
+    case ChainEnum.bsc:
+      return 1.675;
+    case ChainEnum.ftm:
+      return 1;
+    default:
+      return 1;
+  }
+}

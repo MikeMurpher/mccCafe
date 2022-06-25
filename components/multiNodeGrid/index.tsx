@@ -12,6 +12,7 @@ import { MultiNodeType, useWalletStore } from '../../lib/stores/wallet';
 import {
   generateChainAbbreviation,
   generateChainBase,
+  generateChainGasMultiple,
   generateChainName,
   generateChainNameIdentifier,
   renderConnectedChain,
@@ -93,7 +94,10 @@ export function MulitNodeGrid() {
         }
       );
 
-      const gasLimit = RECOMMENDED_MULTI_GAS * nodeIds?.length;
+      const gasLimit =
+        RECOMMENDED_MULTI_GAS *
+        nodeIds?.length *
+        generateChainGasMultiple(chainId);
 
       const mccClaimTxt = await contract?.claimDividendsMulti(nodeIds, {
         gasLimit,

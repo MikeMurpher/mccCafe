@@ -12,6 +12,7 @@ import { useWalletStore } from '../../lib/stores/wallet';
 import { BlockchainType, ChainEnum } from '../../lib/types';
 import {
   generateChainBase,
+  generateChainGasMultiple,
   generateChainName,
 } from '../../lib/utils/chainFormatters';
 import {
@@ -29,7 +30,7 @@ import {
 } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import error from 'next/error';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
@@ -132,7 +133,7 @@ export function MultiNode(props: MultiNodeType) {
           },
         });
         const mccClaimTxt = await contract?.claimDividend(nodeId, {
-          gasLimit: RECOMMENDED_SINGLE_GAS,
+          gasLimit: RECOMMENDED_SINGLE_GAS * generateChainGasMultiple(chainId),
         });
 
         toast.loading(
