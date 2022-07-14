@@ -1,8 +1,8 @@
+import useSWR from 'swr';
 import { BlockchainType, ChainEnum } from '../types';
 import { numberWithCommas } from '../utils/formatNumbers';
 import request from '../utils/request';
 import { useWeb3 } from './useWeb3';
-import useSWR from 'swr';
 
 interface BalanceProps {
   address?: string;

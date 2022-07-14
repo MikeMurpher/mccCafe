@@ -1,8 +1,8 @@
-import { CHAINS } from '../../lib/chains';
-import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckCircleIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
+import { CHAINS } from '../../lib/chains';
+import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 
 interface ChainSelectProps {
   chainId?: number;
@@ -22,7 +22,7 @@ export function ChainSelect(props: ChainSelectProps) {
       }}
     >
       <div className="relative">
-        <Listbox.Button className="relative w-16 h-10 py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default bg-opacity-40 sm:w-18 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+        <Listbox.Button className="relative w-16 h-10 py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default sm:w-18 bg-opacity-40 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
           <span className="">{renderConnectedChain(chainId)}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <SelectorIcon
@@ -37,7 +37,7 @@ export function ChainSelect(props: ChainSelectProps) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute right-0 py-1 mt-1 overflow-auto text-base rounded-md shadow-lg bg-gray-50 w-72 max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute right-0 py-1 mt-1 overflow-auto text-base rounded-md shadow-lg max-h-60 w-72 bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {chainIds?.map((c) => {
               return (
                 <Listbox.Option

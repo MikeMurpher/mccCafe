@@ -1,12 +1,12 @@
+import classNames from 'classnames';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import { MULTINODE_CLAIM_CONTRACT } from '../../lib/constants';
 import { ChainEnum, ChainNameEnum } from '../../lib/types';
 import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
-import classNames from 'classnames';
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
 
 export function RewardBalanceStats() {
   const [rewards, setRewards] = useState([
@@ -86,7 +86,7 @@ export function RewardBalanceStats() {
                 <div className="ml-auto">
                   <div
                     className={classNames(
-                      'bg-green-100 flex-auto text-green-800 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0'
+                      'inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0'
                     )}
                   >
                     {isLoading ? (

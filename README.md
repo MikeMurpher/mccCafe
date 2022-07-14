@@ -8,7 +8,7 @@
 <div align="center">
 <a href="https://mcc.cafe/">Website</a> 
 <span> · </span>
-<a href="https://t.me/MccIncubationZone">Telegram</a> 
+<a href="https://t.me/MCCofficialtg">Telegram</a> 
 <span> · </span>
 <a href="https://twitter.com/multichaincap">Twitter</a>
 </div>

@@ -1,3 +1,14 @@
+import {
+  CheckCircleIcon,
+  InformationCircleIcon,
+  PlusCircleIcon,
+  SparklesIcon,
+} from '@heroicons/react/solid';
+import classNames from 'classnames';
+import error from 'next/error';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import useSWR from 'swr';
 import MultiNodeContractAbi from '../../contracts/MultiNode.json';
 import {
   MULTINODE_CLAIM_CONTRACT,
@@ -22,17 +33,6 @@ import {
 import { isNumeric } from '../../lib/utils/isNumeric';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
-import {
-  CheckCircleIcon,
-  InformationCircleIcon,
-  PlusCircleIcon,
-  SparklesIcon,
-} from '@heroicons/react/solid';
-import classNames from 'classnames';
-import error from 'next/error';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
 interface MultiNodeType {
   name: string;
@@ -189,7 +189,7 @@ export function MultiNode(props: MultiNodeType) {
     <li
       className={classNames(
         isInCart ? `border-green-600` : ` border-white`,
-        `flex flex-col border-4 col-span-1 text-center bg-white rounded-lg shadow`
+        `col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow`
       )}
     >
       {!isManualCheckEnabled && (
@@ -214,9 +214,9 @@ export function MultiNode(props: MultiNodeType) {
               nodeId: token_id,
             });
           }}
-          className="relative h-0 ml-auto bg-gray-200 rounded-full right-1.5 top-1.5 group"
+          className="group relative right-1.5 top-1.5 ml-auto h-0 rounded-full bg-gray-200"
         >
-          <span className="flex items-center justify-center p-0.25 overflow-hidden rounded-full ">
+          <span className="p-0.25 flex items-center justify-center overflow-hidden rounded-full ">
             {isInCart ? (
               <CheckCircleIcon className="w-8 h-8 text-green-600 transition-colors duration-500 bg-gray-200 group-hover:text-red-500" />
             ) : (
@@ -306,9 +306,9 @@ export function MultiNode(props: MultiNodeType) {
               }}
               className={classNames(
                 nothingClaimable || isManualCheckEnabled
-                  ? `from-gray-500 to-gray-700 hover:to-gray-90`
-                  : `from-green-500 to-green-700 hover:to-green-90`,
-                `"relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-medium text-gray-100 border rounded-br-lg cursor-pointer bg-gradient-to-r 0"`
+                  ? `hover:to-gray-90 from-gray-500 to-gray-700`
+                  : `hover:to-green-90 from-green-500 to-green-700`,
+                `"relative 0" inline-flex w-0 flex-1 cursor-pointer items-center justify-center rounded-br-lg border bg-gradient-to-r py-4 text-sm font-medium text-gray-100`
               )}
             >
               <SparklesIcon

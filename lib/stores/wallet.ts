@@ -1,6 +1,6 @@
-import { BlockchainType, ChainEnum, WalletType } from '../types';
 import create, { StateCreator } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
+import { BlockchainType, ChainEnum, WalletType } from '../types';
 
 export type MyWalletState = {
   manualAddress?: string;

@@ -1,8 +1,8 @@
-import { URLS } from '../lib/chains';
 import { Eip1193Bridge } from '@ethersproject/experimental';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { initializeConnector } from '@web3-react/core';
 import { EIP1193 } from '@web3-react/eip1193';
+import { URLS } from '../lib/chains';
 
 class Eip1193BridgeWithoutAccounts extends Eip1193Bridge {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

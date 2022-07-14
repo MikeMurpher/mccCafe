@@ -1,9 +1,9 @@
-import { useWeb3 } from './useWeb3';
 import { AddressZero } from '@ethersproject/constants';
 import { Provider } from '@ethersproject/providers';
 import { Contract, ContractInterface, Signer } from 'ethers';
 import { isAddress } from 'ethers/lib/utils';
 import { useMemo } from 'react';
+import { useWeb3 } from './useWeb3';
 
 export function getContract<T = Contract>(
   address: string,

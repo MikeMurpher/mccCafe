@@ -1,3 +1,15 @@
+import { Dialog, Popover, Transition } from '@headlessui/react';
+import { CashIcon, ChevronDownIcon } from '@heroicons/react/solid';
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
+import type { Web3ReactHooks } from '@web3-react/core';
+import { GnosisSafe } from '@web3-react/gnosis-safe';
+import { MetaMask } from '@web3-react/metamask';
+import { Network } from '@web3-react/network';
+import { WalletConnect } from '@web3-react/walletconnect';
+import classNames from 'classnames';
+import Image from 'next/image';
+import Router from 'next/router';
+import { Fragment, useCallback, useState } from 'react';
 import { CHAINS, getAddChainParameters, URLS } from '../../lib/chains';
 import useMetaMaskOnboarding from '../../lib/hooks/useMetaMaskOnboarding';
 import { useTokenBalance } from '../../lib/hooks/useTokenBalance';
@@ -21,18 +33,6 @@ import { GnosisSafeSvg } from '../svgs/gnosisSafe';
 import { MetamaskSvg } from '../svgs/metamask';
 import { WalletConnectSvg } from '../svgs/walletConnect';
 import { ChainSelect } from './chainSelect';
-import { Dialog, Popover, Transition } from '@headlessui/react';
-import { CashIcon, ChevronDownIcon } from '@heroicons/react/solid';
-import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
-import type { Web3ReactHooks } from '@web3-react/core';
-import { GnosisSafe } from '@web3-react/gnosis-safe';
-import { MetaMask } from '@web3-react/metamask';
-import { Network } from '@web3-react/network';
-import { WalletConnect } from '@web3-react/walletconnect';
-import classNames from 'classnames';
-import Image from 'next/image';
-import Router from 'next/router';
-import { Fragment, useCallback, useState } from 'react';
 
 interface ConnectionProps {
   type: WalletType;
@@ -193,7 +193,7 @@ export function ConnectionComponent(props: ConnectionProps) {
         <button
           type="button"
           onClick={() => openAccountModal()}
-          className="relative inline-flex items-center h-6 px-2 py-2 ml-1 font-bold text-gray-900 bg-white border border-gray-300 rounded-full shadow-sm sm:px-4 whitespace-nowrap -right-2 bg-opacity-40 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-0"
+          className="relative inline-flex items-center h-6 px-2 py-2 ml-1 font-bold text-gray-900 bg-white border border-gray-300 rounded-full shadow-sm -right-2 whitespace-nowrap bg-opacity-40 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-0 sm:px-4"
         >
           {ens?.[0] || `${shortenHex(accounts?.[0] ?? ``, 4)}`}
         </button>
@@ -203,15 +203,15 @@ export function ConnectionComponent(props: ConnectionProps) {
               <Popover.Button
                 className={classNames(
                   open ? 'text-gray-900' : 'text-gray-500',
-                  'group bg-white z-10 h-10 rounded-md px-0.5 sm:px-2 inline-flex items-center hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+                  'group z-10 inline-flex h-10 items-center rounded-md bg-white px-0.5 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:px-2'
                 )}
               >
-                <span className="w-4 h-4 sm:w-6 sm:h-6">
+                <span className="w-4 h-4 sm:h-6 sm:w-6">
                   <MccLogo id={id} />
                 </span>
                 <span className="flex flex-col justify-center pt-4 pl-1 text-lg font-bold text-gray-700">
-                  <span className="leading-[0px] text-left">MCC</span>
-                  <span className="block text-[10px] text-left">
+                  <span className="text-left leading-[0px]">MCC</span>
+                  <span className="block text-left text-[10px]">
                     {parseInt(mccBalance) > 0
                       ? abbreviateNumber(mccBalance, 2)
                       : `--`}
@@ -220,7 +220,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                 <ChevronDownIcon
                   className={classNames(
                     open ? 'text-gray-600' : 'text-gray-400',
-                    'ml-1 h-5 w-5 group-hover:text-gray-500 transition ease-in-out duration-150'
+                    'ml-1 h-5 w-5 transition duration-150 ease-in-out group-hover:text-gray-500'
                   )}
                   aria-hidden="true"
                 />
@@ -235,7 +235,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-2 mt-3 transform sm:max-w-md sm:-translate-x-3/4 -translate-x-2/3 left-1/2 sm:px-0 lg:max-w-3xl">
+                <Popover.Panel className="absolute z-10 w-screen max-w-sm px-2 mt-3 transform left-1/2 -translate-x-2/3 sm:max-w-md sm:-translate-x-3/4 sm:px-0 lg:max-w-3xl">
                   <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="relative grid gap-6 px-5 py-6 bg-white sm:gap-8 sm:p-8 lg:grid-cols-2">
                       {solutions.map((item) => (
@@ -265,7 +265,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                           <span className="text-base font-medium text-gray-900">
                             MCC Ecosystem Holdings
                           </span>
-                          <span className="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-indigo-100 text-indigo-800">
+                          <span className="ml-3 inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-xs font-medium leading-5 text-indigo-800">
                             Coming Soon
                           </span>
                         </span>
@@ -303,7 +303,7 @@ export function ConnectionComponent(props: ConnectionProps) {
               <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
                 {/* This element is to trick the browser into centering the modal contents. */}
                 <span
-                  className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                  className="hidden sm:inline-block sm:h-screen sm:align-middle"
                   aria-hidden="true"
                 >
                   &#8203;
@@ -317,7 +317,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                   leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                  <Dialog.Panel className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                  <Dialog.Panel className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
                     <div>
                       <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full">
                         <CashIcon
@@ -342,7 +342,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                     <div className="mt-5 sm:mt-6">
                       <button
                         type="button"
-                        className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-black border border-black rounded-md shadow-sm hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                        className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-black border border-black rounded-md shadow-sm hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
                         onClick={async () => {
                           await connector.deactivate();
                           addDisconnectAction(type);
@@ -375,7 +375,7 @@ export function ConnectionComponent(props: ConnectionProps) {
       <div className="relative flex flex-col items-center space-x-3">
         <div
           className={classNames(
-            'relative group p-6 w-full hover:bg-slate-700 rounded-lg transition-colors duration-150'
+            'group relative w-full rounded-lg p-6 transition-colors duration-150 hover:bg-slate-700'
           )}
         >
           <div>

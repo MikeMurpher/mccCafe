@@ -1,5 +1,5 @@
-import AppIcons from '../components/appIcons';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+import AppIcons from '../components/appIcons';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: any) {

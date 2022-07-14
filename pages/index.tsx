@@ -1,8 +1,8 @@
+import { NextSeo } from 'next-seo';
+import Image from 'next/image';
 import { LayoutContainer } from '../components/layout';
 import { MulitNodeGrid } from '../components/multiNodeGrid';
 import { RewardBalanceStats } from '../components/rewardBalanceStats';
-import { NextSeo } from 'next-seo';
-import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -18,7 +18,7 @@ export default function HomePage() {
             <span className="block bg-gradient-to-br from-gray-800 via-gray-600 to-[#a47730] bg-clip-text pb-0.5 text-center font-black text-transparent">
               Need help claiming MCC Node Rewards?
             </span>
-            <span className="mt-6 flex flex-col items-center justify-center lg:justify-start font-kaushan text-[#a47730] sm:mt-0 sm:flex-row">
+            <span className="mt-6 flex flex-col items-center justify-center font-kaushan text-[#a47730] sm:mt-0 sm:flex-row lg:justify-start">
               <span className="">MCC Cafe</span>
               <span className="inline-flex pl-4 pr-1">
                 <span className="w-24 h-24">

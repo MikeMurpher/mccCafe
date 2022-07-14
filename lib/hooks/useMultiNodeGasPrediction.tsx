@@ -1,9 +1,9 @@
+import useSWR from 'swr';
 import { ONE_BILLION } from '../constants';
 import { BlockchainType, ChainEnum } from '../types';
 import request from '../utils/request';
 import { useGasGwei } from './useGasGwei';
 import { useWeb3 } from './useWeb3';
-import useSWR from 'swr';
 
 export const ETH_MULTINODE_EXACT_GAS_PREDICTION = 85000;
 export const BSC_MULTINODE_EXACT_GAS_PREDICTION = 250000;

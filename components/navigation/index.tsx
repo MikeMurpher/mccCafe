@@ -1,11 +1,10 @@
+import { motion, useCycle } from 'framer-motion';
+import Image from 'next/image';
+import { useRef } from 'react';
 import { Web3Account } from '../account';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './Navigation';
 import { useDimensions } from './use-dimensions';
-import { motion, useCycle } from 'framer-motion';
-import Image from 'next/image';
-import * as React from 'react';
-import { useRef } from 'react';
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -44,7 +43,7 @@ const navItems = [
     nextJsLink: false,
     openInNewPage: true,
     text: 'Telegram',
-    href: 'https://t.me/MccIncubationZone',
+    href: 'https://t.me/MCCofficialtg',
   },
   {
     nextJsLink: false,
@@ -84,8 +83,8 @@ export function NavContainer() {
                 />
               </a>
 
-              <span className="items-center hidden px-3 py-1 mx-3 overflow-hidden text-xs font-medium leading-5 rounded-full sm:flex bg-amber-400/20 text-amber-400">
-                <strong className="font-semibold font-kaushan whitespace-nowrap">
+              <span className="items-center hidden px-3 py-1 mx-3 overflow-hidden text-xs font-medium leading-5 rounded-full bg-amber-400/20 text-amber-400 sm:flex">
+                <strong className="font-semibold whitespace-nowrap font-kaushan">
                   MCC Cafe
                 </strong>
                 <svg
@@ -97,7 +96,7 @@ export function NavContainer() {
                 >
                   <circle cx={1} cy={1} r={1} />
                 </svg>
-                <span className="hidden ml-2 md:flex whitespace-nowrap">
+                <span className="hidden ml-2 whitespace-nowrap md:flex">
                   A little pick me up for the MCC Community
                 </span>
               </span>

@@ -1,7 +1,7 @@
+import classNames from 'classnames';
 import { Footer } from '../footer';
 import { NavContainer } from '../navigation';
 import { StickyBanner } from '../stickyBanner';
-import classNames from 'classnames';
 
 export function LayoutContainer(props: any): JSX.Element {
   return (

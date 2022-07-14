@@ -1,3 +1,13 @@
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
+import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core';
+import { MetaMask } from '@web3-react/metamask';
+import { Network } from '@web3-react/network';
+import { WalletConnect } from '@web3-react/walletconnect';
+import { DefaultSeo } from 'next-seo';
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import Script from 'next/script';
+import { useEffect } from 'react';
 import { CustomToaster } from '../components/customToaster';
 import {
   coinbaseWallet,
@@ -12,16 +22,6 @@ import {
 import * as gtag from '../lib/gtag';
 import SEO from '../next-seo.config';
 import '../styles/globals.css';
-import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
-import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core';
-import { MetaMask } from '@web3-react/metamask';
-import { Network } from '@web3-react/network';
-import { WalletConnect } from '@web3-react/walletconnect';
-import { DefaultSeo } from 'next-seo';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
-import Script from 'next/script';
-import { useEffect } from 'react';
 
 export default function App({
   Component,

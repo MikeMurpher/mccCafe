@@ -1,3 +1,5 @@
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment, useEffect, useState } from 'react';
 import {
   coinbaseWallet,
   hooks as coinbaseWalletHooks,
@@ -14,8 +16,6 @@ import {
 import { useWalletStore } from '../../lib/stores/wallet';
 import { WalletEnum } from '../../lib/types';
 import { ConnectionComponent } from '../connectorComponents/connection';
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
 
 const {
   useChainId: useMetaMaskChainId,

@@ -1,7 +1,7 @@
-import { ONE_BILLION } from '../constants';
 import type { Web3Provider } from '@ethersproject/providers';
 import { formatUnits } from '@ethersproject/units';
 import useSWR from 'swr';
+import { ONE_BILLION } from '../constants';
 
 function getGas(provider: Web3Provider) {
   return async () => {

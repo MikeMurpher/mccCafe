@@ -1,6 +1,6 @@
-import { ONE_BILLION } from '../constants';
 import type { BigNumberish } from '@ethersproject/bignumber';
 import { formatUnits } from '@ethersproject/units';
+import { ONE_BILLION } from '../constants';
 
 export const parseBalance = (
   value: BigNumberish,

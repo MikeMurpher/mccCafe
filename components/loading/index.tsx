@@ -1,5 +1,5 @@
-import Icon from '../icons';
 import cn from 'classnames';
+import Icon from '../icons';
 
 export function Loading({
   size = 6,

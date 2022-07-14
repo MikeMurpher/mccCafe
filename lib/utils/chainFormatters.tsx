@@ -1,3 +1,4 @@
+import { StatusOfflineIcon } from '@heroicons/react/solid';
 import { BSCIcon } from '../../components/svgs/bsc';
 import { ErcIcon } from '../../components/svgs/erc';
 import { FtmIcon } from '../../components/svgs/ftm';
@@ -13,7 +14,6 @@ import {
   WFTM,
 } from '../constants';
 import { BlockchainType, ChainEnum, ChainNameEnum } from '../types';
-import { StatusOfflineIcon } from '@heroicons/react/solid';
 
 export function generateChainBase(chain?: BlockchainType) {
   switch (chain) {

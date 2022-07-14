@@ -1,6 +1,5 @@
-import { MenuItem } from './MenuItem';
 import { motion } from 'framer-motion';
-import * as React from 'react';
+import { MenuItem } from './MenuItem';
 
 const variants = {
   open: {
@@ -24,7 +23,7 @@ const itemIds = [
     nextJsLink: false,
     openInNewPage: true,
     text: `Telegram`,
-    href: 'https://t.me/MccIncubationZone',
+    href: 'https://t.me/MCCofficialtg',
     img: ``,
   },
   {

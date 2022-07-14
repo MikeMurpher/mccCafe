@@ -1,10 +1,10 @@
+import useSWR from 'swr';
 import { BlockchainType } from '../types';
 import { numberWithCommas } from '../utils/formatNumbers';
 import { parseBalance } from '../utils/parseBalance';
 import { useContract } from './useContract';
 import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
 import { useWeb3 } from './useWeb3';
-import useSWR from 'swr';
 
 function getNodeBalance(contract: any) {
   return async (...args: any[]) => {

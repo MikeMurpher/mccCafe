@@ -1,3 +1,14 @@
+import { Dialog, Popover, Switch, Transition } from '@headlessui/react';
+import {
+  ChevronDownIcon,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  ShoppingCartIcon,
+} from '@heroicons/react/solid';
+import classNames from 'classnames';
+import { ChangeEvent, Fragment, useState } from 'react';
+import toast from 'react-hot-toast';
+import useSWR from 'swr';
 import MultiNodeContractAbi from '../../contracts/MultiNode.json';
 import {
   MULTINODE_CLAIM_CONTRACT,
@@ -22,17 +33,6 @@ import { isNumeric } from '../../lib/utils/isNumeric';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
 import { MultiNode } from '../multiNode';
-import { Dialog, Popover, Switch, Transition } from '@headlessui/react';
-import {
-  ChevronDownIcon,
-  MinusCircleIcon,
-  PlusCircleIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/solid';
-import classNames from 'classnames';
-import { ChangeEvent, Fragment, useState } from 'react';
-import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
 const overview = [
   {
@@ -182,14 +182,14 @@ export function MulitNodeGrid() {
                   onChange={setEnabled}
                   className={classNames(
                     manualCheckEnabled ? 'bg-indigo-600' : 'bg-gray-200',
-                    'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+                    'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                   )}
                 >
                   <span
                     aria-hidden="true"
                     className={classNames(
                       manualCheckEnabled ? 'translate-x-5' : 'translate-x-0',
-                      'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
+                      'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
                     )}
                   />
                 </Switch>
@@ -259,7 +259,7 @@ export function MulitNodeGrid() {
                 </h2>
               </div>
 
-              <div className="flex flex-col items-end flex-shrink-0 mt-4 sm:items-baseline sm:flex-row md:mt-0 md:ml-4">
+              <div className="flex flex-col items-end flex-shrink-0 mt-4 sm:flex-row sm:items-baseline md:mt-0 md:ml-4">
                 {renderAccountCheck()}
                 {!manualCheckEnabled && (
                   <>
@@ -269,9 +269,9 @@ export function MulitNodeGrid() {
                       disabled={!walletNodeStats?.available}
                       className={classNames(
                         !walletNodeStats?.available
-                          ? 'from-gray-500 to-gray-700 cursor-not-allowed focus:ring-gray-500'
+                          ? 'cursor-not-allowed from-gray-500 to-gray-700 focus:ring-gray-500'
                           : 'from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500',
-                        'inline-flex items-center px-4 mb-1 py-2 ml-3 text-sm font-medium text-gray-100 border rounded-md bg-gradient-to-r focus:ring-offset-2'
+                        'mb-1 ml-3 inline-flex items-center rounded-md border bg-gradient-to-r px-4 py-2 text-sm font-medium text-gray-100 focus:ring-offset-2'
                       )}
                     >
                       Claim All Rewards
@@ -306,7 +306,7 @@ export function MulitNodeGrid() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="absolute z-10 w-screen max-w-sm px-2 mt-3 transform sm:-translate-x-3/4 -translate-x-2/3 left-1/2 sm:px-0">
+                              <Popover.Panel className="absolute z-10 w-screen max-w-sm px-2 mt-3 transform left-1/2 -translate-x-2/3 sm:-translate-x-3/4 sm:px-0">
                                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                                   <div className="relative grid gap-8 p-4 overflow-y-scroll bg-gray-100 max-h-96">
                                     {cartClaimNodes?.length ? (
@@ -315,7 +315,7 @@ export function MulitNodeGrid() {
                                           return (
                                             <li
                                               key={`cart-${cn.nodeId}`}
-                                              className="relative flex items-center px-6 py-5 mb-1 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                                              className="relative flex items-center px-6 py-5 mb-1 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
                                             >
                                               <div className="flex-shrink-0">
                                                 <img
@@ -341,13 +341,13 @@ export function MulitNodeGrid() {
                                                         }}
                                                         className="relative bg-gray-200 rounded-full group"
                                                       >
-                                                        <span className="flex items-center justify-center p-0.25 overflow-hidden rounded-full">
+                                                        <span className="p-0.25 flex items-center justify-center overflow-hidden rounded-full">
                                                           <MinusCircleIcon className="w-4 h-4 text-gray-600 transition-colors duration-200 bg-gray-200 group-hover:text-red-500" />
                                                         </span>
                                                       </button>
                                                     </span>
                                                   </p>
-                                                  <span className="py-0.5 px-2 text-xs font-bold text-gray-800 bg-green-100 border-green-900 border rounded-full whitespace-nowrap">
+                                                  <span className="whitespace-nowrap rounded-full border border-green-900 bg-green-100 py-0.5 px-2 text-xs font-bold text-gray-800">
                                                     <>{cn.mccClaimable}</>
                                                   </span>
                                                   <span className="ml-1">
@@ -410,7 +410,7 @@ export function MulitNodeGrid() {
                                                 nativePrice.toFixed(6)
                                               )})`}
                                             </span>
-                                            <span className="ml-1 p-1 text-[#3498db] bg-[#3498db1a] rounded-lg">
+                                            <span className="ml-1 rounded-lg bg-[#3498db1a] p-1 text-[#3498db]">
                                               ($
                                               {formatDollar(cartPrediction)})
                                             </span>
@@ -431,8 +431,8 @@ export function MulitNodeGrid() {
                                     className={classNames(
                                       cartClaimNodes?.length
                                         ? `from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500`
-                                        : `from-gray-500 to-gray-700 hover:to-gray-900 focus:ring-gray-500 cursor-not-allowed`,
-                                      `flex justify-center w-full p-4 text-white bg-gradient-to-r `
+                                        : `cursor-not-allowed from-gray-500 to-gray-700 hover:to-gray-900 focus:ring-gray-500`,
+                                      `flex w-full justify-center bg-gradient-to-r p-4 text-white `
                                     )}
                                   >
                                     <div className="flow-root px-2 py-2">
@@ -504,7 +504,7 @@ export function MulitNodeGrid() {
                     <div className="ml-auto">
                       <div
                         className={classNames(
-                          'bg-green-100 flex-auto text-green-800 inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium md:mt-2 lg:mt-0'
+                          'inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0'
                         )}
                       >
                         {isLoading ? (
@@ -656,7 +656,7 @@ export function MulitNodeGrid() {
                                   setManualAddress(e.target.value)
                                 }
                                 value={manualAddress}
-                                className="block w-full p-1 text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                className="block w-full p-1 text-black border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                           </div>
@@ -669,7 +669,7 @@ export function MulitNodeGrid() {
                         <button
                           onClick={closeManualCheckModal}
                           type="button"
-                          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                           Cancel
                         </button>
@@ -679,7 +679,7 @@ export function MulitNodeGrid() {
                             setEnabled(true);
                             closeManualCheckModal();
                           }}
-                          className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          className="inline-flex justify-center px-4 py-2 ml-3 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                           Investigate
                         </button>
