@@ -1,6 +1,7 @@
 import { Dialog, Popover, Switch, Transition } from '@headlessui/react';
 import {
   ChevronDownIcon,
+  DocumentSearchIcon,
   MinusCircleIcon,
   PlusCircleIcon,
   ShoppingCartIcon,
@@ -70,10 +71,28 @@ export function MulitNodeGrid() {
     address: manualCheckEnabled ? manualAddress : address,
   });
 
+  const { data: rewardData } = useSWR(
+    `/api/holdings?address=${MULTINODE_CLAIM_CONTRACT}`
+  );
+
   async function claimNodeRewards(selectedNodes?: MultiNodeType[]) {
     try {
+      let confirmedContinue = true;
       if (!selectedNodes?.length) {
         return toast.error('No Multi Nodes selected to claim rewards');
+      }
+
+      if (
+        walletNodeStats?.available >
+        rewardData[`${generateChainNameIdentifier(chainId)}`].supply
+      ) {
+        confirmedContinue = confirm(
+          'There are not enough rewards in the MultiNode Treasury Wallet for you to claim ALL of your rewards - if you claiming an individual node amount - or specific nodes in the cart, please be sure you know what you are doing - are you sure you want to continue?'
+        );
+      }
+
+      if (!confirmedContinue) {
+        return;
       }
 
       const nodeIds = selectedNodes
@@ -206,7 +225,10 @@ export function MulitNodeGrid() {
             onClick={() => openManualCheckModal()}
             className="inline-flex items-center px-4 py-2 mb-1 ml-3 text-sm font-medium text-white border border-white rounded-md focus:ring-offset-2"
           >
-            Check Address Manually
+            <DocumentSearchIcon
+              className={`h-5 w-5 text-white`}
+              aria-hidden="true"
+            />
           </button>
         </div>
       </>
@@ -259,7 +281,7 @@ export function MulitNodeGrid() {
                 </h2>
               </div>
 
-              <div className="flex flex-col items-end flex-shrink-0 mt-4 sm:flex-row sm:items-baseline md:mt-0 md:ml-4">
+              <div className="flex flex-col items-end flex-shrink-0 mt-4 sm:flex-row md:mt-0 md:ml-4">
                 {renderAccountCheck()}
                 {!manualCheckEnabled && (
                   <>
@@ -271,12 +293,12 @@ export function MulitNodeGrid() {
                         !walletNodeStats?.available
                           ? 'cursor-not-allowed from-gray-500 to-gray-700 focus:ring-gray-500'
                           : 'from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500',
-                        'mb-1 ml-3 inline-flex items-center rounded-md border bg-gradient-to-r px-4 py-2 text-sm font-medium text-gray-100 focus:ring-offset-2'
+                        'ml-3 mb-1 inline-flex items-center rounded-md border bg-gradient-to-r px-4 py-2 text-sm font-medium text-gray-100 focus:ring-offset-2'
                       )}
                     >
                       Claim All Rewards
                     </button>
-                    <div className="inline-flex items-center ml-3">
+                    <div className="inline-flex items-center mb-1 ml-3">
                       <Popover className="relative">
                         {({ open }) => (
                           <>
@@ -629,12 +651,13 @@ export function MulitNodeGrid() {
                     <div className="space-y-2 divide-y divide-gray-200">
                       <div>
                         <div>
-                          <h3 className="text-2xl font-medium leading-6 text-gray-50">
+                          <h3 className="text-2xl font-medium leading-6 text-left text-gray-50">
                             Check Address Manually
                           </h3>
-                          <p className="mt-1 text-sm tracking-tighter text-center text-gray-200">
-                            Do some investigative on-chain detective work in to
-                            your favorite multi-noder
+                          <p className="mt-1 text-sm tracking-tighter text-left text-gray-200">
+                            This is only for investigating a wallet - not for
+                            initiating a claim on your MultiNodes. To do so -
+                            please connect above in the navigation.
                           </p>
                         </div>
                       </div>

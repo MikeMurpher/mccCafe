@@ -4,19 +4,17 @@ export function StickyBanner() {
       <div className="px-3 py-3 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="text-center sm:px-16">
           <p className="font-medium text-white">
-            <span className="md:hidden">✨ New Official MCC Telegram</span>
-            <span className="hidden md:inline">
-              ✨ New Official MCC Telegram ✨
-            </span>
+            <span className="md:hidden">🚀 MCC Staking Now Live 🚀</span>
+            <span className="hidden md:inline">🚀 MCC Staking Now Live 🚀</span>
             <span className="inline-block ml-2">
               <a
                 rel="noopener noreferrer"
                 target="_blank"
-                href="https://t.me/MCCofficialtg"
+                href="https://medium.com/@mikemurpher/mcc-staking-live-on-ftm-6a1c70da1cfc"
                 className="font-bold text-white underline"
               >
                 {' '}
-                Join Here <span aria-hidden="true">&rarr;</span>
+                Learn More <span aria-hidden="true">&rarr;</span>
               </a>
             </span>
           </p>

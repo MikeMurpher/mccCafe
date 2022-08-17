@@ -25,6 +25,7 @@ import {
   generateChainBase,
   generateChainGasMultiple,
   generateChainName,
+  generateChainNameIdentifier,
 } from '../../lib/utils/chainFormatters';
 import {
   formatTotalRealized,
@@ -59,6 +60,7 @@ export function MultiNode(props: MultiNodeType) {
     addClaimableNode,
     addNodeStats,
     addToCartClaim,
+    walletNodeStats,
     removeFromCartClaim,
     cartClaimNodes,
   } = useWalletStore((state) => state);
@@ -113,6 +115,10 @@ export function MultiNode(props: MultiNodeType) {
 
   const nodePic = data?.attributes?.[0].value?.toLowerCase();
 
+  const { data: rewardData } = useSWR(
+    `/api/holdings?address=${MULTINODE_CLAIM_CONTRACT}`
+  );
+
   async function claimRewards(nodeId: string) {
     try {
       if (!nodeId) {
@@ -120,6 +126,21 @@ export function MultiNode(props: MultiNodeType) {
         return;
       }
       const { ethereum } = window;
+
+      let confirmedContinue = true;
+
+      if (
+        walletNodeStats?.available >
+        rewardData[`${generateChainNameIdentifier(chainId)}`].supply
+      ) {
+        confirmedContinue = confirm(
+          'There are not enough rewards in the MultiNode Treasury Wallet for you to claim ALL of your rewards - if you claiming an individual node amount - or specific nodes in the cart, please be sure you know what you are doing - are you sure you want to continue?'
+        );
+      }
+
+      if (!confirmedContinue) {
+        return;
+      }
 
       if (ethereum) {
         toast.success(`Confirming Transaction In Wallet`, {
