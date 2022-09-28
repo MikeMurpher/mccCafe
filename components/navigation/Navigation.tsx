@@ -21,6 +21,20 @@ export const Navigation = () => (
 const itemIds = [
   {
     nextJsLink: false,
+    openInNewPage: false,
+    text: `Home`,
+    href: '/',
+    img: ``,
+  },
+  {
+    nextJsLink: false,
+    openInNewPage: false,
+    text: `Contracts`,
+    href: '/contracts',
+    img: ``,
+  },
+  {
+    nextJsLink: false,
     openInNewPage: true,
     text: `Telegram`,
     href: 'https://t.me/MCCofficialtg',

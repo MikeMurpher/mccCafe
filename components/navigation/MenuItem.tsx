@@ -17,7 +17,7 @@ const variants = {
   },
 };
 
-const colors = ['#241f20', '#3a2f2f', '#53312f', '#9d581f', '#e6d6c8'];
+const colors = ['#000000','#241f20', '#3a2f2f', '#53312f', '#9d581f', '#eab676'];
 
 export const MenuItem = ({ item, index }: any) => {
   const style = { background: `${colors[index]}` };
