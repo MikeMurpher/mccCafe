@@ -43,7 +43,7 @@ export function ContractsGrid() {
           </li>
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
-              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/logos/mcc-black.png" alt="multichaincapital.eth Image" title="/0xfbf335f8224a102e22abe78d78cc52dc95e074fa" />
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/logos/mcc-black.png" alt="multichaincapital.eth Image" title="0xfbf335f8224a102e22abe78d78cc52dc95e074fa" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">multichaincapital .eth</h3>
             </div>
             <div>
