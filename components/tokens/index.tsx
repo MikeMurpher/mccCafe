@@ -25,7 +25,7 @@ export function Tokens() {
                 </header>
             </div>
             <dl className="grid grid-cols-1 mt-5 gap-2 overflow-hide divide-y divide-gray-200 rounded-lg md:grid-cols-2 md:divide-y-0 md:divide-x">
-                {data?.myTokens?.[0]?.balances?.map((token:any) => (
+                {data?.myTokens?.data?.ethereum?.address?.[0]?.balances?.map((token:any) => (
                     <Token type="incubator" {...token}/>
                 ))}
             </dl>
@@ -36,7 +36,7 @@ export function Tokens() {
                 </header>
             </div>
             <dl className="grid grid-cols-1 mt-5 gap-2 overflow-hide divide-y divide-gray-200 rounded-lg shadow md:grid-cols-2 md:divide-y-0 md:divide-x">
-                {data?.myTokens?.[0]?.balances?.map((token:any) => (
+                {data?.myTokens?.data?.ethereum?.address?.[0]?.balances?.map((token:any) => (
                     <Token type="yieldwolf" {...token}/>
                 ))}
             </dl>

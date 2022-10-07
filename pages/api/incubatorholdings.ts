@@ -9,13 +9,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         parseInt(req?.query?.chainId as any)
       );
 
-  
       const myTokens = await getIncubatorTokenBalances(chainName,address);
 
-      
-  
       res.status(200).json({
-        myTokens:myTokens?.data?.ethereum?.address
+        myTokens
       });
       res.end();
     } catch (error) {
