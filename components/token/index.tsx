@@ -3,6 +3,7 @@ import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 import { generateChainNameIdentifier } from '../../lib/utils/chainFormatters';
 import { ChainEnum } from '../../lib/types';
 import { useWeb3 } from '../../lib/hooks/useWeb3';
+
 interface tokenType {
   currency: any
   value: string
@@ -150,7 +151,7 @@ function getHyperlinkDisplay(t:string){
 export default function Token(n: tokenType) {
   const { currency, value, type } = n
   const { chainId } = useWeb3();
-
+  console.log(currency.symbol);
   const val = abbreviateNumber(value, 4);
   const tokenImage = getTokenImage(currency.address, type);
   const buttonText = getButtonText(type);
