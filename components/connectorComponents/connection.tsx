@@ -259,22 +259,20 @@ export function ConnectionComponent(props: ConnectionProps) {
                         </a>
                       ))}
                     </div>
-                    <div className="p-5 bg-gray-50 sm:p-8">
-                      <span className="flow-root p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-gray-100">
-                        <span className="flex items-center">
-                          <span className="text-base font-medium text-gray-900">
-                            MCC Ecosystem Holdings
+                    <a href="/tokens">
+                      <div className="p-5 bg-gray-50 sm:p-8">
+                        <span className="flow-root p-3 -m-3 transition duration-150 ease-in-out rounded-md hover:bg-gray-100">
+                          <span className="flex items-center">
+                            <span className="text-base font-medium text-gray-900">
+                              MCC Ecosystem Holdings
+                            </span>
                           </span>
-                          <span className="ml-3 inline-flex items-center rounded-full bg-indigo-100 px-3 py-0.5 text-xs font-medium leading-5 text-indigo-800">
-                            Coming Soon
+                          <span className="block mt-1 text-sm text-gray-500">
+                            View all your MCC investments across chain here
                           </span>
                         </span>
-                        <span className="block mt-1 text-sm text-gray-500">
-                          You'll be able to view all your MCC investments across
-                          chain here
-                        </span>
-                      </span>
-                    </div>
+                      </div>
+                    </a>
                   </div>
                 </Popover.Panel>
               </Transition>
@@ -390,16 +388,16 @@ export function ConnectionComponent(props: ConnectionProps) {
                   connector instanceof MetaMask && !isWeb3Available
                     ? () => startOnboarding()
                     : isActivating
-                    ? undefined
-                    : () => {
+                      ? undefined
+                      : () => {
                         connector instanceof GnosisSafe
                           ? void connector.activate()
                           : connector instanceof WalletConnect ||
                             connector instanceof Network
-                          ? connector.activate(
+                            ? connector.activate(
                               desiredChainId === -1 ? undefined : desiredChainId
                             )
-                          : connector.activate(
+                            : connector.activate(
                               desiredChainId === -1
                                 ? undefined
                                 : getAddChainParameters(desiredChainId)
@@ -431,10 +429,10 @@ export function ConnectionComponent(props: ConnectionProps) {
 
 function renderMessaging(type: WalletType):
   | {
-      title: string;
-      action: string;
-      img: JSX.Element;
-    }
+    title: string;
+    action: string;
+    img: JSX.Element;
+  }
   | undefined {
   switch (type) {
     case WalletEnum.coinbase:
