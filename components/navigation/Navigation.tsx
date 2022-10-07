@@ -29,6 +29,13 @@ const itemIds = [
   {
     nextJsLink: false,
     openInNewPage: false,
+    text: `My Tokens`,
+    href: '/tokens',
+    img: ``,
+  },
+  {
+    nextJsLink: false,
+    openInNewPage: false,
     text: `Contracts`,
     href: '/contracts',
     img: ``,

@@ -80,6 +80,19 @@ export function generateBitqueryChainData(chainId?: BlockchainType) {
   }
 }
 
+export function generateBitqueryChainName(chainId?: BlockchainType) {
+  switch (chainId) {
+    case ChainEnum.erc:
+      return 'ethereum';
+    case ChainEnum.bsc:
+      return ChainNameEnum.bsc;
+    case ChainEnum.ftm:
+      return 'fantom';
+    default:
+      return 'ethereum';
+  }
+}
+
 export function renderConnectedChain(chain?: BlockchainType) {
   switch (chain) {
     case ChainEnum.erc:
