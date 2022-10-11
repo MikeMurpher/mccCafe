@@ -3,7 +3,7 @@ import {
   InformationCircleIcon,
   PlusCircleIcon,
   SparklesIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import error from 'next/error';
 import { useEffect } from 'react';

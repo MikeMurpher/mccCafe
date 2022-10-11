@@ -1,11 +1,11 @@
 import { Dialog, Popover, Switch, Transition } from '@headlessui/react';
 import {
   ChevronDownIcon,
-  DocumentSearchIcon,
+  DocumentMagnifyingGlassIcon,
   MinusCircleIcon,
   PlusCircleIcon,
   ShoppingCartIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import { ChangeEvent, Fragment, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -225,7 +225,7 @@ export function MulitNodeGrid() {
             onClick={() => openManualCheckModal()}
             className="inline-flex items-center px-4 py-2 mb-1 ml-3 text-sm font-medium text-white border border-white rounded-md focus:ring-offset-2"
           >
-            <DocumentSearchIcon
+            <DocumentMagnifyingGlassIcon
               className={`h-5 w-5 text-white`}
               aria-hidden="true"
             />

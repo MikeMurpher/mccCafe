@@ -1,26 +1,26 @@
-import { getTokenBalance } from '../../lib/api/getTokenBalance';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getTokenBalances } from '../../lib/api/getTokenBalances';
 import { MCC_CONTRACT, ONE_BILLION } from '../../lib/constants';
 import { ChainNameEnum } from '../../lib/types';
 import request from '../../lib/utils/request';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const [ftmSupply, bscSupply, ercSupply] = await Promise.all([
-      getTokenBalance({
+      getTokenBalances({
         chain: ChainNameEnum.ftm,
         account: req?.query?.address,
-        tokenAddress: MCC_CONTRACT,
+        tokenAddress: [MCC_CONTRACT],
       }),
-      getTokenBalance({
+      getTokenBalances({
         chain: ChainNameEnum.bsc,
         account: req?.query?.address,
-        tokenAddress: MCC_CONTRACT,
+        tokenAddress: [MCC_CONTRACT],
       }),
-      getTokenBalance({
+      getTokenBalances({
         chain: 'eth',
         account: req?.query?.address,
-        tokenAddress: MCC_CONTRACT,
+        tokenAddress: [MCC_CONTRACT],
       }),
     ]);
 

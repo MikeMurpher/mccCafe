@@ -1,5 +1,5 @@
 import { Dialog, Popover, Transition } from '@headlessui/react';
-import { CashIcon, ChevronDownIcon } from '@heroicons/react/solid';
+import { BanknotesIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import type { Web3ReactHooks } from '@web3-react/core';
 import { GnosisSafe } from '@web3-react/gnosis-safe';
@@ -318,7 +318,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                   <Dialog.Panel className="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
                     <div>
                       <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full">
-                        <CashIcon
+                        <BanknotesIcon
                           className="w-6 h-6 text-blue-600"
                           aria-hidden="true"
                         />
@@ -388,16 +388,16 @@ export function ConnectionComponent(props: ConnectionProps) {
                   connector instanceof MetaMask && !isWeb3Available
                     ? () => startOnboarding()
                     : isActivating
-                      ? undefined
-                      : () => {
+                    ? undefined
+                    : () => {
                         connector instanceof GnosisSafe
                           ? void connector.activate()
                           : connector instanceof WalletConnect ||
                             connector instanceof Network
-                            ? connector.activate(
+                          ? connector.activate(
                               desiredChainId === -1 ? undefined : desiredChainId
                             )
-                            : connector.activate(
+                          : connector.activate(
                               desiredChainId === -1
                                 ? undefined
                                 : getAddChainParameters(desiredChainId)
@@ -429,10 +429,10 @@ export function ConnectionComponent(props: ConnectionProps) {
 
 function renderMessaging(type: WalletType):
   | {
-    title: string;
-    action: string;
-    img: JSX.Element;
-  }
+      title: string;
+      action: string;
+      img: JSX.Element;
+    }
   | undefined {
   switch (type) {
     case WalletEnum.coinbase:

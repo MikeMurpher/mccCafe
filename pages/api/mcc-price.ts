@@ -1,18 +1,22 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getPriceQuote } from '../../lib/api/getPriceQuote';
 import { MCC_CONTRACT } from '../../lib/constants';
 import { ChainNameEnum } from '../../lib/types';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const [ftmPrice, bscPrice, ercPrice] = await Promise.all([
       getPriceQuote({
         chain: ChainNameEnum.ftm,
+        token: MCC_CONTRACT,
       }),
       getPriceQuote({
         chain: ChainNameEnum.bsc,
+        token: MCC_CONTRACT,
       }),
       getPriceQuote({
         chain: 'eth',
+        token: MCC_CONTRACT,
       }),
     ]);
 
@@ -27,21 +31,3 @@ export default async (_req: NextApiRequest, res: NextApiResponse) => {
     res.status(500);
   }
 };
-
-async function getPriceQuote({ chain }: any) {
-  try {
-    return await fetch(
-      `https://deep-index.moralis.io/api/v2/erc20/${MCC_CONTRACT}/price?chain=${chain}`,
-      {
-        headers: {
-          accept: 'application/json',
-          'Content-Type': 'application/json',
-          'x-api-key': `${process.env.NEXT_PUBLIC_MORALIS_API_KEY}`,
-        },
-        method: 'GET',
-      }
-    ).then((res) => res.json());
-  } catch (error) {
-    console.error(error);
-  }
-}

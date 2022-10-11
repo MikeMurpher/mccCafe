@@ -1,18 +1,8 @@
-import { StatusOfflineIcon } from '@heroicons/react/solid';
+import { SignalSlashIcon } from '@heroicons/react/20/solid';
 import { BSCIcon } from '../../components/svgs/bsc';
 import { ErcIcon } from '../../components/svgs/erc';
 import { FtmIcon } from '../../components/svgs/ftm';
-import {
-  BSCSCAN_URL,
-  BUSD,
-  ERC_USDC,
-  ETHERSCAN_URL,
-  FTMSCAN_URL,
-  FTM_USDC,
-  WBNB,
-  WETH,
-  WFTM,
-} from '../constants';
+import { BSCSCAN_URL, ETHERSCAN_URL, FTMSCAN_URL } from '../constants';
 import { BlockchainType, ChainEnum, ChainNameEnum } from '../types';
 
 export function generateChainBase(chain?: BlockchainType) {
@@ -67,29 +57,16 @@ export function generateChainAbbreviation(chain?: BlockchainType) {
   }
 }
 
-export function generateBitqueryChainData(chainId?: BlockchainType) {
+export function generateNativeQueryCommands(chainId?: BlockchainType) {
   switch (chainId) {
     case ChainEnum.erc:
-      return { network: 'ethereum', usdc: ERC_USDC, nativeCurrency: WETH };
+      return { nativeCurrency: 'ethereum' };
     case ChainEnum.bsc:
-      return { network: ChainNameEnum.bsc, usdc: BUSD, nativeCurrency: WBNB };
+      return { nativeCurrency: 'binancecoin' };
     case ChainEnum.ftm:
-      return { network: 'fantom', usdc: FTM_USDC, nativeCurrency: WFTM };
+      return { nativeCurrency: 'fantom' };
     default:
-      return { network: 'ethereum', usdc: ERC_USDC, nativeCurrency: WETH };
-  }
-}
-
-export function generateBitqueryChainName(chainId?: BlockchainType) {
-  switch (chainId) {
-    case ChainEnum.erc:
-      return 'ethereum';
-    case ChainEnum.bsc:
-      return ChainNameEnum.bsc;
-    case ChainEnum.ftm:
-      return 'fantom';
-    default:
-      return 'ethereum';
+      return { nativeCurrency: 'ethereum' };
   }
 }
 
@@ -103,14 +80,11 @@ export function renderConnectedChain(chain?: BlockchainType) {
       return <FtmIcon />;
     case ChainEnum.offline:
       return (
-        <StatusOfflineIcon
-          className="w-5 h-5 text-gray-900"
-          aria-hidden="true"
-        />
+        <SignalSlashIcon className="w-5 h-5 text-gray-900" aria-hidden="true" />
       );
     default:
       return (
-        <StatusOfflineIcon className="w-5 h-5 text-black" aria-hidden="true" />
+        <SignalSlashIcon className="w-5 h-5 text-black" aria-hidden="true" />
       );
   }
 }
