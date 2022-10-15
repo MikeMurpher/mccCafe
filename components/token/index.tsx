@@ -56,7 +56,7 @@ function getTokenImage(address: string, t: string) {
         return '/incubators/gold.png';
       case IncubatorTokenAddressEnum.MPRINT:
         return '/incubators/multiprint.png';
-      case IncubatorTokenAddressEnum.OGTBOND:
+      case IncubatorTokenAddressEnum.OGTOMB:
         return '/incubators/ogtomb.png';
       case IncubatorTokenAddressEnum.OGTSHARE:
         return '/incubators/ogtshare.png';
@@ -130,7 +130,7 @@ function getButtonLink(id: any, address: string, t: string): string {
 
 function getHyperlinkDisplay(t: string) {
   if (t == 'yieldwolf') {
-    return 'hide';
+    return 'hidden';
   } else {
     return '';
   }
