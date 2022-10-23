@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getTokenBalances } from '../../lib/api/getTokenBalances';
-import { IncubatorTokenAddressEnum } from '../../lib/types';
+import { IncubatorTokenAddressEnum, YieldWolfTokenAddressEnum } from '../../lib/types';
 import { generateChainName } from '../../lib/utils/chainFormatters';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const myTokens: any = await getTokenBalances({
       chain: chainName,
       account: address,
-      tokenAddress: Object.values(IncubatorTokenAddressEnum),
+      tokenAddress: Object.values(Object.assign({}, IncubatorTokenAddressEnum, YieldWolfTokenAddressEnum)),
     });
 
     res.status(200).json({
