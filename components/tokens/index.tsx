@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { useWeb3 } from '../../lib/hooks/useWeb3';
-import { IncubatorTokenAddressEnum, TokenType } from '../../lib/types';
+import { IncubatorTokenAddressEnum, TokenType, YieldWolfTokenAddressEnum } from '../../lib/types';
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
 import { TokenView } from '../token';
@@ -28,9 +28,28 @@ export function Tokens() {
         };
       }
     }
-  );
+  ).filter((element: any) => {
+    return element !== undefined;
+  });
 
-  const yieldwolfVaults: TokenType[] = [];
+  const yieldwolfVaults: TokenType[] = data?.myTokens?.map(
+    (token: TokenType) => {
+      if (
+        parseInt(token.balance) > 0 &&
+        Object.values(YieldWolfTokenAddressEnum).includes(
+          token?.token_address as YieldWolfTokenAddressEnum
+        )
+      ) {
+        return {
+          ...token,
+          type: 'yieldwolf',
+          balance: parseInt(token.balance) / Math.pow(10, token?.decimals),
+        };
+      }
+    }
+  ).filter((element: any) => {
+    return element !== undefined;
+  });;
 
   if (isLoading) {
     return (
@@ -45,7 +64,7 @@ export function Tokens() {
       <div>
         <header>
           <h3 className="text-2xl font-medium leading-6 text-gray-50">
-            My Incubator Tokens
+            My Ecosystem Holdings
           </h3>
         </header>
       </div>
@@ -66,7 +85,7 @@ export function Tokens() {
           </h3>
         </header>
       </div>
-      <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg shadow overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
+      <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
         {yieldwolfVaults?.map((token: any) => (
           <TokenView
             key={`token-${token?.token_address}`}
