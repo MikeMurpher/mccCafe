@@ -13,7 +13,7 @@ export function Tokens() {
     (url: string) => request(url)
   );
 
-  const incubatorTokens: TokenType[] = data?.myTokens?.map(
+  const incubatorTokens: TokenType[] = chainId != undefined ? data?.myTokens?.map(
     (token: TokenType) => {
       if (
         parseInt(token.balance) > 0 &&
@@ -30,9 +30,9 @@ export function Tokens() {
     }
   ).filter((element: any) => {
     return element !== undefined;
-  });
+  }) : undefined;
 
-  const yieldwolfVaults: TokenType[] = data?.myTokens?.map(
+  const yieldwolfVaults: TokenType[] = chainId != undefined ? data?.myTokens?.map(
     (token: TokenType) => {
       if (
         parseInt(token.balance) > 0 &&
@@ -49,7 +49,7 @@ export function Tokens() {
     }
   ).filter((element: any) => {
     return element !== undefined;
-  });;
+  }) : undefined;
 
   if (isLoading) {
     return (
@@ -69,13 +69,19 @@ export function Tokens() {
         </header>
       </div>
       <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
-        {incubatorTokens?.map((token: any) => (
+        {incubatorTokens != undefined ? incubatorTokens?.map((token: any) => (
           <TokenView
             key={`token-${token?.token_address}`}
             type="incubator"
             {...token}
           />
-        ))}
+        )) :
+          <div className="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow px-4 py-5">
+            <h2 className="text-2xl font-bold leading-7 text-gray-500 sm:truncate sm:text-2xl">
+              Connect Wallet To View Your Tokens
+            </h2>
+          </div>
+        }
       </dl>
       <div className="mb-5"></div>
       <div>
@@ -86,13 +92,19 @@ export function Tokens() {
         </header>
       </div>
       <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
-        {yieldwolfVaults?.map((token: any) => (
+        {yieldwolfVaults != undefined ? yieldwolfVaults?.map((token: any) => (
           <TokenView
             key={`token-${token?.token_address}`}
             type="yieldwolf"
             {...token}
           />
-        ))}
+        )) :
+        <div className="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow px-4 py-5">
+          <h2 className="text-2xl font-bold leading-7 text-gray-500 sm:truncate sm:text-2xl">
+            Connect Wallet To View Your Vaults
+          </h2>
+        </div>
+        }
       </dl>
       <div className="mb-5"></div>
     </main>
