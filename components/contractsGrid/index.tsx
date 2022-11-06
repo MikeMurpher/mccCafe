@@ -473,7 +473,7 @@ export function ContractsGrid() {
           </li>
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
-              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/czr.png" alt="CZ Retirement Package Image" title="0xC5401F6EAb46cBa5a8151D1132c022a311d9AEAE"/>
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/czr.png" alt="CZ Retirement Package Image" title="0xC5401F6EAb46cBa5a8151D1132c022a311d9AEAE" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">CZ Retirement</h3>
             </div>
             <div>
@@ -608,7 +608,7 @@ export function ContractsGrid() {
           </li>
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
-              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/rc.png" alt="RC Image" title="0xF6ee08FA550E1cb08C0821a4DA8CEa57b8909D2e"/>
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/rc.png" alt="RC Image" title="0xF6ee08FA550E1cb08C0821a4DA8CEa57b8909D2e" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">RC</h3>
             </div>
             <div>
@@ -688,7 +688,7 @@ export function ContractsGrid() {
           </li>
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
-              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/merge.png" alt="TheMerge Tech Image" title="0x0a533badc3d59014c761674c1962e2d3aaef1035"/>
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/merge.png" alt="TheMerge Tech Image" title="0x0a533badc3d59014c761674c1962e2d3aaef1035" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">TheMerge.Tech</h3>
             </div>
             <div>
@@ -933,6 +933,21 @@ export function ContractsGrid() {
         <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-5 mb-5">
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/abc.png" alt="ABC Protocol Image" title="0xebde95c46e429ecd284d04bffcfd9b4cb9861dfc" />
+              <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">ABC Protocol</h3>
+            </div>
+            <div>
+              <div className="flex -mt-px divide-x divide-gray-200">
+                <div className="flex flex-1 w-0">
+                  <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/token/0xebde95c46e429ecd284d04bffcfd9b4cb9861dfc" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg rounded-br-lg hover:text-gray-500">
+                    <img className="flex-shrink-0 w-5 h-5" src="/networks/ftm.png" alt="Fantom Image" title="ftmscan" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
+            <div className="flex flex-col flex-1 px-4 py-3">
               <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/green.png" alt="Greenlight Image" title="0xe5c8e7a3be1d6b24b41e4418ba46e31b35b86f0c" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">Greenlight</h3>
             </div>
@@ -969,7 +984,7 @@ export function ContractsGrid() {
             <div>
               <div className="flex -mt-px divide-x divide-gray-200">
                 <div className="flex flex-1 w-0">
-                <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/address/0xfb0a20b546aa5c5cdbc9e2dcbc472282f2dc28c8" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg rounded-br-lg hover:text-gray-500">
+                  <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/address/0xfb0a20b546aa5c5cdbc9e2dcbc472282f2dc28c8" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg rounded-br-lg hover:text-gray-500">
                     <img className="flex-shrink-0 w-5 h-5" src="/networks/ftm.png" alt="Fantom Image" title="ftmscan" />
                   </a>
                 </div>
@@ -984,7 +999,7 @@ export function ContractsGrid() {
             <div>
               <div className="flex -mt-px divide-x divide-gray-200">
                 <div className="flex flex-1 w-0">
-                <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/token/0x137c1b5974a514965021b9c728a5551b4985dac5" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg rounded-br-lg hover:text-gray-500">
+                  <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/token/0x137c1b5974a514965021b9c728a5551b4985dac5" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg rounded-br-lg hover:text-gray-500">
                     <img className="flex-shrink-0 w-5 h-5" src="/networks/ftm.png" alt="Fantom Image" title="ftmscan" />
                   </a>
                 </div>
