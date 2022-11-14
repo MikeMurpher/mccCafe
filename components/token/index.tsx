@@ -69,7 +69,7 @@ function getTokenImage(address: string, t: string) {
       case IncubatorTokenAddressEnum.ReflectiveEuro:
         return '/incubators/reuro.png';
       case IncubatorTokenAddressEnum.Silver:
-        return '/incubators/silver.png';
+        return '/incubators/slvr.png';
       case IncubatorTokenAddressEnum.SalesTax:
         return '/incubators/sales.png';
       case IncubatorTokenAddressEnum.TheMergeTech:
