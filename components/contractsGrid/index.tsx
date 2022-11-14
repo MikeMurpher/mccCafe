@@ -963,6 +963,21 @@ export function ContractsGrid() {
           </li>
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/justtest.png" alt="Just Test Image" title="0xACACab474461877B90E6fDca44A2F8d1B5941BAf" />
+              <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">Just Test</h3>
+            </div>
+            <div>
+              <div className="flex -mt-px divide-x divide-gray-200">
+                <div className="flex flex-1 w-0">
+                  <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/token/0xacacab474461877b90e6fdca44a2f8d1b5941baf" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg rounded-br-lg hover:text-gray-500">
+                    <img className="flex-shrink-0 w-5 h-5" src="/networks/ftm.png" alt="Fantom Image" title="ftmscan" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
+            <div className="flex flex-col flex-1 px-4 py-3">
               <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/art.png" alt="Human Only Art Image" title="0x52b976bda3bc65b5b36234c29cda1a4f156e8ca4" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">Human Only Art</h3>
             </div>
