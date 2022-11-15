@@ -1,6 +1,6 @@
-import loading from './glyphs/loading';
-import cn from 'classnames';
+import clsx from 'clsx';
 import { createElement, MemoExoticComponent } from 'react';
+import loading from './glyphs/loading';
 
 interface IconProps {
   glyph: glyph;
@@ -27,7 +27,7 @@ function Icon(props: IconProps): JSX.Element {
   const { glyph, fill, rotate, size = 8, containerClass = '', ...res } = props;
 
   return (
-    <span className={cn(`w-${size} h-${size} inline-block`, containerClass)}>
+    <span className={clsx(`w-${size} h-${size} inline-block`, containerClass)}>
       {createElement(GLYPH_MAPS[glyph], {
         fill: fill ? fill : 'currentColor',
         ...res,

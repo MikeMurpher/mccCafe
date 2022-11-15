@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { MULTINODE_CLAIM_CONTRACT } from '../../lib/constants';
@@ -85,7 +85,7 @@ export function RewardBalanceStats() {
                 </span>
                 <div className="ml-auto">
                   <div
-                    className={classNames(
+                    className={clsx(
                       'inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0'
                     )}
                   >

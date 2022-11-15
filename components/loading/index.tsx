@@ -1,4 +1,4 @@
-import cn from 'classnames';
+import clsx from 'clsx';
 import Icon from '../icons';
 
 export function Loading({
@@ -12,7 +12,7 @@ export function Loading({
 }): JSX.Element {
   return (
     <div
-      className={cn(
+      className={clsx(
         containerClass
           ? containerClass
           : 'relative z-50 flex flex-auto items-center justify-center self-stretch'

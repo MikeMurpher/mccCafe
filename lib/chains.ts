@@ -53,11 +53,6 @@ export const CHAINS: {
     urls: [`https://polygon-rpc.com`].filter((url) => url !== undefined),
     name: 'Fantom (Matic)',
   },
-
-  // '-1': {
-  //   urls: [],
-  //   name: 'Offline',
-  // },
 };
 
 export const URLS: { [chainId: number]: string[] } = Object.keys(

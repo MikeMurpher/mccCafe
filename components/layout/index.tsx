@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { Footer } from '../footer';
 import { NavContainer } from '../navigation';
 import { StickyBanner } from '../stickyBanner';
@@ -13,7 +13,7 @@ export function LayoutContainer(props: any): JSX.Element {
             <NavContainer />
             <main className="my-8">
               <div
-                className={classNames(
+                className={clsx(
                   props?.isFullWidth ? `w-full` : `max-w-7xl`,
                   'mx-auto px-8'
                 )}

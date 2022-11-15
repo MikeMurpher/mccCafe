@@ -4,7 +4,7 @@ import {
   PlusCircleIcon,
   SparklesIcon,
 } from '@heroicons/react/20/solid';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import error from 'next/error';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
@@ -208,7 +208,7 @@ export function MultiNode(props: MultiNodeType) {
 
   return (
     <li
-      className={classNames(
+      className={clsx(
         isInCart ? `border-green-600` : ` border-white`,
         `col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow`
       )}
@@ -325,7 +325,7 @@ export function MultiNode(props: MultiNodeType) {
                 }
                 claimRewards(props?.token_id);
               }}
-              className={classNames(
+              className={clsx(
                 nothingClaimable || isManualCheckEnabled
                   ? `hover:to-gray-90 from-gray-500 to-gray-700`
                   : `hover:to-green-90 from-green-500 to-green-700`,

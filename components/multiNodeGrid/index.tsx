@@ -6,7 +6,7 @@ import {
   PlusCircleIcon,
   ShoppingCartIcon,
 } from '@heroicons/react/20/solid';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { ChangeEvent, Fragment, useState } from 'react';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
@@ -199,14 +199,14 @@ export function MulitNodeGrid() {
                 <Switch
                   checked={manualCheckEnabled}
                   onChange={setEnabled}
-                  className={classNames(
+                  className={clsx(
                     manualCheckEnabled ? 'bg-indigo-600' : 'bg-gray-200',
                     'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                   )}
                 >
                   <span
                     aria-hidden="true"
-                    className={classNames(
+                    className={clsx(
                       manualCheckEnabled ? 'translate-x-5' : 'translate-x-0',
                       'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out'
                     )}
@@ -289,7 +289,7 @@ export function MulitNodeGrid() {
                       type="button"
                       onClick={() => claimNodeRewards(claimableNodes)}
                       disabled={!walletNodeStats?.available}
-                      className={classNames(
+                      className={clsx(
                         !walletNodeStats?.available
                           ? 'cursor-not-allowed from-gray-500 to-gray-700 focus:ring-gray-500'
                           : 'from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500',
@@ -450,7 +450,7 @@ export function MulitNodeGrid() {
                                       }
                                       claimNodeRewards(cartClaimNodes);
                                     }}
-                                    className={classNames(
+                                    className={clsx(
                                       cartClaimNodes?.length
                                         ? `from-green-500 to-green-700 hover:to-green-900 focus:ring-green-500`
                                         : `cursor-not-allowed from-gray-500 to-gray-700 hover:to-gray-900 focus:ring-gray-500`,
@@ -525,7 +525,7 @@ export function MulitNodeGrid() {
                     </span>
                     <div className="ml-auto">
                       <div
-                        className={classNames(
+                        className={clsx(
                           'inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0'
                         )}
                       >

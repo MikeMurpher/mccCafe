@@ -6,7 +6,7 @@ import { GnosisSafe } from '@web3-react/gnosis-safe';
 import { MetaMask } from '@web3-react/metamask';
 import { Network } from '@web3-react/network';
 import { WalletConnect } from '@web3-react/walletconnect';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Image from 'next/image';
 import Router from 'next/router';
 import { Fragment, useCallback, useState } from 'react';
@@ -201,7 +201,7 @@ export function ConnectionComponent(props: ConnectionProps) {
           {({ open }) => (
             <>
               <Popover.Button
-                className={classNames(
+                className={clsx(
                   open ? 'text-gray-900' : 'text-gray-500',
                   'group z-10 inline-flex h-10 items-center rounded-md bg-white px-0.5 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:px-2'
                 )}
@@ -218,7 +218,7 @@ export function ConnectionComponent(props: ConnectionProps) {
                   </span>
                 </span>
                 <ChevronDownIcon
-                  className={classNames(
+                  className={clsx(
                     open ? 'text-gray-600' : 'text-gray-400',
                     'ml-1 h-5 w-5 transition duration-150 ease-in-out group-hover:text-gray-500'
                   )}
@@ -372,12 +372,12 @@ export function ConnectionComponent(props: ConnectionProps) {
     return (
       <div className="relative flex flex-col items-center space-x-3">
         <div
-          className={classNames(
+          className={clsx(
             'group relative w-full rounded-lg p-6 transition-colors duration-150 hover:bg-slate-700'
           )}
         >
           <div>
-            <span className={classNames('inline-flex')}>
+            <span className={clsx('inline-flex')}>
               {renderMessaging(type)?.img}
             </span>
           </div>
