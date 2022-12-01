@@ -86,6 +86,8 @@ function getTokenImage(address: string, t: string) {
         return '/incubators/mirror.png';
       case IncubatorTokenAddressEnum.RMPL:
         return '/incubators/rmpl.png';
+      case IncubatorTokenAddressEnum.OGKOLLECTIVE:
+        return '/incubators/ogkollective.png'
       case IncubatorTokenAddressEnum.MCC:
         return '/logos/mcc-black.png';
       default:
