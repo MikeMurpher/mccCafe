@@ -53,6 +53,7 @@ export enum IncubatorTokenAddressEnum {
   HumanOnlyArt = '0x52b976bda3bc65b5b36234c29cda1a4f156e8ca4',
   MultichainMirror = '0xfb0a20b546aa5c5cdbc9e2dcbc472282f2dc28c8',
   RMPL = '0x137c1b5974a514965021b9c728a5551b4985dac5',
+  OGKOLLECTIVE = '0x3b9c214a501b2ae33ab1793b57b09879a754f2ef'
 }
 
 export enum YieldWolfTokenAddressEnum {
