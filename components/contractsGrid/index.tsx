@@ -563,6 +563,31 @@ export function ContractsGrid() {
           </li>
           <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
             <div className="flex flex-col flex-1 px-4 py-3">
+              <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/ogkollective.png" alt="OG Kollective Image" title="0x3B9c214a501b2AE33AB1793B57b09879a754F2ef" />
+              <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">OG Kollective</h3>
+            </div>
+            <div>
+              <div className="flex -mt-px divide-x divide-gray-200">
+              <div className="flex flex-1 w-0">
+                  <a target="_blank" rel="noopener noreferrer" href="https://etherscan.io/token/0x3B9c214a501b2AE33AB1793B57b09879a754F2ef" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-bl-lg hover:text-gray-500">
+                    <img className="flex-shrink-0 w-5 h-5" src="/networks/eth.png" alt="Ethereum Image" title="etherscan" />
+                  </a>
+                </div>
+                <div className="flex flex-1 w-0">
+                  <a target="_blank" rel="noopener noreferrer" href="https://bscscan.com/token/0x3B9c214a501b2AE33AB1793B57b09879a754F2ef" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border hover:text-gray-500">
+                    <img className="flex-shrink-0 w-5 h-5" src="/networks/bsc.png" alt="Binance Smart Chain Image" title="bscscan" />
+                  </a>
+                </div>
+                <div className="flex flex-1 w-0">
+                  <a target="_blank" rel="noopener noreferrer" href="https://ftmscan.com/token/0x3B9c214a501b2AE33AB1793B57b09879a754F2ef" className="relative inline-flex items-center justify-center flex-1 w-0 py-4 -mr-px text-sm font-medium text-gray-700 border rounded-br-lg rounded-br-lg hover:text-gray-500">
+                    <img className="flex-shrink-0 w-5 h-5" src="/networks/ftm.png" alt="Fantom Image" title="ftmscan" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li className=" border-white col-span-1 flex flex-col rounded-lg border-4 bg-white text-center shadow">
+            <div className="flex flex-col flex-1 px-4 py-3">
               <img className="flex-shrink-0 w-auto h-32 mx-auto rounded-lg" src="/incubators/ogtomb.png" alt="OG-TOMB Image" title="0x318315ac34494caaec9028cbb63eff15c7b3b2e4" />
               <h3 className="mt-2 text-sm font-black text-gray-900 uppercase">OG-TOMB</h3>
             </div>
