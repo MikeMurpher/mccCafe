@@ -15,7 +15,7 @@
 
 <br />
 <div align="center">
-  <sub>Cooked by <a href="https://twitter.com/cryptod0c_">cryptod0c</a> 🥊</sub>
+  <sub>Cooked by <a href="https://twitter.com/cryptod0c_">cryptod0c</a> & <a href="https://twitter.com/mikemurpher">MikeMurpher</a></sub>
 </div>
 
 <br />

@@ -7,6 +7,7 @@ import {
   ShoppingCartIcon,
 } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { ChangeEvent, Fragment, useState } from 'react';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
@@ -340,7 +341,9 @@ export function MulitNodeGrid() {
                                               className="relative flex items-center px-6 py-5 mb-1 space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
                                             >
                                               <div className="flex-shrink-0">
-                                                <img
+                                                <Image
+                                                  height={50}
+                                                  width={50}
                                                   className="w-6 h-auto rounded-full"
                                                   src={`/nodes/${cn?.type}.png`}
                                                   alt=""

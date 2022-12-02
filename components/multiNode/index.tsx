@@ -6,6 +6,7 @@ import {
 } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 import error from 'next/error';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useSWR from 'swr';
@@ -250,7 +251,9 @@ export function MultiNode(props: MultiNodeType) {
         {isLoading || !nodePic ? (
           <Loading size={64} fill="gray" />
         ) : (
-          <img
+          <Image
+            height={200}
+            width={200}
             className="flex-shrink-0 w-auto h-64 mx-auto rounded-full"
             src={`/nodes/${nodePic}.png`}
             alt="Node Image"

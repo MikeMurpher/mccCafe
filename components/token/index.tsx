@@ -1,10 +1,11 @@
+import Image from 'next/image';
 import { useWeb3 } from '../../lib/hooks/useWeb3';
 import {
   ChainEnum,
   IncubatorTokenAddressEnum,
   TokenType,
+  YieldWolfToken,
   YieldWolfTokenAddressEnum,
-  YieldWolfToken
 } from '../../lib/types';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 
@@ -21,7 +22,12 @@ export function TokenView(props: TokenType & { type: string }) {
   return (
     <div className="px-4 py-5 mb-1 bg-white rounded-lg sm:p-6">
       <dt className="flex items-center text-base font-bold text-gray-900 uppercase">
-        <img width="24" height="24" src={tokenImage}></img>
+        <Image
+          alt={`${tokenImage} alt`}
+          width="24"
+          height="24"
+          src={tokenImage}
+        />
         <span className="ml-1 text-xs font-normal text-gray-400 normal-case">
           {name}
         </span>
@@ -87,7 +93,7 @@ function getTokenImage(address: string, t: string) {
       case IncubatorTokenAddressEnum.RMPL:
         return '/incubators/rmpl.png';
       case IncubatorTokenAddressEnum.OGKOLLECTIVE:
-        return '/incubators/ogkollective.png'
+        return '/incubators/ogkollective.png';
       case IncubatorTokenAddressEnum.MCC:
         return '/logos/mcc-black.png';
       default:
@@ -185,7 +191,8 @@ function getTokenImage(address: string, t: string) {
         return YieldWolfToken.WFTM_OGTSHARE.image;
       case YieldWolfTokenAddressEnum.WFTM_OGTOMB:
         return YieldWolfToken.WFTM_OGTOMB.image;
-      default: return '/logos/yieldwolf.png';
+      default:
+        return '/logos/yieldwolf.png';
     }
   } else {
     return '/logos/mcc-black.png';
@@ -304,7 +311,8 @@ function getButtonLink(id: any, address: string, t: string): string {
         return YieldWolfToken.WFTM_OGTSHARE.url;
       case YieldWolfTokenAddressEnum.WFTM_OGTOMB:
         return YieldWolfToken.WFTM_OGTOMB.url;
-      default: return '#';
+      default:
+        return '#';
     }
   } else {
     return '#';

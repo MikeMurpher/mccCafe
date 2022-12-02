@@ -34,10 +34,10 @@ const navItems = [
     href: '#disclaimer',
   },
   {
-    nextJsLink: false,
-    openInNewPage: true,
-    text: 'Twitter',
-    href: 'https://twitter.com/mccincubations',
+    nextJsLink: true,
+    openInNewPage: false,
+    text: 'Contracts',
+    href: '/contracts',
   },
   {
     nextJsLink: false,
