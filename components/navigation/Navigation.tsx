@@ -3,15 +3,17 @@ import { MenuItem } from './MenuItem';
 
 const variants = {
   open: {
+    zIndex: 20,
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
   },
   closed: {
+    zIndex: 0,
     transition: { staggerChildren: 0.05, staggerDirection: -1 },
   },
 };
 
 export const Navigation = () => (
-  <motion.ul className="z-20 nav-ul" variants={variants}>
+  <motion.ul className="nav-ul" variants={variants}>
     {itemIds.map((i, index) => (
       <MenuItem item={i} index={index} key={index} />
     ))}
