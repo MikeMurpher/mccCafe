@@ -424,19 +424,6 @@ export const incubatorContracts = [
     ],
   },
   {
-    name: 'BlackHole',
-    img: '/incubators/blackhole.png',
-    alt: 'BlackHole',
-    contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
-    subItems: [
-      {
-        link: 'https://ftmscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
-        img: '/networks/ftm.png',
-        title: 'ftmscan',
-      },
-    ],
-  },
-  {
     name: 'Cash Back',
     img: '/incubators/cashback.png',
     alt: 'Cash Back',
@@ -904,6 +891,19 @@ export const miscellaneousContracts = [
     subItems: [
       {
         link: 'https://ftmscan.com/address/0xebde95c46e429ecd284d04bffcfd9b4cb9861dfc',
+        img: '/networks/ftm.png',
+        title: 'ftmscan',
+      },
+    ],
+  },
+  {
+    name: 'BlackHole',
+    img: '/incubators/blackhole.png',
+    alt: 'BlackHole',
+    contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
+    subItems: [
+      {
+        link: 'https://ftmscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
         img: '/networks/ftm.png',
         title: 'ftmscan',
       },
