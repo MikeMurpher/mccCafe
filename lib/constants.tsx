@@ -426,7 +426,7 @@ export const incubatorContracts = [
   {
     name: 'BlackHole',
     img: '/incubators/blackhole.png',
-    alt: 'Cash Back',
+    alt: 'BlackHole',
     contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
     subItems: [
       {
