@@ -54,6 +54,7 @@ export enum IncubatorTokenAddressEnum {
   MultichainMirror = '0xfb0a20b546aa5c5cdbc9e2dcbc472282f2dc28c8',
   RMPL = '0x137c1b5974a514965021b9c728a5551b4985dac5',
   OGKOLLECTIVE = '0x3b9c214a501b2ae33ab1793b57b09879a754f2ef',
+  BLACKHOLE = '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
 }
 
 export enum YieldWolfTokenAddressEnum {
