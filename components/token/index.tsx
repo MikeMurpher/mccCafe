@@ -10,7 +10,7 @@ import {
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 
 export function TokenView(props: TokenType & { type: string }) {
-  const { token_address, balance, symbol, type, name } = props;
+  const { token_address, balance, symbol, type, name, decimals } = props;
   const { chainId } = useWeb3();
 
   const val = abbreviateNumber(balance, 2);
@@ -18,6 +18,26 @@ export function TokenView(props: TokenType & { type: string }) {
   const buttonText = getButtonText(type);
   const buttonLink = getButtonLink(chainId, token_address, type);
   const visible = getHyperlinkDisplay(type);
+
+  const addTokenToMM = async () => {
+    try {
+      const { ethereum } = window as any;
+      await ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          options: {
+            address: token_address, // The address that the token is at.
+            symbol: symbol, // A ticker symbol or shorthand, up to 5 chars.
+            decimals: decimals, // The number of decimals in the token
+            image: 'https://www.mcc.cafe' + getTokenImage(token_address,type), // A string url of the token logo
+          },
+        },
+      })
+    } catch (ex) {
+      console.error(ex);
+    }
+  }
 
   return (
     <div className="px-4 py-5 mb-1 bg-white rounded-lg sm:p-6">
@@ -31,6 +51,9 @@ export function TokenView(props: TokenType & { type: string }) {
         <span className="ml-1 text-xs font-normal text-gray-400 normal-case">
           {name}
         </span>
+        <button onClick={addTokenToMM} className="ml-auto text-xs font-bold text-gray-500 rounded-full border border-gray-200 px-2.5 py-0.5">
+          Add {symbol} To MetaMask
+        </button>
       </dt>
       <dd className="flex items-baseline justify-between w-full mt-1 md:block lg:flex">
         <div className="flex items-baseline w-full text-2xl font-semibold text-indigo-600">
@@ -38,7 +61,7 @@ export function TokenView(props: TokenType & { type: string }) {
           <span className="ml-2 text-lg font-bold text-gray-500">{symbol}</span>
           <div className="ml-auto">
             <a href={buttonLink} target="_blank" className={`${visible}`}>
-              <div className="inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0">
+            <div className="inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0">
                 {buttonText}
               </div>
             </a>
@@ -94,6 +117,8 @@ function getTokenImage(address: string, t: string) {
         return '/incubators/rmpl.png';
       case IncubatorTokenAddressEnum.OGKOLLECTIVE:
         return '/incubators/ogkollective.png';
+        case IncubatorTokenAddressEnum.BLACKHOLE:
+        return '/incubators/blackhole.png';
       case IncubatorTokenAddressEnum.MCC:
         return '/logos/mcc-black.png';
       default:

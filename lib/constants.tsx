@@ -897,6 +897,19 @@ export const miscellaneousContracts = [
     ],
   },
   {
+    name: 'BlackHole',
+    img: '/incubators/blackhole.png',
+    alt: 'BlackHole',
+    contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
+    subItems: [
+      {
+        link: 'https://ftmscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
+        img: '/networks/ftm.png',
+        title: 'ftmscan',
+      },
+    ],
+  },
+  {
     name: 'Greenlight',
     img: '/incubators/green.png',
     alt: 'Greenlight Image',
