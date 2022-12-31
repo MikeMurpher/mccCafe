@@ -1,9 +1,10 @@
-import { SignalSlashIcon } from '@heroicons/react/20/solid';
 import { BSCIcon } from '../../components/svgs/bsc';
 import { ErcIcon } from '../../components/svgs/erc';
 import { FtmIcon } from '../../components/svgs/ftm';
+import { PolygonIcon } from '../../components/svgs/polygon';
 import { BSCSCAN_URL, ETHERSCAN_URL, FTMSCAN_URL } from '../constants';
 import { BlockchainType, ChainEnum, ChainNameEnum } from '../types';
+import { SignalSlashIcon } from '@heroicons/react/20/solid';
 
 export function generateChainBase(chain?: BlockchainType) {
   switch (chain) {
@@ -39,6 +40,8 @@ export function generateChainNameIdentifier(chain?: BlockchainType) {
       return ChainNameEnum.bsc;
     case ChainEnum.ftm:
       return ChainNameEnum.ftm;
+    case ChainEnum.polygon:
+      return ChainNameEnum?.polygon;
     default:
       return ChainNameEnum.erc;
   }
@@ -52,6 +55,8 @@ export function generateChainAbbreviation(chain?: BlockchainType) {
       return 'BNB ';
     case ChainEnum.ftm:
       return 'FTM ';
+    case ChainEnum.polygon:
+      return 'MATIC ';
     default:
       return 'Ξ';
   }
@@ -63,6 +68,8 @@ export function generateNativeQueryCommands(chainId?: BlockchainType) {
       return { nativeCurrency: 'ethereum' };
     case ChainEnum.bsc:
       return { nativeCurrency: 'binancecoin' };
+    case ChainEnum.polygon:
+      return { nativeCurrency: 'matic' };
     case ChainEnum.ftm:
       return { nativeCurrency: 'fantom' };
     default:
@@ -78,6 +85,8 @@ export function renderConnectedChain(chain?: BlockchainType) {
       return <BSCIcon />;
     case ChainEnum.ftm:
       return <FtmIcon />;
+    case ChainEnum.polygon:
+      return <PolygonIcon />;
     case ChainEnum.offline:
       return (
         <SignalSlashIcon className="w-5 h-5 text-gray-900" aria-hidden="true" />
@@ -96,6 +105,8 @@ export function generateChainGasMultiple(chainId?: BlockchainType): number {
     case ChainEnum.bsc:
       return 1.675;
     case ChainEnum.ftm:
+      return 1;
+    case ChainEnum.polygon:
       return 1;
     default:
       return 1;

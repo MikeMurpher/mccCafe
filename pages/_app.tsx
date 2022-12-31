@@ -1,27 +1,23 @@
-import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
-import { Web3ReactHooks, Web3ReactProvider } from '@web3-react/core';
-import { MetaMask } from '@web3-react/metamask';
-import { Network } from '@web3-react/network';
-import { WalletConnect } from '@web3-react/walletconnect';
+import { CustomToaster } from '../components/customToaster';
+import * as gtag from '../lib/gtag';
+import SEO from '../next-seo.config';
+import '../styles/globals.css';
+import { ConnectKitProvider, getDefaultClient } from 'connectkit';
 import { DefaultSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect } from 'react';
-import { CustomToaster } from '../components/customToaster';
-import {
-  coinbaseWallet,
-  hooks as coinbaseWalletHooks,
-} from '../connectors/coinbaseWallet';
-import { hooks as metaMaskHooks, metaMask } from '../connectors/metaMask';
-import { hooks as networkHooks, network } from '../connectors/network';
-import {
-  hooks as walletConnectHooks,
-  walletConnect,
-} from '../connectors/walletConnect';
-import * as gtag from '../lib/gtag';
-import SEO from '../next-seo.config';
-import '../styles/globals.css';
+import { createClient, WagmiConfig } from 'wagmi';
+import { bsc, fantom, mainnet, polygon } from 'wagmi/chains';
+
+const client = createClient(
+  getDefaultClient({
+    appName: 'mcccafe',
+    infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
+    chains: [mainnet, polygon, bsc, fantom],
+  })
+);
 
 export default function App({
   Component,
@@ -40,17 +36,18 @@ export default function App({
   }, [router.events]);
 
   return (
-    <Web3ReactProvider connectors={connectors}>
-      <DefaultSeo {...SEO} />
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+    <WagmiConfig client={client}>
+      <ConnectKitProvider>
+        <DefaultSeo {...SEO} />
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -58,21 +55,11 @@ export default function App({
               page_path: window.location.pathname,
             });
           `,
-        }}
-      />
-
-      <Component {...pageProps} />
-      <CustomToaster />
-    </Web3ReactProvider>
+          }}
+        />
+        <Component {...pageProps} />
+        <CustomToaster />
+      </ConnectKitProvider>
+    </WagmiConfig>
   );
 }
-
-const connectors: [
-  MetaMask | WalletConnect | CoinbaseWallet | Network,
-  Web3ReactHooks
-][] = [
-  [metaMask, metaMaskHooks],
-  [walletConnect, walletConnectHooks],
-  [coinbaseWallet, coinbaseWalletHooks],
-  [network, networkHooks],
-];

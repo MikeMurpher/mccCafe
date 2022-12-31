@@ -1,6 +1,7 @@
 export enum ChainEnum {
   erc = 1,
   bsc = 56,
+  polygon = 137,
   ftm = 250,
   offline = -1,
 }
@@ -9,6 +10,7 @@ export enum ChainNameEnum {
   erc = 'erc',
   bsc = 'bsc',
   ftm = 'ftm',
+  polygon = 'polygon',
   offline = 'offline',
 }
 
@@ -16,6 +18,7 @@ export type BlockchainType =
   | ChainEnum.erc
   | ChainEnum.bsc
   | ChainEnum.ftm
+  | ChainEnum.polygon
   | ChainEnum.offline;
 
 export enum WalletEnum {
@@ -432,3 +435,5 @@ export interface TokenType {
   decimals: number;
   balance: string;
 }
+
+export type Optional<T> = T | undefined;

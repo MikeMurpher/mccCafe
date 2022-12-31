@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
 import { MenuItem } from './MenuItem';
+import { motion } from 'framer-motion';
 
 const variants = {
   open: {

@@ -1,24 +1,23 @@
+import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckCircleIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Fragment } from 'react';
-import { CHAINS } from '../../lib/chains';
-import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 
 interface ChainSelectProps {
   chainId?: number;
-  switchChain: (chainId: number) => Promise<void>;
-  displayDefault: boolean;
-  chainIds: number[];
+  switchChain?: (chainId_?: number | undefined) => void;
+  chains: any[];
 }
 
 export function ChainSelect(props: ChainSelectProps) {
-  const { chainId, switchChain, chainIds } = props;
+  const { chainId, switchChain, chains } = props;
 
   return (
     <Listbox
       value={chainId}
       onChange={(event) => {
-        switchChain?.(Number(event));
+        // @ts-ignore
+        switchChain(event);
       }}
     >
       <div className="relative">
@@ -38,16 +37,16 @@ export function ChainSelect(props: ChainSelectProps) {
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute right-0 py-1 mt-1 overflow-auto text-base rounded-md shadow-lg max-h-60 w-72 bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {chainIds?.map((c) => {
+            {chains?.map((c) => {
               return (
                 <Listbox.Option
-                  key={c}
+                  key={c?.id}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                    `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
                       active ? 'bg-green-200 text-green-900' : 'text-gray-900'
                     }`
                   }
-                  value={c}
+                  value={c?.id}
                 >
                   {({ selected }) => (
                     <>
@@ -58,9 +57,9 @@ export function ChainSelect(props: ChainSelectProps) {
                       >
                         <span className="flex items-center">
                           <span className="mr-1">
-                            {renderConnectedChain(c)}
+                            {renderConnectedChain(c?.id)}
                           </span>
-                          {CHAINS[c]?.name ?? c}
+                          {c?.name}
                         </span>
                       </span>
                       {selected ? (
