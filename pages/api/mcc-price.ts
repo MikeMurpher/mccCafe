@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { getPriceQuote } from '../../lib/api/getPriceQuote';
 import { MCC_CONTRACT } from '../../lib/constants';
 import { ChainNameEnum } from '../../lib/types';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -21,9 +21,9 @@ export default async (_req: NextApiRequest, res: NextApiResponse) => {
     ]);
 
     res.status(200).json({
-      ftmPrice: ftmPrice?.usdPrice,
-      bscPrice: bscPrice.usdPrice,
-      ercPrice: ercPrice.usdPrice,
+      [ChainNameEnum.ftm]: ftmPrice?.usdPrice?.toFixed(10),
+      [ChainNameEnum.bsc]: bscPrice.usdPrice?.toFixed(10),
+      [ChainNameEnum.erc]: ercPrice.usdPrice?.toFixed(10),
     });
     res.end();
   } catch (error) {

@@ -28,7 +28,7 @@ const lookup = [
 
 export function abbreviateNumber(val: string | number, digits: number) {
   const value = val ?? 0.0;
-  const num = parseFloat(value?.toString().replaceAll(',', ''));
+  const num = parseFloat(value?.toString()?.replaceAll(',', ''));
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
   var item = lookup
     .slice()

@@ -51,7 +51,7 @@ export function Footer() {
           Presented By
         </p>
         <p className="text-lg text-center text-gray-200 font-kaushan">
-          Multi-Chain Capital: Incubation Zone
+          Multi-Chain Capital Community
         </p>
         <nav
           className="flex flex-wrap justify-center -mx-5 -my-2"
@@ -60,6 +60,8 @@ export function Footer() {
           {navigation.main.map((item) => (
             <div key={item.name} className="px-5 py-2">
               <a
+                target="_blank"
+                rel="noopener noreferrer"
                 href={item.href}
                 className="text-sm tracking-wide text-amber-400 hover:text-amber-200"
               >
@@ -114,11 +116,11 @@ export function Footer() {
             Of Note
           </div>
           <div className="max-w-xl text-center text-amber-400">
-            The MCC Cafe & MCC Incubation Zone does not condone any violence,
+            The MCC Cafe & MCC Official Community does not condone any violence,
             threats or defamatory comments made towards any members of our
             community which includes Mr. Capital. Any such member participating
-            in this behavior in the MCC Incubation Zone channels or in any other
-            public channels will not be permitted to participate in our
+            in this behavior in the MCC Official Community channels or in any
+            other public channels will not be permitted to participate in our
             community.
           </div>
         </div>

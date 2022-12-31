@@ -1,27 +1,32 @@
-import useSWR from 'swr';
 import { ONE_BILLION } from '../constants';
 import { BlockchainType, ChainEnum } from '../types';
 import request from '../utils/request';
-import { useGasGwei } from './useGasGwei';
-import { useWeb3 } from './useWeb3';
+import useSWR from 'swr';
+import { useFeeData, useNetwork } from 'wagmi';
 
 export const ETH_MULTINODE_EXACT_GAS_PREDICTION = 85000;
 export const BSC_MULTINODE_EXACT_GAS_PREDICTION = 250000;
 export const FTM_MULTINODE_EXACT_GAS_PREDICTION = 140000;
 
 export function useMultiNodeGasPrediction(multiNodes: number) {
-  const { provider, chainId } = useWeb3();
+  const { chain } = useNetwork();
 
   const { data, isLoading } = useSWR(
-    chainId ? `/api/gas-quote?chainId=${chainId}` : ``,
+    chain?.id ? `/api/gas-quote?chainId=${chain?.id}` : ``,
     (url: string) => request(url)
   );
 
-  const gwei = useGasGwei(provider);
-  const prediction = (generateChainGasPrediction(chainId) * gwei) / ONE_BILLION;
+  const { data: gasData, isLoading: gweiLoading } = useFeeData({
+    formatUnits: 'gwei',
+  });
+
+  const prediction =
+    (generateChainGasPrediction(chain?.id) *
+      parseInt(gasData?.formatted?.gasPrice ?? '')) /
+    ONE_BILLION;
 
   return {
-    isLoading,
+    isLoading: isLoading || gweiLoading,
     nativePrice: prediction * multiNodes,
     cartPrediction: prediction * data?.price * multiNodes,
     perNodePrediction: prediction * data?.price,

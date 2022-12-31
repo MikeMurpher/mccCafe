@@ -1,7 +1,7 @@
-import clsx from 'clsx';
 import { Footer } from '../footer';
 import { NavContainer } from '../navigation';
 import { StickyBanner } from '../stickyBanner';
+import clsx from 'clsx';
 
 export function LayoutContainer(props: any): JSX.Element {
   return (

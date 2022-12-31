@@ -1,5 +1,5 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document';
 import AppIcons from '../components/appIcons';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
@@ -9,7 +9,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html className="dark js-focus-visible [--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
+      <Html className="js-focus-visible dark [--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
         <Head>
           <meta httpEquiv="Content-Language" content="en" />
 
