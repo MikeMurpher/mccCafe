@@ -12,7 +12,7 @@ export function useMultiNodeGasPrediction(multiNodes: number) {
   const { chain } = useNetwork();
 
   const { data, isLoading } = useSWR(
-    chain?.id ? `/api/gas-quote?chainId=${chain?.id}` : ``,
+    chain?.id ? `/api/native-currency-quote?chainId=${chain?.id}` : ``,
     (url: string) => request(url)
   );
 

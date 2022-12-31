@@ -2,22 +2,23 @@ import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckCircleIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Fragment } from 'react';
+import { useSwitchNetwork } from 'wagmi';
 
 interface ChainSelectProps {
   chainId?: number;
-  switchChain?: (chainId_?: number | undefined) => void;
-  chains: any[];
 }
 
 export function ChainSelect(props: ChainSelectProps) {
-  const { chainId, switchChain, chains } = props;
+  const { chainId } = props;
+  const { chains, switchNetwork } = useSwitchNetwork();
 
   return (
     <Listbox
       value={chainId}
       onChange={(event) => {
-        // @ts-ignore
-        switchChain(event);
+        if (chainId !== event && switchNetwork) {
+          switchNetwork(event);
+        }
       }}
     >
       <div className="relative">
@@ -40,13 +41,13 @@ export function ChainSelect(props: ChainSelectProps) {
             {chains?.map((c) => {
               return (
                 <Listbox.Option
-                  key={c?.id}
+                  key={c.id}
                   className={({ active }) =>
                     `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
                       active ? 'bg-green-200 text-green-900' : 'text-gray-900'
                     }`
                   }
-                  value={c?.id}
+                  value={c.id}
                 >
                   {({ selected }) => (
                     <>
@@ -57,7 +58,7 @@ export function ChainSelect(props: ChainSelectProps) {
                       >
                         <span className="flex items-center">
                           <span className="mr-1">
-                            {renderConnectedChain(c?.id)}
+                            {renderConnectedChain(c.id)}
                           </span>
                           {c?.name}
                         </span>
