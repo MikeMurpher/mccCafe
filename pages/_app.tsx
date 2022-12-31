@@ -37,7 +37,7 @@ export default function App({
 
   return (
     <WagmiConfig client={client}>
-      <ConnectKitProvider>
+      <ConnectKitProvider theme="retro">
         <DefaultSeo {...SEO} />
         <Script
           strategy="afterInteractive"

@@ -1,24 +1,17 @@
 import { MCC_CONTRACT } from '../../lib/constants';
+import { useWalletStore } from '../../lib/stores/wallet';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
 import { shortenHex } from '../../lib/utils/shortenHex';
-import aa from '../../public/incubators/aa.png';
-import cashback from '../../public/incubators/cashback.png';
-import czr from '../../public/incubators/czr.png';
-import fnd from '../../public/incubators/fnd.png';
-import multiprint from '../../public/incubators/multiprint.png';
-import ogTomb from '../../public/incubators/ogtomb.png';
-import salestax from '../../public/incubators/sales.png';
-import ub from '../../public/incubators/ub.png';
-import uub from '../../public/incubators/uub.png';
 import { ChainSelect } from '../chainSelect';
 import MccLogo from '../icons/glyphs/mcc';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { watchNetwork } from '@wagmi/core';
 import clsx from 'clsx';
 import { ConnectKitButton } from 'connectkit';
 import Image from 'next/image';
 import { Fragment } from 'react';
-import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useAccount, useBalance, useNetwork } from 'wagmi';
 
 const solutions = [
   {
@@ -27,7 +20,12 @@ const solutions = [
       'MultiPrint provides rewards for staking and farming of $MCC and $MCC incubation pairs.',
     href: 'https://multiprint.mchain.capital/',
     icon: () => (
-      <Image alt="MultiPrint logo" src={multiprint} width={261} height={215} />
+      <Image
+        alt="MultiPrint logo"
+        src={'/incubators/multiprint.png'}
+        width={261}
+        height={215}
+      />
     ),
   },
   {
@@ -35,44 +33,81 @@ const solutions = [
     description:
       'OG-TOMB is Pegged to FTM. Not the first algorithmic stablecoin on Fantom Opera',
     href: 'https://www.ogtomb.com/',
-    icon: () => <Image alt="OgTomb logo" src={ogTomb} width={40} height={40} />,
+    icon: () => (
+      <Image
+        alt="OgTomb logo"
+        src={'/incubators/ogtomb.png'}
+        width={40}
+        height={40}
+      />
+    ),
   },
   {
     name: 'UUB',
     description: 'Ultra Unit Bias - 10% Reflections with an Ultra Low Supply.',
     href: 'https://incubations.mchain.capital/uub',
-    icon: () => <Image alt="UUB logo" src={uub} width={40} height={40} />,
+    icon: () => (
+      <Image
+        alt="UUB logo"
+        src={'/incubators/uub.png'}
+        width={40}
+        height={40}
+      />
+    ),
   },
   {
     name: 'UB',
     description: 'Unit Bias - 10% Reflections with a Low Supply.',
     href: 'https://incubations.mchain.capital/ub',
-    icon: () => <Image alt="UB logo" src={ub} width={40} height={40} />,
+    icon: () => (
+      <Image alt="UB logo" src={'/incubators/ub.png'} width={40} height={40} />
+    ),
   },
   {
     name: 'CZR',
     description: 'CZ Retirement Package - Auto-Rebasing Every 15 Min',
     href: 'https://incubations.mchain.capital/czr',
-    icon: () => <Image alt="CZR logo" src={czr} width={40} height={40} />,
+    icon: () => (
+      <Image
+        alt="CZR logo"
+        src={'/incubators/czr.png'}
+        width={40}
+        height={40}
+      />
+    ),
   },
   {
     name: 'FND',
     description: 'Friday Night Degen - Degens Unite Each Week.',
     href: 'https://incubations.mchain.capital/fnd',
-    icon: () => <Image alt="FND logo" src={fnd} width={40} height={40} />,
+    icon: () => (
+      <Image
+        alt="FND logo"
+        src={'/incubators/fnd.png'}
+        width={40}
+        height={40}
+      />
+    ),
   },
   {
     name: 'Andre Anonymous',
     description: 'AA - 5% to Andre to Keep Building.',
     href: 'https://incubations.mchain.capital/aa',
-    icon: () => <Image alt="AA logo" src={aa} width={40} height={40} />,
+    icon: () => (
+      <Image alt="AA logo" src={'/incubators/aa.png'} width={40} height={40} />
+    ),
   },
   {
     name: 'Sales Tax',
     description: '15% Reflections on Sales.',
     href: 'https://incubations.mchain.capital/sale',
     icon: () => (
-      <Image alt="Sales Tax logo" src={salestax} width={40} height={40} />
+      <Image
+        alt="Sales Tax logo"
+        src={'/incubators/sales.png'}
+        width={40}
+        height={40}
+      />
     ),
   },
   {
@@ -80,7 +115,12 @@ const solutions = [
     description: 'Cash Back Each Time you Sell.',
     href: 'https://incubations.mchain.capital/cash',
     icon: () => (
-      <Image alt="Cash Back logo" src={cashback} width={40} height={40} />
+      <Image
+        alt="Cash Back logo"
+        src={'/incubators/cashback.png'}
+        width={40}
+        height={40}
+      />
     ),
   },
 ];
@@ -88,8 +128,11 @@ const solutions = [
 export function ConnectionComponent(props: { id: 'mobile' | 'desktop' }) {
   const { id } = props;
   const { chain } = useNetwork();
-  const { chains, switchNetwork } = useSwitchNetwork();
   const { address } = useAccount();
+  const { resetMultiNodeStats } = useWalletStore((state) => state);
+  watchNetwork(() => {
+    resetMultiNodeStats();
+  });
 
   const { data: mccBalanceData } = useBalance({
     address,
@@ -212,11 +255,7 @@ export function ConnectionComponent(props: { id: 'mobile' | 'desktop' }) {
       </ConnectKitButton.Custom>
 
       <div className="ml-1 sm:ml-2">
-        <ChainSelect
-          chainId={chain?.id}
-          switchChain={switchNetwork}
-          chains={chains}
-        />
+        <ChainSelect chainId={chain?.id} />
       </div>
     </div>
   );

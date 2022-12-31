@@ -58,11 +58,6 @@ export const useWalletStore = create<MyWalletState>((set, get) => ({
               if (!cur?.mccClaimable && !cur?.mccPerDay) {
                 return acc;
               }
-              console.log(
-                `adding to ${acc.available} with: ${parseInt(
-                  cur?.mccClaimable?.replaceAll(',', '')
-                )} from ${n?.nodeId}`
-              );
               return {
                 available:
                   acc?.available +
