@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import { useWeb3 } from '../../lib/hooks/useWeb3';
 import {
   ChainEnum,
   IncubatorTokenAddressEnum,
@@ -8,15 +6,17 @@ import {
   YieldWolfTokenAddressEnum,
 } from '../../lib/types';
 import { abbreviateNumber } from '../../lib/utils/formatNumbers';
+import Image from 'next/image';
+import { useNetwork } from 'wagmi';
 
 export function TokenView(props: TokenType & { type: string }) {
   const { token_address, balance, symbol, type, name, decimals } = props;
-  const { chainId } = useWeb3();
+  const { chain } = useNetwork();
 
   const val = abbreviateNumber(balance, 2);
   const tokenImage = getTokenImage(token_address, type);
   const buttonText = getButtonText(type);
-  const buttonLink = getButtonLink(chainId, token_address, type);
+  const buttonLink = getButtonLink(chain?.id, token_address, type);
   const visible = getHyperlinkDisplay(type);
 
   const addTokenToMM = async () => {
@@ -30,14 +30,14 @@ export function TokenView(props: TokenType & { type: string }) {
             address: token_address, // The address that the token is at.
             symbol: symbol, // A ticker symbol or shorthand, up to 5 chars.
             decimals: decimals, // The number of decimals in the token
-            image: 'https://www.mcc.cafe' + getTokenImage(token_address,type), // A string url of the token logo
+            image: 'https://www.mcc.cafe' + getTokenImage(token_address, type), // A string url of the token logo
           },
         },
-      })
+      });
     } catch (ex) {
       console.error(ex);
     }
-  }
+  };
 
   return (
     <div className="px-4 py-5 mb-1 bg-white rounded-lg sm:p-6">
@@ -51,7 +51,10 @@ export function TokenView(props: TokenType & { type: string }) {
         <span className="ml-1 text-xs font-normal text-gray-400 normal-case">
           {name}
         </span>
-        <button onClick={addTokenToMM} className="ml-auto text-xs font-bold text-gray-500 rounded-full border border-gray-200 px-2.5 py-0.5">
+        <button
+          onClick={addTokenToMM}
+          className="ml-auto rounded-full border border-gray-200 px-2.5 py-0.5 text-xs font-bold text-gray-500"
+        >
           Add {symbol} To MetaMask
         </button>
       </dt>
@@ -61,7 +64,7 @@ export function TokenView(props: TokenType & { type: string }) {
           <span className="ml-2 text-lg font-bold text-gray-500">{symbol}</span>
           <div className="ml-auto">
             <a href={buttonLink} target="_blank" className={`${visible}`}>
-            <div className="inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0">
+              <div className="inline-flex flex-auto items-baseline rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800 md:mt-2 lg:mt-0">
                 {buttonText}
               </div>
             </a>
@@ -117,7 +120,7 @@ function getTokenImage(address: string, t: string) {
         return '/incubators/rmpl.png';
       case IncubatorTokenAddressEnum.OGKOLLECTIVE:
         return '/incubators/ogkollective.png';
-        case IncubatorTokenAddressEnum.BLACKHOLE:
+      case IncubatorTokenAddressEnum.BLACKHOLE:
         return '/incubators/blackhole.png';
       case IncubatorTokenAddressEnum.MCC:
         return '/logos/mcc-black.png';

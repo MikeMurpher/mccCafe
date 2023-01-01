@@ -1,5 +1,3 @@
-import useSWR from 'swr';
-import { useWeb3 } from '../../lib/hooks/useWeb3';
 import {
   IncubatorTokenAddressEnum,
   TokenType,
@@ -8,17 +6,20 @@ import {
 import request from '../../lib/utils/request';
 import { Loading } from '../loading';
 import { TokenView } from '../token';
+import useSWR from 'swr';
+import { useAccount, useNetwork } from 'wagmi';
 
 export function Tokens() {
-  const { chainId, address } = useWeb3();
+  const { address } = useAccount();
+  const { chain } = useNetwork();
 
   const { data, isLoading } = useSWR(
-    `/api/incubatorholdings?chainId=${chainId}&address=${address}`,
+    `/api/incubatorholdings?chainId=${chain?.id}&address=${address}`,
     (url: string) => request(url)
   );
 
   const incubatorTokens: TokenType[] =
-    chainId != undefined
+    chain?.id != undefined
       ? data?.myTokens
           ?.map((token: TokenType) => {
             if (
@@ -41,7 +42,7 @@ export function Tokens() {
       : undefined;
 
   const yieldwolfVaults: TokenType[] =
-    chainId != undefined
+    chain?.id != undefined
       ? data?.myTokens
           ?.map((token: TokenType) => {
             if (

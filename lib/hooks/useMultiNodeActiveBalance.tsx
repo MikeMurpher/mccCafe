@@ -1,61 +1,24 @@
-import useSWR from 'swr';
-import { BlockchainType } from '../types';
+import MultiNodeContractAbi from '../../contracts/MultiNode.json';
+import { MULTINODE_CLAIM_CONTRACT } from '../constants';
 import { numberWithCommas } from '../utils/formatNumbers';
 import { parseBalance } from '../utils/parseBalance';
-import { useContract } from './useContract';
-import useKeepSWRDataLiveAsBlocksArrive from './useKeepSWRDataLiveAsBlocksArrive';
-import { useWeb3 } from './useWeb3';
-
-function getNodeBalance(contract: any) {
-  return async (...args: any[]) => {
-    const nodeId = args?.[0]?.[1];
-    const callType = args?.[0]?.[2];
-
-    if (!nodeId) {
-      return null;
-    }
-
-    if (callType === 'unclaimed') {
-      return await contract.getUnpaidEarnings(parseInt(nodeId));
-    }
-
-    if (callType === 'totalEarnings') {
-      return await contract.getTotalEarnings(parseInt(nodeId));
-    }
-
-    return null;
-  };
-}
+import { useContractRead } from 'wagmi';
 
 interface Props {
-  contractAddress: string;
-  abi: any;
-  balanceType: 'unclaimed' | 'totalEarnings';
-  chainId?: BlockchainType;
+  functionName: 'getUnpaidEarnings' | 'getTotalEarnings';
   nodeId?: string;
-  address?: string;
 }
 
-export default function useMultiNodeActiveBalance(props: Props) {
-  const { contractAddress, abi, balanceType, nodeId } = props;
+export function useMultiNodeActiveBalance(props: Props) {
+  const { nodeId, functionName } = props;
 
-  const { address, chainId } = useWeb3();
-  const contract = useContract(contractAddress, abi);
+  const { data } = useContractRead({
+    address: MULTINODE_CLAIM_CONTRACT,
+    abi: MultiNodeContractAbi,
+    functionName,
+    args: nodeId ? [parseInt(nodeId)] : [],
+  });
 
-  const shouldFetch = !!contractAddress && !!contract && !!nodeId && !!chainId;
-
-  const result = useSWR(
-    shouldFetch
-      ? [
-          `DividendBalance-${chainId}-${nodeId}-${balanceType}-${address}`,
-          nodeId,
-          balanceType,
-        ]
-      : null,
-    getNodeBalance(contract)
-  );
-
-  useKeepSWRDataLiveAsBlocksArrive(result.mutate);
-
-  return numberWithCommas(parseBalance(result?.data ?? 0, 18, 2));
+  // @ts-expect-error
+  return numberWithCommas(parseBalance(data ?? 0, 18, 2));
 }

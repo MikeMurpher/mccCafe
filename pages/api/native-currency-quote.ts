@@ -1,6 +1,6 @@
+import { generateNativeQueryCommands } from '../../lib/utils/chainFormatters';
 import CoinGecko from 'coingecko-api';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateNativeQueryCommands } from '../../lib/utils/chainFormatters';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const CoinGeckoClient = new CoinGecko();

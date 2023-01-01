@@ -1,10 +1,10 @@
-import { motion, useCycle } from 'framer-motion';
-import Image from 'next/image';
-import { useRef } from 'react';
-import { Web3Account } from '../account';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './Navigation';
 import { useDimensions } from './use-dimensions';
+import { motion, useCycle } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import { useRef } from 'react';
 
 const sidebar = {
   open: (height = 1000) => ({
@@ -53,6 +53,14 @@ const navItems = [
   },
 ];
 
+// @ts-ignore
+const ConnectionComponent = dynamic(
+  () => import('./connection').then((mod) => mod.ConnectionComponent),
+  {
+    ssr: false,
+  }
+);
+
 export function NavContainer() {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
@@ -78,8 +86,6 @@ export function NavContainer() {
                   quality={100}
                   width={96}
                   height={96}
-                  objectFit="contain"
-                  layout="responsive"
                 />
               </a>
 
@@ -97,7 +103,7 @@ export function NavContainer() {
                   <circle cx={1} cy={1} r={1} />
                 </svg>
                 <span className="hidden ml-2 whitespace-nowrap md:flex">
-                  A little pick me up for the MCC Community
+                  Explore the MCC ecosystem
                 </span>
               </span>
 
@@ -119,7 +125,7 @@ export function NavContainer() {
                   </ul>
                 </nav>
                 <div className="ml-4">
-                  <Web3Account id="desktop" />
+                  <ConnectionComponent id="desktop" />
                 </div>
                 <div className="flex items-center pl-6 ml-6 border-l border-slate-400 ">
                   <MenuToggle toggle={() => toggleOpen()} />
@@ -127,7 +133,7 @@ export function NavContainer() {
               </div>
               <div className="flex items-center justify-center ml-auto lg:hidden">
                 <div className="mr-2 sm:mr-4">
-                  <Web3Account id="mobile" />
+                  <ConnectionComponent id="mobile" />
                 </div>
                 <MenuToggle toggle={() => toggleOpen()} />
               </div>

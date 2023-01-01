@@ -1,10 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { getTokenBalances } from '../../lib/api/getTokenBalances';
 import {
   IncubatorTokenAddressEnum,
   YieldWolfTokenAddressEnum,
 } from '../../lib/types';
 import { generateChainName } from '../../lib/utils/chainFormatters';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
