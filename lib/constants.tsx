@@ -903,6 +903,16 @@ export const miscellaneousContracts = [
     contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
     subItems: [
       {
+        link: 'https://etherscan.io/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
+        img: '/networks/eth.png',
+        title: 'etherscan',
+      },
+      {
+        link: 'https://bscscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
+        img: '/networks/bsc.png',
+        title: 'ftmscan',
+      },
+      {
         link: 'https://ftmscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
         img: '/networks/ftm.png',
         title: 'ftmscan',

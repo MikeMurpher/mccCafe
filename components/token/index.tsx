@@ -124,6 +124,8 @@ function getTokenImage(address: string, t: string) {
         return '/incubators/blackhole.png';
       case IncubatorTokenAddressEnum.MCC:
         return '/logos/mcc-black.png';
+        case IncubatorTokenAddressEnum.JustTest:
+          return '/incubators/justtest.png';
       default:
         return '/logos/mcc-black.png';
     }
