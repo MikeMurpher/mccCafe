@@ -6,7 +6,7 @@ export async function getTokenBalances({ chain, account, tokenAddress }: any) {
   });
 
   return await fetch(
-    `https://deep-index.moralis.io/api/v2/${account}/erc20?chain=${chain}&${tokenString}`,
+    `https://deep-index.moralis.io/api/v2/${account}/erc20?chain=${chain}`,
     {
       headers: {
         accept: 'application/json',

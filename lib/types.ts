@@ -34,7 +34,8 @@ export type WalletType =
   | WalletEnum.walletConnect
   | WalletEnum.gnosisSafe;
 
-export enum IncubatorTokenAddressEnum {
+export enum IncubatorTokenAddressEnum { 
+  ABC = '0xebde95c46e429ecd284d04bffcfd9b4cb9861dfc',
   AndreAnonymous = '0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
   CashBack = '0x6a1e94128a5065c6544d23ffa9b4e78b69015611',
   CZRetirement = '0xc5401f6eab46cba5a8151d1132c022a311d9aeae',
@@ -58,6 +59,7 @@ export enum IncubatorTokenAddressEnum {
   RMPL = '0x137c1b5974a514965021b9c728a5551b4985dac5',
   OGKOLLECTIVE = '0x3b9c214a501b2ae33ab1793b57b09879a754f2ef',
   BLACKHOLE = '0x1d84e6f3c03c869b951d017a852f8464174b3ff4',
+  JustTest = '0xacacab474461877b90e6fdca44a2f8d1b5941baf',
 }
 
 export enum YieldWolfTokenAddressEnum {
