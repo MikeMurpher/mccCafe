@@ -19,7 +19,6 @@ export function RewardBalanceStats() {
     token: MCC_CONTRACT,
     chainId: ChainEnum.ftm,
     watch: true,
-    cacheTime: 60_000,
   });
 
   const { data: ercBalance, isLoading: ercLoading } = useBalance({
@@ -27,7 +26,6 @@ export function RewardBalanceStats() {
     token: MCC_CONTRACT,
     chainId: ChainEnum.erc,
     watch: true,
-    cacheTime: 60_000,
   });
 
   const { data: bscBalance, isLoading: bscLoading } = useBalance({
@@ -35,7 +33,6 @@ export function RewardBalanceStats() {
     token: MCC_CONTRACT,
     chainId: ChainEnum.bsc,
     watch: true,
-    cacheTime: 60_000,
   });
 
   return (
