@@ -18,21 +18,21 @@ export function RewardBalanceStats() {
     address: MULTINODE_CLAIM_CONTRACT,
     token: MCC_CONTRACT,
     chainId: ChainEnum.ftm,
-    watch: true,
+    // watch: true,
   });
 
   const { data: ercBalance, isLoading: ercLoading } = useBalance({
     address: MULTINODE_CLAIM_CONTRACT,
     token: MCC_CONTRACT,
     chainId: ChainEnum.erc,
-    watch: true,
+    // watch: true,
   });
 
   const { data: bscBalance, isLoading: bscLoading } = useBalance({
     address: MULTINODE_CLAIM_CONTRACT,
     token: MCC_CONTRACT,
     chainId: ChainEnum.bsc,
-    watch: true,
+    // watch: true,
   });
 
   return (
