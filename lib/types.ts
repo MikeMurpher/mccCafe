@@ -34,7 +34,7 @@ export type WalletType =
   | WalletEnum.walletConnect
   | WalletEnum.gnosisSafe;
 
-export enum IncubatorTokenAddressEnum { 
+export enum IncubatorTokenAddressEnum {
   ABC = '0xebde95c46e429ecd284d04bffcfd9b4cb9861dfc',
   AndreAnonymous = '0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
   CashBack = '0x6a1e94128a5065c6544d23ffa9b4e78b69015611',
@@ -442,9 +442,9 @@ export interface FarmingRewardType {
   name: string;
   symbol: string;
   decimals: number;
-  farmcontract : string;
-  fetchcontract : string;
-  contractfunction : string;
+  farmcontract: string;
+  fetchcontract: string;
+  contractfunction: string;
 }
 
 export type Optional<T> = T | undefined;

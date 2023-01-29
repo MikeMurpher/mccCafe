@@ -1,14 +1,14 @@
+import { farmingPlatforms } from '../../lib/constants';
 import {
-  IncubatorTokenAddressEnum,
   FarmingRewardType,
+  IncubatorTokenAddressEnum,
   TokenType,
   YieldWolfTokenAddressEnum,
 } from '../../lib/types';
-import { farmingPlatforms } from '../../lib/constants';
 import request from '../../lib/utils/request';
+import { FarmingRewardsView } from '../farmingRewards';
 import { Loading } from '../loading';
 import { TokenView } from '../token';
-import { FarmingRewardsView } from '../farmingRewards';
 import useSWR from 'swr';
 import { useAccount, useNetwork } from 'wagmi';
 
@@ -24,66 +24,63 @@ export function Tokens() {
   const incubatorTokens: TokenType[] =
     chain?.id != undefined
       ? data?.myTokens
-        ?.map((token: TokenType) => {
-          if (
-            parseInt(token.balance) > 0 &&
-            Object.values(IncubatorTokenAddressEnum).includes(
-              token?.token_address as IncubatorTokenAddressEnum
-            )
-          ) {
-            return {
-              ...token,
-              type: 'incubator',
-              balance:
-                parseInt(token.balance) / Math.pow(10, token?.decimals),
-            };
-          }
-        })
-        .filter((element: any) => {
-          return element !== undefined;
-        })
+          ?.map((token: TokenType) => {
+            if (
+              parseInt(token.balance) > 0 &&
+              Object.values(IncubatorTokenAddressEnum).includes(
+                token?.token_address as IncubatorTokenAddressEnum
+              )
+            ) {
+              return {
+                ...token,
+                type: 'incubator',
+                balance:
+                  parseInt(token.balance) / Math.pow(10, token?.decimals),
+              };
+            }
+          })
+          .filter((element: any) => {
+            return element !== undefined;
+          })
       : undefined;
 
   const yieldwolfVaults: TokenType[] =
     chain?.id != undefined
       ? data?.myTokens
-        ?.map((token: TokenType) => {
-          if (
-            parseInt(token.balance) > 0 &&
-            Object.values(YieldWolfTokenAddressEnum).includes(
-              token?.token_address as YieldWolfTokenAddressEnum
-            )
-          ) {
-            return {
-              ...token,
-              type: 'yieldwolf',
-              balance:
-                parseInt(token.balance) / Math.pow(10, token?.decimals),
-            };
-          }
-        })
-        .filter((element: any) => {
-          return element !== undefined;
-        })
+          ?.map((token: TokenType) => {
+            if (
+              parseInt(token.balance) > 0 &&
+              Object.values(YieldWolfTokenAddressEnum).includes(
+                token?.token_address as YieldWolfTokenAddressEnum
+              )
+            ) {
+              return {
+                ...token,
+                type: 'yieldwolf',
+                balance:
+                  parseInt(token.balance) / Math.pow(10, token?.decimals),
+              };
+            }
+          })
+          .filter((element: any) => {
+            return element !== undefined;
+          })
       : undefined;
 
   const farmingPlatformTokens: FarmingRewardType[] =
     chain?.id != undefined
-      ?
-      farmingPlatforms
-        .filter(platform => platform.chainId === chain.id)
-        .flatMap(platform => platform.farms)
-        .map(farm => ({
-          name: farm.name,
-          symbol: farm.symbol,
-          decimals: farm.decimals, 
-          farmcontract: farm.farmcontract,
-          fetchcontract: farm.fetchcontract,
-          contractfunction : farm.contractfunction,
-        }))
+      ? farmingPlatforms
+          .filter((platform) => platform.chainId === chain.id)
+          .flatMap((platform) => platform.farms)
+          .map((farm) => ({
+            name: farm.name,
+            symbol: farm.symbol,
+            decimals: farm.decimals,
+            farmcontract: farm.farmcontract,
+            fetchcontract: farm.fetchcontract,
+            contractfunction: farm.contractfunction,
+          }))
       : [];
-
-
 
   if (isLoading) {
     return (
@@ -95,7 +92,7 @@ export function Tokens() {
 
   return (
     <main>
-      {(chain?.id != undefined) ? (
+      {chain?.id != undefined ? (
         <div>
           <div>
             <header>
@@ -105,11 +102,8 @@ export function Tokens() {
             </header>
           </div>
           <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
-          {farmingPlatformTokens?.map((farm: any) => (
-            <FarmingRewardsView
-              key={`farm-${farm?.name}`}
-              {...farm}
-            />
+            {farmingPlatformTokens?.map((farm: any) => (
+              <FarmingRewardsView key={`farm-${farm?.name}`} {...farm} />
             ))}
           </dl>
         </div>
