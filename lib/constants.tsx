@@ -972,3 +972,48 @@ export const miscellaneousContracts = [
     ],
   },
 ];
+
+export const farmingPlatforms = [
+  {
+    chainId: 56,
+    farms: [
+      {
+        name: 'Multiprint',
+        symbol: 'MPRINT',
+        decimals : 18,
+        farmcontract: '0x3Cf9f83047be6f6c74E9Bf40372DbdEb43c2F92C',
+        fetchcontract:'0x53f791BAd9f03942d299A9A215128b6a62BBaa04',
+        contractfunction : 'pendingRewardsMasterChef',
+      },
+      {
+        name: 'Reflector Collector',
+        symbol: 'RC',
+        decimals : 18,
+        farmcontract: '0x796a21b01b13696164bcF6BD733cFE36890c54CB',
+        fetchcontract:'0x53f791BAd9f03942d299A9A215128b6a62BBaa04',
+        contractfunction : 'pendingRewardsReflectorChef',
+      },
+    ]
+  },
+  {
+    chainId: 250,
+    farms: [
+      {
+        name: 'Multiprint',
+        symbol: 'MPRINT',
+        decimals : 18,
+        farmcontract: '0x3Cf9f83047be6f6c74E9Bf40372DbdEb43c2F92C',
+        fetchcontract:'0x4e81a6ee816bDA3798E7A1D3597c172Adc07668b',
+        contractfunction : 'pendingRewardsMasterChef',
+      },
+      {
+        name: 'Reflector Collector',
+        symbol: 'RC',
+        decimals : 18,
+        farmcontract: '0x796a21b01b13696164bcF6BD733cFE36890c54CB',
+        fetchcontract:'0x4e81a6ee816bDA3798E7A1D3597c172Adc07668b',
+        contractfunction : 'pendingRewardsReflectorChef',
+      },
+    ]
+  },
+];
