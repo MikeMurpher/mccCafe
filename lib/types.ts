@@ -438,4 +438,13 @@ export interface TokenType {
   balance: string;
 }
 
+export interface FarmingRewardType {
+  name: string;
+  symbol: string;
+  decimals: number;
+  farmcontract : string;
+  fetchcontract : string;
+  contractfunction : string;
+}
+
 export type Optional<T> = T | undefined;
