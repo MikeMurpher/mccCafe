@@ -67,20 +67,19 @@ export function Tokens() {
           })
       : undefined;
 
-  const farmingPlatformTokens: FarmingRewardType[] =
-    chain?.id != undefined
-      ? farmingPlatforms
-          .filter((platform) => platform.chainId === chain.id)
-          .flatMap((platform) => platform.farms)
-          .map((farm) => ({
-            name: farm.name,
-            symbol: farm.symbol,
-            decimals: farm.decimals,
-            farmcontract: farm.farmcontract,
-            fetchcontract: farm.fetchcontract,
-            contractfunction: farm.contractfunction,
-          }))
-      : [];
+  const farmingPlatformTokens: FarmingRewardType[] = chain?.id
+    ? farmingPlatforms
+        .filter((platform) => platform.chainId === chain.id)
+        .flatMap((platform) => platform.farms)
+        .map((farm) => ({
+          name: farm.name,
+          symbol: farm.symbol,
+          decimals: farm.decimals,
+          farmcontract: farm.farmcontract,
+          fetchcontract: farm.fetchcontract,
+          contractfunction: farm.contractfunction,
+        }))
+    : [];
 
   if (isLoading) {
     return (
@@ -92,7 +91,7 @@ export function Tokens() {
 
   return (
     <main>
-      {chain?.id != undefined ? (
+      {chain?.id && (
         <div>
           <div>
             <header>
@@ -107,8 +106,6 @@ export function Tokens() {
             ))}
           </dl>
         </div>
-      ) : (
-        ''
       )}
       <div className="mb-5"></div>
       <div>

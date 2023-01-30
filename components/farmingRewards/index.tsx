@@ -9,7 +9,9 @@ export function FarmingRewardsView(props: FarmingRewardType) {
   const { chain } = useNetwork();
 
   const { data } = useSWR(
-    `/api/farming-rewards?chainId=${chain?.id}&symbol=${symbol}&farmcontract=${farmcontract}&fetchcontract=${fetchcontract}&address=${address}`,
+    chain?.id
+      ? `/api/farming-rewards?chainId=${chain?.id}&symbol=${symbol}&farmcontract=${farmcontract}&fetchcontract=${fetchcontract}&address=${address}`
+      : ``,
     (url: string) => request(url)
   );
 
