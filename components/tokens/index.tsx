@@ -100,7 +100,7 @@ export function Tokens() {
               </h3>
             </header>
           </div>
-          <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
+          <dl className="overflow-hide mt-5 grid grid-cols-1 gap-2 divide-y divide-gray-200 rounded-lg md:grid-cols-2 md:divide-y-0 md:divide-x">
             {farmingPlatformTokens?.map((farm: any) => (
               <FarmingRewardsView key={`farm-${farm?.name}`} {...farm} />
             ))}
@@ -115,7 +115,7 @@ export function Tokens() {
           </h3>
         </header>
       </div>
-      <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
+      <dl className="overflow-hide mt-5 grid grid-cols-1 gap-2 divide-y divide-gray-200 rounded-lg md:grid-cols-2 md:divide-y-0 md:divide-x">
         {incubatorTokens != undefined ? (
           incubatorTokens?.map((token: any) => (
             <TokenView
@@ -125,7 +125,7 @@ export function Tokens() {
             />
           ))
         ) : (
-          <div className="grid grid-cols-1 px-4 py-5 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
+          <div className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white px-4 py-5 shadow">
             <h2 className="text-2xl font-bold leading-7 text-gray-500 sm:truncate sm:text-2xl">
               Connect Wallet To View Your Tokens
             </h2>
@@ -140,7 +140,7 @@ export function Tokens() {
           </h3>
         </header>
       </div>
-      <dl className="grid grid-cols-1 gap-2 mt-5 divide-y divide-gray-200 rounded-lg overflow-hide md:grid-cols-2 md:divide-y-0 md:divide-x">
+      <dl className="overflow-hide mt-5 grid grid-cols-1 gap-2 divide-y divide-gray-200 rounded-lg md:grid-cols-2 md:divide-y-0 md:divide-x">
         {yieldwolfVaults != undefined ? (
           yieldwolfVaults?.map((token: any) => (
             <TokenView
@@ -150,7 +150,7 @@ export function Tokens() {
             />
           ))
         ) : (
-          <div className="grid grid-cols-1 px-4 py-5 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow">
+          <div className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white px-4 py-5 shadow">
             <h2 className="text-2xl font-bold leading-7 text-gray-500 sm:truncate sm:text-2xl">
               Connect Wallet To View Your Vaults
             </h2>

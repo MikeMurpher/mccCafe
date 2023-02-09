@@ -1,7 +1,7 @@
 import { renderConnectedChain } from '../../lib/utils/chainFormatters';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckCircleIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { useSwitchNetwork } from 'wagmi';
 
 interface ChainSelectProps {
@@ -10,23 +10,25 @@ interface ChainSelectProps {
 
 export function ChainSelect(props: ChainSelectProps) {
   const { chainId } = props;
+  const [selectedChain, setSelectedChain] = useState(chainId);
   const { chains, switchNetwork } = useSwitchNetwork();
 
   return (
     <Listbox
-      value={chainId}
+      value={selectedChain}
       onChange={(event) => {
         if (chainId !== event && switchNetwork) {
+          setSelectedChain(chainId);
           switchNetwork(event);
         }
       }}
     >
       <div className="relative">
-        <Listbox.Button className="relative w-16 h-10 py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default sm:w-18 bg-opacity-40 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+        <Listbox.Button className="sm:w-18 relative h-10 w-16 cursor-default rounded-lg bg-white bg-opacity-40 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
           <span className="">{renderConnectedChain(chainId)}</span>
-          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <ChevronDownIcon
-              className="w-5 h-5 text-gray-700"
+              className="h-5 w-5 text-gray-700"
               aria-hidden="true"
             />
           </span>
@@ -37,7 +39,7 @@ export function ChainSelect(props: ChainSelectProps) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute right-0 py-1 mt-1 overflow-auto text-base rounded-md shadow-lg max-h-60 w-72 bg-gray-50 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          <Listbox.Options className="absolute right-0 mt-1 max-h-60 w-72 overflow-auto rounded-md bg-gray-50 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {chains?.map((c) => {
               return (
                 <Listbox.Option
@@ -66,7 +68,7 @@ export function ChainSelect(props: ChainSelectProps) {
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
                           <CheckCircleIcon
-                            className="w-5 h-5"
+                            className="h-5 w-5"
                             aria-hidden="true"
                           />
                         </span>

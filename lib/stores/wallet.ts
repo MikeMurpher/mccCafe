@@ -1,5 +1,5 @@
 import { ChainEnum } from '../types';
-import create from 'zustand';
+import { create } from 'zustand';
 
 export type MyWalletState = {
   manualAddress?: string;

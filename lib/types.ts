@@ -3,6 +3,8 @@ export enum ChainEnum {
   bsc = 56,
   polygon = 137,
   ftm = 250,
+  optimism = 10,
+  arbitrum = 42161,
   offline = -1,
 }
 

@@ -40,15 +40,15 @@ export function TokenView(props: TokenType & { type: string }) {
   };
 
   return (
-    <div className="px-4 py-5 mb-1 bg-white rounded-lg sm:p-6">
-      <dt className="flex items-center text-base font-bold text-gray-900 uppercase">
+    <div className="mb-1 rounded-lg bg-white px-4 py-5 sm:p-6">
+      <dt className="flex items-center text-base font-bold uppercase text-gray-900">
         <Image
           alt={`${tokenImage} alt`}
           width="24"
           height="24"
           src={tokenImage}
         />
-        <span className="ml-1 text-xs font-normal text-gray-400 normal-case">
+        <span className="ml-1 text-xs font-normal normal-case text-gray-400">
           {name}
         </span>
         <button
@@ -58,8 +58,8 @@ export function TokenView(props: TokenType & { type: string }) {
           Add {symbol} To MetaMask
         </button>
       </dt>
-      <dd className="flex items-baseline justify-between w-full mt-1 md:block lg:flex">
-        <div className="flex items-baseline w-full text-2xl font-semibold text-indigo-600">
+      <dd className="mt-1 flex w-full items-baseline justify-between md:block lg:flex">
+        <div className="flex w-full items-baseline text-2xl font-semibold text-indigo-600">
           <span className="class">{val}</span>
           <span className="ml-2 text-lg font-bold text-gray-500">{symbol}</span>
           <div className="ml-auto">
@@ -125,9 +125,9 @@ function getTokenImage(address: string, t: string) {
       case IncubatorTokenAddressEnum.MCC:
         return '/logos/mcc-black.png';
       case IncubatorTokenAddressEnum.JustTest:
-          return '/incubators/justtest.png';
+        return '/incubators/justtest.png';
       case IncubatorTokenAddressEnum.ABC:
-          return '/incubators/abc.png';
+        return '/incubators/abc.png';
       default:
         return '/logos/mcc-black.png';
     }
