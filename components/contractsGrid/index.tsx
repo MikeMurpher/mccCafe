@@ -6,6 +6,7 @@ import {
   mainContracts,
   marketplaceContracts,
   miscellaneousContracts,
+  retiredContracts,
   treasuryContracts,
 } from '../../lib/constants';
 import { ContractSection } from './contractsSection';
@@ -41,6 +42,10 @@ export function ContractsGrid() {
         <ContractSection
           header={'Governance'}
           contracts={governanceContracts}
+        />
+        <ContractSection
+          header={'Retired Contracts'}
+          contracts={retiredContracts}
         />
         <ContractSection
           header={'Miscellaneous Contracts'}
