@@ -401,23 +401,23 @@ export const treasuryContracts = [
 ];
 export const incubatorContracts = [
   {
-    name: 'Andre Anonymous',
-    img: '/incubators/aa.png',
-    alt: 'Andre Anonymous',
-    contract: '0x6c96997d0fe3ea4e67af1f48f23d1f9c265ee401',
+    name: 'BlackHole',
+    img: '/incubators/blackhole.png',
+    alt: 'BlackHole',
+    contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
     subItems: [
       {
-        link: 'https://etherscan.io/address/0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
+        link: 'https://etherscan.io/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
         img: '/networks/eth.png',
-        title: 'Ethereum',
+        title: 'etherscan',
       },
       {
-        link: 'https://bscscan.com/address/0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
+        link: 'https://bscscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
         img: '/networks/bsc.png',
-        title: 'bscscan',
+        title: 'ftmscan',
       },
       {
-        link: 'https://ftmscan.com/address/0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
+        link: 'https://ftmscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
         img: '/networks/ftm.png',
         title: 'ftmscan',
       },
@@ -464,24 +464,6 @@ export const incubatorContracts = [
       },
       {
         link: 'https://ftmscan.com/address/0xC5401F6EAb46cBa5a8151D1132c022a311d9AEAE',
-        img: '/networks/ftm.png',
-        title: 'ftmscan',
-      },
-    ],
-  },
-  {
-    name: 'Friday Night Degen',
-    img: '/incubators/fnd.png',
-    alt: 'Friday Night Degen',
-    contract: '0x86904a5ce54b397bf8a0041cbb9725980d5d6b7b',
-    subItems: [
-      {
-        link: 'https://bscscan.com/address/0x86904a5ce54b397bf8a0041cbb9725980d5d6b7b',
-        img: '/networks/bsc.png',
-        title: 'bscscan',
-      },
-      {
-        link: 'https://ftmscan.com/address/0x86904a5ce54b397bf8a0041cbb9725980d5d6b7b',
         img: '/networks/ftm.png',
         title: 'ftmscan',
       },
@@ -622,19 +604,6 @@ export const incubatorContracts = [
     ],
   },
   {
-    name: 'Reflective EURO',
-    img: '/incubators/reuro.png',
-    alt: 'Reflective EURO',
-    contract: '0xb9681e6e064f2f36de3e1bc614b83d306fc2d461',
-    subItems: [
-      {
-        link: 'https://etherscan.io/address/0xb9681e6e064f2f36de3e1bc614b83d306fc2d461',
-        img: '/networks/eth.png',
-        title: 'Ethereum',
-      },
-    ],
-  },
-  {
     name: 'Sales Tax',
     img: '/incubators/sales.png',
     alt: 'Sales Tax',
@@ -665,29 +634,6 @@ export const incubatorContracts = [
     subItems: [
       {
         link: 'https://ftmscan.com/address/0xddcc5bd7581955c7df2f902423bfe53b47c1f935',
-        img: '/networks/ftm.png',
-        title: 'ftmscan',
-      },
-    ],
-  },
-  {
-    name: 'TheMerge.Tech',
-    img: '/incubators/merge.png',
-    alt: 'TheMerge.Tech',
-    contract: '0x0a533badc3d59014c761674c1962e2d3aaef1035',
-    subItems: [
-      {
-        link: 'https://etherscan.io/address/0x0a533badc3d59014c761674c1962e2d3aaef1035',
-        img: '/networks/eth.png',
-        title: 'Ethereum',
-      },
-      {
-        link: 'https://bscscan.com/address/0x0a533badc3d59014c761674c1962e2d3aaef1035',
-        img: '/networks/bsc.png',
-        title: 'bscscan',
-      },
-      {
-        link: 'https://ftmscan.com/address/0x0a533badc3d59014c761674c1962e2d3aaef1035',
         img: '/networks/ftm.png',
         title: 'ftmscan',
       },
@@ -882,6 +828,86 @@ export const governanceContracts = [
   },
 ];
 
+export const retiredContracts = [
+  {
+    name: 'Andre Anonymous',
+    img: '/incubators/aa.png',
+    alt: 'Andre Anonymous',
+    contract: '0x6c96997d0fe3ea4e67af1f48f23d1f9c265ee401',
+    subItems: [
+      {
+        link: 'https://etherscan.io/address/0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
+        img: '/networks/eth.png',
+        title: 'Ethereum',
+      },
+      {
+        link: 'https://bscscan.com/address/0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
+        img: '/networks/bsc.png',
+        title: 'bscscan',
+      },
+      {
+        link: 'https://ftmscan.com/address/0xb0918b73a7d8d53df8bd0d91d2821478db17da2b',
+        img: '/networks/ftm.png',
+        title: 'ftmscan',
+      },
+    ],
+  },
+  {
+    name: 'Friday Night Degen',
+    img: '/incubators/fnd.png',
+    alt: 'Friday Night Degen',
+    contract: '0x86904a5ce54b397bf8a0041cbb9725980d5d6b7b',
+    subItems: [
+      {
+        link: 'https://bscscan.com/address/0x86904a5ce54b397bf8a0041cbb9725980d5d6b7b',
+        img: '/networks/bsc.png',
+        title: 'bscscan',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x86904a5ce54b397bf8a0041cbb9725980d5d6b7b',
+        img: '/networks/ftm.png',
+        title: 'ftmscan',
+      },
+    ],
+  },
+  {
+    name: 'Reflective EURO',
+    img: '/incubators/reuro.png',
+    alt: 'Reflective EURO',
+    contract: '0xb9681e6e064f2f36de3e1bc614b83d306fc2d461',
+    subItems: [
+      {
+        link: 'https://etherscan.io/address/0xb9681e6e064f2f36de3e1bc614b83d306fc2d461',
+        img: '/networks/eth.png',
+        title: 'Ethereum',
+      },
+    ],
+  },
+  {
+    name: 'TheMerge.Tech',
+    img: '/incubators/merge.png',
+    alt: 'TheMerge.Tech',
+    contract: '0x0a533badc3d59014c761674c1962e2d3aaef1035',
+    subItems: [
+      {
+        link: 'https://etherscan.io/address/0x0a533badc3d59014c761674c1962e2d3aaef1035',
+        img: '/networks/eth.png',
+        title: 'Ethereum',
+      },
+      {
+        link: 'https://bscscan.com/address/0x0a533badc3d59014c761674c1962e2d3aaef1035',
+        img: '/networks/bsc.png',
+        title: 'bscscan',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x0a533badc3d59014c761674c1962e2d3aaef1035',
+        img: '/networks/ftm.png',
+        title: 'ftmscan',
+      },
+    ],
+  },
+];
+
 export const miscellaneousContracts = [
   {
     name: 'ABC Protocol',
@@ -891,29 +917,6 @@ export const miscellaneousContracts = [
     subItems: [
       {
         link: 'https://ftmscan.com/address/0xebde95c46e429ecd284d04bffcfd9b4cb9861dfc',
-        img: '/networks/ftm.png',
-        title: 'ftmscan',
-      },
-    ],
-  },
-  {
-    name: 'BlackHole',
-    img: '/incubators/blackhole.png',
-    alt: 'BlackHole',
-    contract: '0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
-    subItems: [
-      {
-        link: 'https://etherscan.io/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
-        img: '/networks/eth.png',
-        title: 'etherscan',
-      },
-      {
-        link: 'https://bscscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
-        img: '/networks/bsc.png',
-        title: 'ftmscan',
-      },
-      {
-        link: 'https://ftmscan.com/address/0x1d84e6F3C03c869b951d017a852f8464174b3FF4',
         img: '/networks/ftm.png',
         title: 'ftmscan',
       },
@@ -980,20 +983,20 @@ export const farmingPlatforms = [
       {
         name: 'Multiprint',
         symbol: 'MPRINT',
-        decimals : 18,
+        decimals: 18,
         farmcontract: '0x3Cf9f83047be6f6c74E9Bf40372DbdEb43c2F92C',
-        fetchcontract:'0x53f791BAd9f03942d299A9A215128b6a62BBaa04',
-        contractfunction : 'pendingRewardsMasterChef',
+        fetchcontract: '0x53f791BAd9f03942d299A9A215128b6a62BBaa04',
+        contractfunction: 'pendingRewardsMasterChef',
       },
       {
         name: 'Reflector Collector',
         symbol: 'RC',
-        decimals : 18,
+        decimals: 18,
         farmcontract: '0x796a21b01b13696164bcF6BD733cFE36890c54CB',
-        fetchcontract:'0x53f791BAd9f03942d299A9A215128b6a62BBaa04',
-        contractfunction : 'pendingRewardsReflectorChef',
+        fetchcontract: '0x53f791BAd9f03942d299A9A215128b6a62BBaa04',
+        contractfunction: 'pendingRewardsReflectorChef',
       },
-    ]
+    ],
   },
   {
     chainId: 250,
@@ -1001,19 +1004,19 @@ export const farmingPlatforms = [
       {
         name: 'Multiprint',
         symbol: 'MPRINT',
-        decimals : 18,
+        decimals: 18,
         farmcontract: '0x3Cf9f83047be6f6c74E9Bf40372DbdEb43c2F92C',
-        fetchcontract:'0x4e81a6ee816bDA3798E7A1D3597c172Adc07668b',
-        contractfunction : 'pendingRewardsMasterChef',
+        fetchcontract: '0x4e81a6ee816bDA3798E7A1D3597c172Adc07668b',
+        contractfunction: 'pendingRewardsMasterChef',
       },
       {
         name: 'Reflector Collector',
         symbol: 'RC',
-        decimals : 18,
+        decimals: 18,
         farmcontract: '0x796a21b01b13696164bcF6BD733cFE36890c54CB',
-        fetchcontract:'0x4e81a6ee816bDA3798E7A1D3597c172Adc07668b',
-        contractfunction : 'pendingRewardsReflectorChef',
+        fetchcontract: '0x4e81a6ee816bDA3798E7A1D3597c172Adc07668b',
+        contractfunction: 'pendingRewardsReflectorChef',
       },
-    ]
+    ],
   },
 ];
