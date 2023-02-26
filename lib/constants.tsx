@@ -699,12 +699,12 @@ export const farmingContracts = [
     contract: '',
     subItems: [
       {
-        link: 'https://mprint.mchain.capital/',
+        link: 'https://multiprint-eth.mchain.capital/',
         img: '/networks/eth.png',
         title: 'Ethereum',
       },
       {
-        link: 'https://multiprint.mchain.capital/',
+        link: 'https://multiprint-bsc.mchain.capital/',
         img: '/networks/bsc.png',
         title: 'bscscan',
       },
