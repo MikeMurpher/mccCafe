@@ -976,6 +976,85 @@ export const miscellaneousContracts = [
   },
 ];
 
+export const multiprintPrinterPools = [
+  {
+    name: 'BSC Printer Pools',
+    img: '/logos/bnb.png',
+    alt: 'Binance Smart Chain',
+    contract: '0xe7563F4dcA8DfC5A892a9d3cA4F2E4cF665A3164',
+    subItems: [
+      {
+        link: 'https://bscscan.com/address/0xD6c61c366681DA9e168518182baAD22fd842E98e',
+        img: '/logos/busd.png',
+        title: 'busd [Perpetual]',
+      },
+      {
+        link: 'https://bscscan.com/address/0xB8234D1b57af791603A57b617C95D6fE2b29dE58',
+        img: '/logos/bnb.png',
+        title: 'bnb [Perpetual]',
+      },
+      {
+        link: 'https://bscscan.com/address/0xA5343630C02a92b95716eC22Ad9C141e8145a19D',
+        img: '/logos/ftm.png',
+        title: 'ftm [Perpetual]',
+      },
+      {
+        link: 'https://bscscan.com/address/0x6C9e0d8B247904f7124b1bcF1334c811DE207bc2',
+        img: '/logos/mcc-black.png',
+        title: 'mcc [Perpetual]',
+      },
+      {
+        link: 'https://bscscan.com/address/0xAC8550f211895a2EA7e585e92792fdbe4F6D2fC4',
+        img: '/logos/eth.png',
+        title: 'eth [Perpetual]',
+      },
+    ],
+  },
+  {
+    name: 'FTM Printer Pools',
+    img: '/logos/ftm.png',
+    alt: 'Fantom',
+    contract: '0x55E396218d088461A87D4FA965eBAd653C45b9f1',
+    subItems: [
+      {
+        link: 'https://ftmscan.com/address/0x37B423525EC14F9115F0610C29E236Bebe279eF7',
+        img: '/logos/dai.png',
+        title: 'dai',
+      },
+      {
+        link: 'https://ftmscan.com/address/0xA02c05e981b3c322E6Ca41B112cC609eC0db9ea2',
+        img: '/logos/ftm.png',
+        title: 'ftm',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x4eEb5486b7eDc8eb3c9c6D7269D4aBbE77a8B64d',
+        img: '/logos/mcc-black.png',
+        title: 'mcc',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x10a8B3f589Bd0110B0f631079b6706AdFab551A7',
+        img: '/incubators/slvr.png',
+        title: 'slvr',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x217Bc512F3683c012da5aA8c5FAe9B477a583604',
+        img: '/logos/eth.png',
+        title: 'eth',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x374c4BE1Fe03D2C2ccDB1078687eDab5de43B9E6',
+        img: '/logos/link.png',
+        title: 'link [Perpetual]',
+      },
+      {
+        link: 'https://ftmscan.com/address/0x06ec0eD186F0Bcaa4Bf6Dcc5cB497B4B209ED30D',
+        img: '/logos/mmy.png',
+        title: 'mmy [Perpetual]',
+      },
+    ],
+  },
+];
+
 export const farmingPlatforms = [
   {
     chainId: 56,
